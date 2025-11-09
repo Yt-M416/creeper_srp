@@ -75,6 +75,7 @@ def ensure_event_and_total(df):
 # ========== 3. 主函数 ==========
 def main():
     df_list = []
+    result_list =[]
     df_list_for_top10 = []  # 专门收集有 Event & Total 的表，用于项目前10筛选
 
     for file_path in file_list:
@@ -94,10 +95,34 @@ def main():
 
             print(f"  正在处理 sheet: {sheet_name}")
 
-        
-            df.columns = df.columns.str.strip()  # 去掉前后空格
-            # 删除重复列，保留第一次出现的
+            # 清理列名（防止有空格）
+            df.columns = df.columns.str.strip()
+
+            # 删除重复列（常见问题）
             df = df.loc[:, ~df.columns.duplicated()]
+
+            # 预清洗空行
+            df = df.dropna(how='all')
+
+            if 'Nation' in df.columns:
+                # 检查其他列存在时才做复合空行过滤
+                other_cols = [c for c in ['Name', 'Born', 'Bodyweight'] if c in df.columns]
+                if other_cols:
+                    df = df[~(df['Nation'].isna() & df[other_cols].isna().all(axis=1))]
+
+
+            # 检查 Nation 空值
+            if 'Nation' in df.columns:
+                bad_rows = df[df['Nation'].isna()].copy()  # 加 copy()
+                if not bad_rows.empty:
+                    bad_rows['Excel_Row'] = bad_rows.index + 2  # 警告消除
+                    bad_rows['File'] = os.path.basename(file_path)
+                    bad_rows['Sheet'] = sheet_name
+                    result_list.append(bad_rows)
+                    print(f"  ⚠️ {sheet_name}: 发现 {len(bad_rows)} 个 Nation 空值")
+                
+            
+            
 
 
             # 1) 标准化 Nation 列
@@ -108,6 +133,7 @@ def main():
             # 2) 记录来源信息（可选，便于追溯）
             df['_file'] = os.path.basename(file_path)
             df['_sheet'] = sheet_name
+            df['source_sheet'] = df['_sheet']  # 新增一列 source_sheet
 
             # 3) 尝试标准化 Event/Total 列（如果存在）
             df_event_checked = ensure_event_and_total(df.copy())
@@ -203,11 +229,6 @@ def main():
     only_total = sorted(list(set_total - set_top10))
     only_top10 = sorted(list(set_top10 - set_total))
 
-    # ---- 输出：保存 CSV 和 一个多 sheet 的 Excel（含对比） ----
-    # 1) 仍保持原来的 CSV（仅总量前20）
-    out_csv = os.path.join(base_dir, "top20_nations.csv")
-    total_top20.to_csv(out_csv, index=False)
-    print(f"✅ 已保存总量前20（CSV）：{out_csv}")
 
     # 2) 保存一个含多个 sheet 的 Excel，包含：总量前20、项目前10前20、对比结果
     out_xlsx = os.path.join(base_dir, "top20_nation.xlsx")
