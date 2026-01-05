@@ -1,0 +1,57 @@
+2025-12-10 15:50:46,490 [INFO] ======== LMM with Travel Duration (Fixed Cartesian Product): START ========
+2025-12-10 15:50:46,490 [INFO] 加载 travel CSV: travel_time_merged.csv
+2025-12-10 15:50:46,496 [INFO] travel_time 表已加载，行数=565, 列=['Departure_Nation', 'Departure_City', 'Arrival_City', 'Duration_Hours', 'Types', 'Year']
+2025-12-10 15:50:46,497 [INFO] 加载 IWF 数据: iwf_data_with_tz.csv
+2025-12-10 15:50:46,507 [INFO] IWF 表已加载，行数=3184, 列=['Rank', 'Name', 'Nation', 'Born', 'Body_Weight', 'Group', 'Snatch', 'Clean_Jerk', 'Total', 'Event', 'Event_City', 'Timezone', 'Note', 'competition', 'Athlete_Timezone', 'Event_Year', 'Reference_Date', 'Athlete_UTC_offset', 'Venue_UTC_offset', 'Timezone_Diff_hours', 'Sex']
+2025-12-10 15:50:46,513 [INFO] 开始合并 travel_time 与 IWF 表（使用三键匹配避免笛卡尔积）
+2025-12-10 15:50:46,517 [INFO] 执行三键合并：Nation + Event_City + Event_Year
+2025-12-10 15:50:46,522 [INFO] 三键合并完成！
+2025-12-10 15:50:46,522 [INFO]   合并后总行数: 3184
+2025-12-10 15:50:46,522 [INFO]   Travel_Duration 有值的行数: 3028
+2025-12-10 15:50:46,523 [INFO]   Travel_Duration 缺失的行数: 156
+2025-12-10 15:50:46,525 [WARNING] 警告：仍存在重复记录，最大重复次数=2
+2025-12-10 15:50:46,525 [WARNING] 重复示例：
+Name                  Event_Year  Event_City_norm  
+MARTIROSYAN Tigran    2006        Santo Domingo,DOM    2
+                      2007        Chiang Mai,THA       2
+                      2009        Goyang,KOR           2
+                      2010        Antalya,TUR          2
+URRUTIA Maria Isabel  1998        Lathi,FIN            2
+dtype: int64
+2025-12-10 15:50:46,525 [INFO] 计算 Sinclair_Total ...
+2025-12-10 15:50:46,553 [INFO] Sinclair_Total 非空数 = 2800
+2025-12-10 15:50:46,559 [INFO] 准备建模数据：总行数=3184
+2025-12-10 15:50:46,559 [INFO] 去除基础缺失后的行数=2800
+2025-12-10 15:50:46,559 [INFO] Travel_Duration 有效行数=2659；缺失行数=141
+2025-12-10 15:50:46,599 [INFO] 已保存：lmm_time\merged_full_with_travel.csv 和 lmm_time\model_input_with_travel.csv
+2025-12-10 15:50:46,601 [INFO] 各国样本量统计：
+Nation
+CHN    282
+USA    274
+COL    252
+JPN    248
+KOR    225
+TPE    220
+RUS    212
+KAZ    192
+MEX    188
+THA    185
+IRI    141
+ARM    137
+UKR    103
+Name: count, dtype: int64
+2025-12-10 15:50:46,602 [INFO] 过滤后用于建模的行数=2659，国家数=13
+2025-12-10 15:50:46,602 [INFO] 开始拟合 Model 1: Sinclair_Total ~ Sex_clean + Travel_Duration + Timezone_Diff_hours with (1|Nation)
+2025-12-10 15:50:46,714 [INFO] Model 1 拟合完成
+2025-12-10 15:50:46,731 [INFO] Model 1 摘要已保存
+2025-12-10 15:50:46,731 [INFO] 开始拟合 Model 2: Sinclair_Total ~ Sex_clean + Travel_Duration * Timezone_Diff_hours with (1|Nation)
+2025-12-10 15:50:46,862 [INFO] Model 2 拟合完成
+2025-12-10 15:50:46,876 [INFO] Model 2 摘要已保存
+2025-12-10 15:50:47,303 [INFO] 已保存 Model 1 预测图
+2025-12-10 15:50:47,619 [INFO] 已保存 Model 2 预测图
+2025-12-10 15:50:47,625 [INFO] 绘制交互效果图...
+2025-12-10 15:50:47,971 [INFO] 已保存交互效果图
+2025-12-10 15:50:48,159 [INFO] 已保存系数图: coef_model1.png
+2025-12-10 15:50:48,347 [INFO] 已保存系数图: coef_model2.png
+2025-12-10 15:50:48,347 [INFO] 分析完成！结果已保存到 lmm_time 目录
+2025-12-10 15:50:48,347 [INFO] ======== LMM with Travel Duration: END ========

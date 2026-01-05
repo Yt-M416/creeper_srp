@@ -1,0 +1,14 @@
+LMM Analysis with Mean-Centered Variables
+======================================================================
+Run time: 2025-12-10T23:13:55.144248
+
+Centering Info:
+  Travel_Duration: mean=15.6909, std=7.5811
+  Timezone_Diff_hours: mean=1.5617, std=7.2232
+
+Output Files:
+  - model1_centered_summary.txt
+  - model2_centered_summary.txt
+  - likelihood_ratio_test.txt
+  - coefficients_centered.png
+  - interaction_centered.png

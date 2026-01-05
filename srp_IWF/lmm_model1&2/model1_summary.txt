@@ -1,0 +1,19 @@
+Model 1: Sinclair_Total ~ Sex + Travel_Duration + Timezone_Diff + (1|Nation)
+
+               Mixed Linear Model Regression Results
+===================================================================
+Model:               MixedLM   Dependent Variable:   Sinclair_Total
+No. Observations:    2659      Method:               REML          
+No. Groups:          13        Scale:                5345.3801     
+Min. group size:     103       Log-Likelihood:       -15203.6401   
+Max. group size:     282       Converged:            Yes           
+Mean group size:     204.5                                         
+-------------------------------------------------------------------
+                     Coef.   Std.Err.    z    P>|z|  [0.025  0.975]
+-------------------------------------------------------------------
+Intercept            221.757   10.074  22.012 0.000 202.011 241.503
+Sex_clean[T.Women]   -91.570    2.913 -31.440 0.000 -97.278 -85.861
+Travel_Duration        0.283    0.199   1.422 0.155  -0.107   0.674
+Timezone_Diff_hours   -0.291    0.307  -0.949 0.342  -0.893   0.310
+Group Var           1142.100    6.588                              
+===================================================================

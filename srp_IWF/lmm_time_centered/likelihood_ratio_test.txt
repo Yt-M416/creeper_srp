@@ -1,0 +1,6 @@
+Likelihood Ratio Test
+======================================================================
+Model 1 ML LogLik: -15207.815011
+Model 2 ML LogLik: -15207.813439
+LR Statistic: 0.003144, df=1, p-value=0.955288
+Conclusion: Model 1 sufficient

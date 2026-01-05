@@ -1,0 +1,566 @@
+﻿Departure_Nation,Departure_City,Arrival_City,Duration_Hours(h),Types,Year
+ARM,Yerevan,"Santo Domingo,DOM",23.0,2,2006
+CHN,Beijing,"Santo Domingo,DOM",26.0,1,2006
+COL,Bogota,"Santo Domingo,DOM",3.0,0,2006
+IRI,Tehran,"Santo Domingo,DOM",24.0,2,2006
+JPN,Tokyo,"Santo Domingo,DOM",20.0,1,2006
+KAZ,Almaty,"Santo Domingo,DOM",26.0,2,2006
+KOR,Seoul,"Santo Domingo,DOM",22.0,1,2006
+MEX,San Luis Potosi,"Santo Domingo,DOM",10.0,1,2006
+RUS,Sochi,"Santo Domingo,DOM",24.0,2,2006
+THA,Chiang Mai,"Santo Domingo,DOM",28.0,3,2006
+TPE,Kaohsiung,"Santo Domingo,DOM",25.0,2,2006
+UKR,Kyiv,"Santo Domingo,DOM",26.0,2,2006
+USA,Colorado Springs,"Santo Domingo,DOM",22.0,1,2006
+BUL,Sofia,"Santo Domingo,DOM",19.0,2,2006
+CAN,Montreal,"Santo Domingo,DOM",7.0,1,2006
+ESP,Madrid,"Santo Domingo,DOM",9.0,0,2006
+FRA,Paris,"Santo Domingo,DOM",15.0,1,2006
+POL,Warsaw,"Santo Domingo,DOM",15.0,1,2006
+TUR,Ankara,"Santo Domingo,DOM",20.0,2,2006
+VEN,Caracas,"Santo Domingo,DOM",7.0,1,2006
+BLR,Minsk,"Santo Domingo,DOM",32.0,2,2006
+ECU,Quito,"Santo Domingo,DOM",6.0,1,2006
+EGY,Cairo,"Santo Domingo,DOM",17.0,1,2006
+GEO,Tbilisi,"Santo Domingo,DOM",22.0,2,2006
+INA,Jakarta,"Santo Domingo,DOM",28.0,2,2006
+PRK,Pyongyang,"Santo Domingo,DOM",32.0,2,2006
+UZB,Tashkent,"Santo Domingo,DOM",22.0,1,2006
+ARM,Yerevan,"Chiang Mai,THA",18.0,2,2007
+CHN,Beijing,"Chiang Mai,THA",5.0,0,2007
+COL,Bogota,"Chiang Mai,THA",27.0,2,2007
+IRI,Tehran,"Chiang Mai,THA",13.0,2,2007
+JPN,Tokyo,"Chiang Mai,THA",10.0,1,2007
+KAZ,Almaty,"Chiang Mai,THA",10.0,1,2007
+KOR,Seoul,"Chiang Mai,THA",5.0,0,2007
+MEX,San Luis Potosi,"Chiang Mai,THA",29.0,2,2007
+RUS,Sochi,"Chiang Mai,THA",15.0,2,2007
+THA,Chiang Mai,"Chiang Mai,THA",0.0,0,2007
+TPE,Kaohsiung,"Chiang Mai,THA",7.0,1,2007
+UKR,Kyiv,"Chiang Mai,THA",1.0,0,2007
+USA,Colorado Springs,"Chiang Mai,THA",27.0,2,2007
+BUL,Sofia,"Chiang Mai,THA",16.0,2,2007
+CAN,Montreal,"Chiang Mai,THA",23.0,2,2007
+ESP,Madrid,"Chiang Mai,THA",22.0,1,2007
+FRA,Paris,"Chiang Mai,THA",14.0,1,2007
+POL,Warsaw,"Chiang Mai,THA",17.0,2,2007
+TUR,Ankara,"Chiang Mai,THA",16.0,2,2007
+VEN,Caracas,"Chiang Mai,THA",29.0,2,2007
+BLR,Minsk,"Chiang Mai,THA",22.0,2,2007
+ECU,Quito,"Chiang Mai,THA",38.0,2,2007
+EGY,Cairo,"Chiang Mai,THA",26.0,1,2007
+GEO,Tbilisi,"Chiang Mai,THA",18.0,2,2007
+INA,Jakarta,"Chiang Mai,THA",6.0,1,2007
+PRK,Pyongyang,"Chiang Mai,THA",22.0,2,2007
+UZB,Tashkent,"Chiang Mai,THA",11.0,1,2007
+ARM,Yerevan,"Goyang,KOR",21.0,1,2009
+CHN,Beijing,"Goyang,KOR",2.0,0,2009
+COL,Bogota,"Goyang,KOR",28.0,1,2009
+IRI,Tehran,"Goyang,KOR",13.0,1,2009
+JPN,Tokyo,"Goyang,KOR",3.0,0,2009
+KAZ,Almaty,"Goyang,KOR",6.0,0,2009
+KOR,Seoul,"Goyang,KOR",0.0,0,2009
+MEX,San Luis Potosi,"Goyang,KOR",20.0,1,2009
+RUS,Sochi,"Goyang,KOR",15.0,1,2009
+THA,Chiang Mai,"Goyang,KOR",5.0,0,2009
+TPE,Kaohsiung,"Goyang,KOR",3.0,0,2009
+UKR,Kyiv,"Goyang,KOR",5.0,0,2009
+USA,Colorado Springs,"Goyang,KOR",19.0,1,2009
+BUL,Sofia,"Goyang,KOR",14.0,1,2009
+CAN,Montreal,"Goyang,KOR",19.0,1,2009
+ESP,Madrid,"Goyang,KOR",13.0,0,2009
+FRA,Paris,"Goyang,KOR",12.0,0,2009
+POL,Warsaw,"Goyang,KOR",11.0,0,2009
+TUR,Ankara,"Goyang,KOR",13.0,1,2009
+VEN,Caracas,"Goyang,KOR",30.0,1,2009
+BLR,Minsk,"Goyang,KOR",21.0,1,2009
+ECU,Quito,"Goyang,KOR",26.0,1,2009
+EGY,Cairo,"Goyang,KOR",14.0,1,2009
+GEO,Tbilisi,"Goyang,KOR",14.0,1,2009
+INA,Jakarta,"Goyang,KOR",7.0,0,2009
+PRK,Pyongyang,"Goyang,KOR",21.0,1,2009
+UZB,Tashkent,"Goyang,KOR",6.0,0,2009
+ARM,Yerevan,"Antalya,TUR",5.0,1,2010
+CHN,Beijing,"Antalya,TUR",13.0,1,2010
+COL,Bogota,"Antalya,TUR",20.0,1,2010
+IRI,Tehran,"Antalya,TUR",5.0,1,2010
+JPN,Tokyo,"Antalya,TUR",16.0,1,2010
+KAZ,Almaty,"Antalya,TUR",6.0,0,2010
+KOR,Seoul,"Antalya,TUR",15.0,1,2010
+MEX,San Luis Potosi,"Antalya,TUR",25.0,2,2010
+RUS,Sochi,"Antalya,TUR",7.0,1,2010
+THA,Chiang Mai,"Antalya,TUR",17.0,2,2010
+TPE,Kaohsiung,"Antalya,TUR",20.0,2,2010
+USA,Colorado Springs,"Antalya,TUR",20.0,2,2010
+BUL,Sofia,"Antalya,TUR",4.0,1,2010
+CAN,Montreal,"Antalya,TUR",17.0,1,2010
+ESP,Madrid,"Antalya,TUR",7.0,1,2010
+FRA,Paris,"Antalya,TUR",7.0,1,2010
+POL,Warsaw,"Antalya,TUR",3.0,0,2010
+TUR,Ankara,"Antalya,TUR",1.0,0,2010
+VEN,Caracas,"Antalya,TUR",15.0,1,2010
+BLR,Minsk,"Antalya,TUR",9.0,1,2010
+ECU,Quito,"Antalya,TUR",22.0,2,2010
+EGY,Cairo,"Antalya,TUR",5.0,1,2010
+GEO,Tbilisi,"Antalya,TUR",4.0,1,2010
+INA,Jakarta,"Antalya,TUR",16.0,1,2010
+PRK,Pyongyang,"Antalya,TUR",9.0,1,2010
+UZB,Tashkent,"Antalya,TUR",8.0,1,2010
+ARM,Yerevan,"Paris,FRA",7.0,1,2011
+CHN,Beijing,"Paris,FRA",11.0,0,2011
+COL,Bogota,"Paris,FRA",10.0,0,2011
+IRI,Tehran,"Paris,FRA",9.0,1,2011
+JPN,Tokyo,"Paris,FRA",16.0,1,2011
+KAZ,Almaty,"Paris,FRA",11.0,1,2011
+KOR,Seoul,"Paris,FRA",14.0,0,2011
+MEX,San Luis Potosi,"Paris,FRA",14.0,1,2011
+RUS,Sochi,"Paris,FRA",9.0,1,2011
+THA,Chiang Mai,"Paris,FRA",16.0,1,2011
+TPE,Kaohsiung,"Paris,FRA",19.0,1,2011
+UKR,Kyiv,"Paris,FRA",13.0,0,2011
+USA,Colorado Springs,"Paris,FRA",12.0,1,2011
+BUL,Sofia,"Paris,FRA",3.0,0,2011
+CAN,Montreal,"Paris,FRA",7.0,0,2011
+ESP,Madrid,"Paris,FRA",2.0,0,2011
+FRA,Paris,"Paris,FRA",0.0,0,2011
+POL,Warsaw,"Paris,FRA",3.0,0,2011
+TUR,Ankara,"Paris,FRA",6.0,1,2011
+VEN,Caracas,"Paris,FRA",13.0,1,2011
+BLR,Minsk,"Paris,FRA",20.0,1,2011
+ECU,Quito,"Paris,FRA",14.0,1,2011
+EGY,Cairo,"Paris,FRA",5.0,0,2011
+GEO,Tbilisi,"Paris,FRA",5.0,0,2011
+INA,Jakarta,"Paris,FRA",17.0,1,2011
+PRK,Pyongyang,"Paris,FRA",20.0,1,2011
+UZB,Tashkent,"Paris,FRA",8.0,0,2011
+ARM,Yerevan,"Lathi,FIN",10.0,1,1998
+CHN,Beijing,"Lathi,FIN",14.0,1,1998
+COL,Bogota,"Lathi,FIN",16.0,1,1998
+IRI,Tehran,"Lathi,FIN",9.0,1,1998
+JPN,Tokyo,"Lathi,FIN",13.0,0,1998
+KAZ,Almaty,"Lathi,FIN",11.0,1,1998
+KOR,Seoul,"Lathi,FIN",13.0,0,1998
+MEX,San Luis Potosi,"Lathi,FIN",20.0,1,1998
+RUS,Sochi,"Lathi,FIN",10.0,1,1998
+THA,Chiang Mai,"Lathi,FIN",17.0,1,1998
+TPE,Kaohsiung,"Lathi,FIN",19.0,1,1998
+UKR,Kyiv,"Lathi,FIN",16.0,2,1998
+USA,Colorado Springs,"Lathi,FIN",13.0,1,1998
+BUL,Sofia,"Lathi,FIN",10.0,1,1998
+CAN,Montreal,"Lathi,FIN",12.0,1,1998
+ESP,Madrid,"Lathi,FIN",4.0,0,1998
+FRA,Paris,"Lathi,FIN",3.0,0,1998
+POL,Warsaw,"Lathi,FIN",2.0,0,1998
+TUR,Ankara,"Lathi,FIN",6.0,1,1998
+VEN,Caracas,"Lathi,FIN",15.0,1,1998
+BLR,Minsk,"Lathi,FIN",16.0,2,1998
+ECU,Quito,"Lathi,FIN",20.0,1,1998
+EGY,Cairo,"Lathi,FIN",8.0,1,1998
+GEO,Tbilisi,"Lathi,FIN",9.0,1,1998
+INA,Jakarta,"Lathi,FIN",19.0,1,1998
+PRK,Pyongyang,"Lathi,FIN",13.0,0,1998
+UZB,Tashkent,"Lathi,FIN",8.0,1,1998
+ARM,Yerevan,"Athens,GRE",3.0,0,1999
+CHN,Beijing,"Athens,GRE",16.0,1,1999
+COL,Bogota,"Athens,GRE",14.0,1,1999
+IRI,Tehran,"Athens,GRE",7.0,1,1999
+JPN,Tokyo,"Athens,GRE",20.0,1,1999
+KAZ,Almaty,"Athens,GRE",9.0,1,1999
+KOR,Seoul,"Athens,GRE",16.0,1,1999
+MEX,San Luis Potosi,"Athens,GRE",18.0,2,1999
+RUS,Sochi,"Athens,GRE",17.0,1,1999
+THA,Chiang Mai,"Athens,GRE",20.0,2,1999
+TPE,Kaohsiung,"Athens,GRE",24.0,1,1999
+UKR,Kyiv,"Athens,GRE",9.0,1,1999
+USA,Colorado Springs,"Athens,GRE",18.0,2,1999
+BUL,Sofia,"Athens,GRE",1.0,0,1999
+CAN,Montreal,"Athens,GRE",11.0,1,1999
+ESP,Madrid,"Athens,GRE",4.0,0,1999
+FRA,Paris,"Athens,GRE",3.0,0,1999
+POL,Warsaw,"Athens,GRE",3.0,0,1999
+TUR,Ankara,"Athens,GRE",16.0,1,1999
+VEN,Caracas,"Athens,GRE",15.0,1,1999
+BLR,Minsk,"Athens,GRE",9.0,1,1999
+ECU,Quito,"Athens,GRE",22.0,1,1999
+EGY,Cairo,"Athens,GRE",2.0,0,1999
+GEO,Tbilisi,"Athens,GRE",3.0,0,1999
+INA,Jakarta,"Athens,GRE",14.0,1,1999
+PRK,Pyongyang,"Athens,GRE",16.0,1,1999
+UZB,Tashkent,"Athens,GRE",8.0,1,1999
+ARM,Yerevan,"Antalya,TUR",5.0,1,2001
+CHN,Beijing,"Antalya,TUR",13.0,1,2001
+COL,Bogota,"Antalya,TUR",20.0,2,2001
+IRI,Tehran,"Antalya,TUR",6.0,1,2001
+JPN,Tokyo,"Antalya,TUR",16.0,1,2001
+KAZ,Almaty,"Antalya,TUR",6.0,0,2001
+KOR,Seoul,"Antalya,TUR",15.0,1,2001
+MEX,San Luis Potosi,"Antalya,TUR",23.0,3,2001
+RUS,Sochi,"Antalya,TUR",2.0,0,2001
+THA,Chiang Mai,"Antalya,TUR",17.0,1,2001
+TPE,Kaohsiung,"Antalya,TUR",24.0,2,2001
+UKR,Kyiv,"Antalya,TUR",9.0,1,2001
+USA,Colorado Springs,"Antalya,TUR",20.0,2,2001
+BUL,Sofia,"Antalya,TUR",5.0,1,2001
+CAN,Montreal,"Antalya,TUR",12.0,1,2001
+ESP,Madrid,"Antalya,TUR",7.0,1,2001
+FRA,Paris,"Antalya,TUR",4.0,0,2001
+POL,Warsaw,"Antalya,TUR",3.0,0,2001
+TUR,Ankara,"Antalya,TUR",1.0,0,2001
+VEN,Caracas,"Antalya,TUR",15.0,1,2001
+BLR,Minsk,"Antalya,TUR",9.0,1,2001
+ECU,Quito,"Antalya,TUR",30.0,3,2001
+EGY,Cairo,"Antalya,TUR",10.0,1,2001
+GEO,Tbilisi,"Antalya,TUR",2.0,0,2001
+INA,Jakarta,"Antalya,TUR",16.0,1,2001
+PRK,Pyongyang,"Antalya,TUR",15.0,1,2001
+UZB,Tashkent,"Antalya,TUR",8.0,1,2001
+ARM,Yerevan,"Warsaw,POL",4.0,0,2002
+CHN,Beijing,"Warsaw,POL",10.0,0,2002
+COL,Bogota,"Warsaw,POL",15.0,1,2002
+IRI,Tehran,"Warsaw,POL",8.0,1,2002
+JPN,Tokyo,"Warsaw,POL",21.0,1,2002
+KAZ,Almaty,"Warsaw,POL",11.0,1,2002
+KOR,Seoul,"Warsaw,POL",13.0,0,2002
+MEX,San Luis Potosi,"Warsaw,POL",17.0,2,2002
+RUS,Sochi,"Warsaw,POL",20.0,2,2002
+THA,Chiang Mai,"Warsaw,POL",28.0,1,2002
+TPE,Kaohsiung,"Warsaw,POL",19.0,1,2002
+UKR,Kyiv,"Warsaw,POL",20.0,1,2002
+USA,Colorado Springs,"Warsaw,POL",17.0,1,2002
+BUL,Sofia,"Warsaw,POL",2.0,0,2002
+CAN,Montreal,"Warsaw,POL",12.0,1,2002
+ESP,Madrid,"Warsaw,POL",4.0,1,2002
+FRA,Paris,"Warsaw,POL",2.0,1,2002
+TUR,Ankara,"Warsaw,POL",6.0,1,2002
+VEN,Caracas,"Warsaw,POL",15.0,1,2002
+BLR,Minsk,"Warsaw,POL",20.0,1,2002
+ECU,Quito,"Warsaw,POL",17.0,1,2002
+EGY,Cairo,"Warsaw,POL",4.0,0,2002
+GEO,Tbilisi,"Warsaw,POL",4.0,0,2002
+INA,Jakarta,"Warsaw,POL",17.0,1,2002
+PRK,Pyongyang,"Warsaw,POL",13.0,0,2002
+UZB,Tashkent,"Warsaw,POL",9.0,1,2002
+ARM,Yerevan,"Vancouver,CAN",19.0,1,2003
+CHN,Beijing,"Vancouver,CAN",11.0,0,2003
+COL,Bogota,"Vancouver,CAN",16.0,1,2003
+IRI,Tehran,"Vancouver,CAN",20.0,1,2003
+JPN,Tokyo,"Vancouver,CAN",9.0,0,2003
+KAZ,Almaty,"Vancouver,CAN",20.0,1,2003
+KOR,Seoul,"Vancouver,CAN",10.0,0,2003
+MEX,San Luis Potosi,"Vancouver,CAN",8.0,1,2003
+RUS,Sochi,"Vancouver,CAN",22.0,2,2003
+THA,Chiang Mai,"Vancouver,CAN",15.0,1,2003
+TPE,Kaohsiung,"Vancouver,CAN",17.0,1,2003
+UKR,Kyiv,"Vancouver,CAN",26.0,2,2003
+USA,Colorado Springs,"Vancouver,CAN",5.0,1,2003
+BUL,Sofia,"Vancouver,CAN",16.0,1,2003
+CAN,Montreal,"Vancouver,CAN",6.0,0,2003
+ESP,Madrid,"Vancouver,CAN",15.0,1,2003
+FRA,Paris,"Vancouver,CAN",13.0,1,2003
+POL,Warsaw,"Vancouver,CAN",14.0,1,2003
+TUR,Ankara,"Vancouver,CAN",16.0,1,2003
+VEN,Caracas,"Vancouver,CAN",25.0,2,2003
+BLR,Minsk,"Vancouver,CAN",26.0,2,2003
+ECU,Quito,"Vancouver,CAN",15.0,1,2003
+EGY,Cairo,"Vancouver,CAN",18.0,1,2003
+GEO,Tbilisi,"Vancouver,CAN",17.0,1,2003
+INA,Jakarta,"Vancouver,CAN",19.0,1,2003
+PRK,Pyongyang,"Vancouver,CAN",10.0,0,2003
+UZB,Tashkent,"Vancouver,CAN",20.0,1,2003
+ARM,Yerevan,"Doha,QAT",3.0,0,2005
+CHN,Beijing,"Doha,QAT",10.0,0,2005
+COL,Bogota,"Doha,QAT",17.0,1,2005
+IRI,Tehran,"Doha,QAT",2.0,0,2005
+JPN,Tokyo,"Doha,QAT",12.0,0,2005
+KAZ,Almaty,"Doha,QAT",5.0,0,2005
+KOR,Seoul,"Doha,QAT",11.0,0,2005
+MEX,San Luis Potosi,"Doha,QAT",18.0,1,2005
+RUS,Sochi,"Doha,QAT",7.0,1,2005
+THA,Chiang Mai,"Doha,QAT",14.0,1,2005
+TPE,Kaohsiung,"Doha,QAT",14.0,1,2005
+UKR,Kyiv,"Doha,QAT",15.0,1,2005
+USA,Colorado Springs,"Doha,QAT",20.0,1,2005
+BUL,Sofia,"Doha,QAT",7.0,1,2005
+CAN,Montreal,"Doha,QAT",12.0,0,2005
+ESP,Madrid,"Doha,QAT",7.0,0,2005
+FRA,Paris,"Doha,QAT",6.0,0,2005
+POL,Warsaw,"Doha,QAT",6.0,0,2005
+TUR,Ankara,"Doha,QAT",7.0,1,2005
+VEN,Caracas,"Doha,QAT",21.0,1,2005
+BLR,Minsk,"Doha,QAT",15.0,1,2005
+ECU,Quito,"Doha,QAT",21.0,1,2005
+EGY,Cairo,"Doha,QAT",3.0,0,2005
+GEO,Tbilisi,"Doha,QAT",3.0,0,2005
+INA,Jakarta,"Doha,QAT",9.0,0,2005
+PRK,Pyongyang,"Doha,QAT",11.0,0,2005
+UZB,Tashkent,"Doha,QAT",4.0,0,2005
+ARM,Yerevan,"PATTAYA,THA",20.0,2,2019
+CHN,Beijing,"PATTAYA,THA",14.0,2,2019
+COL,Bogota,"PATTAYA,THA",30.0,3,2019
+IRI,Tehran,"PATTAYA,THA",15.0,2,2019
+JPN,Tokyo,"PATTAYA,THA",19.0,2,2019
+KAZ,Almaty,"PATTAYA,THA",14.0,1,2019
+KOR,Seoul,"PATTAYA,THA",18.0,2,2019
+MEX,San Luis Potosi,"PATTAYA,THA",39.0,3,2019
+RUS,Sochi,"PATTAYA,THA",20.0,2,2019
+THA,Chiang Mai,"PATTAYA,THA",6.0,1,2019
+TPE,Kaohsiung,"PATTAYA,THA",15.0,2,2019
+USA,Colorado Springs,"PATTAYA,THA",35.0,3,2019
+BUL,Sofia,"PATTAYA,THA",20.0,3,2019
+CAN,Montreal,"PATTAYA,THA",32.0,2,2019
+ESP,Madrid,"PATTAYA,THA",20.0,2,2019
+FRA,Paris,"PATTAYA,THA",18.0,2,2019
+POL,Warsaw,"PATTAYA,THA",20.0,2,2019
+TUR,Ankara,"PATTAYA,THA",19.0,3,2019
+VEN,Caracas,"PATTAYA,THA",36.0,2,2019
+BLR,Minsk,"PATTAYA,THA",27.0,2,2019
+ECU,Quito,"PATTAYA,THA",34.0,3,2019
+EGY,Cairo,"PATTAYA,THA",16.0,2,2019
+GEO,Tbilisi,"PATTAYA,THA",17.0,2,2019
+INA,Jakarta,"PATTAYA,THA",5.0,1,2019
+UZB,Tashkent,"PATTAYA,THA",18.0,2,2019
+ARM,Yerevan,"Tashkent,UZB",7.0,1,2021
+CHN,Beijing,"Tashkent,UZB",6.0,0,2021
+COL,Bogota,"Tashkent,UZB",23.0,2,2021
+IRI,Tehran,"Tashkent,UZB",8.0,1,2021
+JPN,Tokyo,"Tashkent,UZB",16.0,1,2021
+KAZ,Almaty,"Tashkent,UZB",2.0,0,2021
+KOR,Seoul,"Tashkent,UZB",7.0,0,2021
+MEX,San Luis Potosi,"Tashkent,UZB",26.0,3,2021
+RUS,Sochi,"Tashkent,UZB",9.0,1,2021
+THA,Chiang Mai,"Tashkent,UZB",12.0,1,2021
+TPE,Kaohsiung,"Tashkent,UZB",14.0,1,2021
+USA,Colorado Springs,"Tashkent,UZB",25.0,2,2021
+BUL,Sofia,"Tashkent,UZB",8.0,1,2021
+CAN,Montreal,"Tashkent,UZB",19.0,1,2021
+ESP,Madrid,"Tashkent,UZB",10.0,1,2021
+FRA,Paris,"Tashkent,UZB",9.0,1,2021
+POL,Warsaw,"Tashkent,UZB",8.0,1,2021
+TUR,Ankara,"Tashkent,UZB",4.0,0,2021
+VEN,Caracas,"Tashkent,UZB",22.0,1,2021
+BLR,Minsk,"Tashkent,UZB",8.0,1,2021
+ECU,Quito,"Tashkent,UZB",27.0,3,2021
+EGY,Cairo,"Tashkent,UZB",9.0,1,2021
+GEO,Tbilisi,"Tashkent,UZB",7.0,1,2021
+INA,Jakarta,"Tashkent,UZB",16.0,1,2021
+ARM,Yerevan,"Bogota,COL",19.0,1,2022
+CHN,Beijing,"Bogota,COL",26.0,1,2022
+IRI,Tehran,"Bogota,COL",19.0,1,2022
+JPN,Tokyo,"Bogota,COL",19.0,1,2022
+KAZ,Almaty,"Bogota,COL",29.0,2,2022
+KOR,Seoul,"Bogota,COL",24.0,1,2022
+MEX,San Luis Potosi,"Bogota,COL",8.0,1,2022
+RUS,Sochi,"Bogota,COL",26.0,2,2022
+THA,Chiang Mai,"Bogota,COL",30.0,2,2022
+TPE,Kaohsiung,"Bogota,COL",24.0,2,2022
+USA,Colorado Springs,"Bogota,COL",8.0,1,2022
+BUL,Sofia,"Bogota,COL",18.0,1,2022
+CAN,Montreal,"Bogota,COL",7.0,0,2022
+ESP,Madrid,"Bogota,COL",10.0,0,2022
+FRA,Paris,"Bogota,COL",11.0,0,2022
+POL,Warsaw,"Bogota,COL",14.0,1,2022
+TUR,Ankara,"Bogota,COL",17.0,1,2022
+VEN,Caracas,"Bogota,COL",2.0,0,2022
+BLR,Minsk,"Bogota,COL",24.0,2,2022
+ECU,Quito,"Bogota,COL",2.0,0,2022
+EGY,Cairo,"Bogota,COL",17.0,1,2022
+GEO,Tbilisi,"Bogota,COL",17.0,1,2022
+INA,Jakarta,"Bogota,COL",28.0,2,2022
+UZB,Tashkent,"Bogota,COL",20.0,1,2022
+ARM,Yerevan,"Riyadh,KSA",7.0,1,2023
+CHN,Beijing,"Riyadh,KSA",12.0,0,2023
+COL,Bogota,"Riyadh,KSA",22.0,1,2023
+IRI,Tehran,"Riyadh,KSA",5.0,1,2023
+JPN,Tokyo,"Riyadh,KSA",16.0,1,2023
+KAZ,Almaty,"Riyadh,KSA",9.0,1,2023
+KOR,Seoul,"Riyadh,KSA",14.0,1,2023
+MEX,San Luis Potosi,"Riyadh,KSA",24.0,2,2023
+RUS,Sochi,"Riyadh,KSA",8.0,1,2023
+THA,Chiang Mai,"Riyadh,KSA",13.0,2,2023
+TPE,Kaohsiung,"Riyadh,KSA",15.0,1,2023
+USA,Colorado Springs,"Riyadh,KSA",21.0,2,2023
+BUL,Sofia,"Riyadh,KSA",7.0,1,2023
+CAN,Montreal,"Riyadh,KSA",16.0,1,2023
+ESP,Madrid,"Riyadh,KSA",9.0,1,2023
+FRA,Paris,"Riyadh,KSA",6.0,0,2023
+POL,Warsaw,"Riyadh,KSA",6.0,0,2023
+TUR,Ankara,"Riyadh,KSA",7.0,0,2023
+VEN,Caracas,"Riyadh,KSA",22.0,2,2023
+BLR,Minsk,"Riyadh,KSA",12.0,1,2023
+ECU,Quito,"Riyadh,KSA",24.0,2,2023
+EGY,Cairo,"Riyadh,KSA",2.0,0,2023
+GEO,Tbilisi,"Riyadh,KSA",8.0,1,2023
+INA,Jakarta,"Riyadh,KSA",11.0,1,2023
+UZB,Tashkent,"Riyadh,KSA",9.0,1,2023
+ARM,Yerevan,"Manama,BRN",7.0,1,2024
+CHN,Beijing,"Manama,BRN",12.0,1,2024
+COL,Bogota,"Manama,BRN",21.0,2,2024
+IRI,Tehran,"Manama,BRN",5.0,1,2024
+JPN,Tokyo,"Manama,BRN",15.0,1,2024
+KAZ,Almaty,"Manama,BRN",8.0,1,2024
+KOR,Seoul,"Manama,BRN",14.0,1,2024
+MEX,San Luis Potosi,"Manama,BRN",21.0,2,2024
+RUS,Sochi,"Manama,BRN",7.0,1,2024
+THA,Chiang Mai,"Manama,BRN",14.0,1,2024
+TPE,Kaohsiung,"Manama,BRN",17.0,2,2024
+USA,Colorado Springs,"Manama,BRN",19.0,2,2024
+BUL,Sofia,"Manama,BRN",8.0,1,2024
+CAN,Montreal,"Manama,BRN",16.0,1,2024
+ESP,Madrid,"Manama,BRN",9.0,1,2024
+FRA,Paris,"Manama,BRN",7.0,0,2024
+POL,Warsaw,"Manama,BRN",9.0,1,2024
+TUR,Ankara,"Manama,BRN",6.0,1,2024
+VEN,Caracas,"Manama,BRN",23.0,2,2024
+BLR,Minsk,"Manama,BRN",10.0,1,2024
+ECU,Quito,"Manama,BRN",23.0,2,2024
+EGY,Cairo,"Manama,BRN",3.0,0,2024
+GEO,Tbilisi,"Manama,BRN",6.0,1,2024
+INA,Jakarta,"Manama,BRN",12.0,1,2024
+UZB,Tashkent,"Manama,BRN",10.0,1,2024
+ARM,Yerevan,"Forde,NOR",17.0,2,2025
+CHN,Beijing,"Forde,NOR",22.0,2,2025
+COL,Bogota,"Forde,NOR",23.0,2,2025
+IRI,Tehran,"Forde,NOR",14.0,2,2025
+JPN,Tokyo,"Forde,NOR",21.0,2,2025
+KAZ,Almaty,"Forde,NOR",18.0,2,2025
+KOR,Seoul,"Forde,NOR",22.0,2,2025
+MEX,San Luis Potosi,"Forde,NOR",31.0,3,2025
+RUS,Sochi,"Forde,NOR",39.0,2,2025
+THA,Chiang Mai,"Forde,NOR",22.0,2,2025
+TPE,Kaohsiung,"Forde,NOR",27.0,2,2025
+BUL,Sofia,"Forde,NOR",10.0,2,2025
+CAN,Montreal,"Forde,NOR",17.0,2,2025
+ESP,Madrid,"Forde,NOR",10.0,2,2025
+FRA,Paris,"Forde,NOR",5.0,1,2025
+POL,Warsaw,"Forde,NOR",6.0,1,2025
+TUR,Ankara,"Forde,NOR",10.0,2,2025
+VEN,Caracas,"Forde,NOR",40.0,2,2025
+ECU,Quito,"Forde,NOR",39.0,3,2025
+EGY,Cairo,"Forde,NOR",16.0,2,2025
+GEO,Tbilisi,"Forde,NOR",22.0,2,2025
+INA,Jakarta,"Forde,NOR",22.0,2,2025
+UZB,Tashkent,"Forde,NOR",17.0,2,2025
+ARM,Yerevan,"Wroclaw,POL",8.0,1,2013
+CHN,Beijing,"Wroclaw,POL",16.0,1,2013
+COL,Bogota,"Wroclaw,POL",16.0,1,2013
+IRI,Tehran,"Wroclaw,POL",12.0,2,2013
+JPN,Tokyo,"Wroclaw,POL",17.0,1,2013
+KAZ,Almaty,"Wroclaw,POL",15.0,2,2013
+KOR,Seoul,"Wroclaw,POL",17.0,1,2013
+MEX,San Luis Potosi,"Wroclaw,POL",21.0,2,2013
+RUS,Sochi,"Wroclaw,POL",18.0,2,2013
+THA,Chiang Mai,"Wroclaw,POL",23.0,2,2013
+TPE,Kaohsiung,"Wroclaw,POL",23.0,2,2013
+USA,Colorado Springs,"Wroclaw,POL",20.0,2,2013
+BUL,Sofia,"Wroclaw,POL",4.0,1,2013
+CAN,Montreal,"Wroclaw,POL",10.0,1,2013
+ESP,Madrid,"Wroclaw,POL",5.0,1,2013
+FRA,Paris,"Wroclaw,POL",5.0,1,2013
+POL,Warsaw,"Wroclaw,POL",1.0,0,2013
+TUR,Ankara,"Wroclaw,POL",10.0,1,2013
+VEN,Caracas,"Wroclaw,POL",21.0,2,2013
+BLR,Minsk,"Wroclaw,POL",14.0,2,2013
+ECU,Quito,"Wroclaw,POL",20.0,2,2013
+EGY,Cairo,"Wroclaw,POL",6.0,1,2013
+GEO,Tbilisi,"Wroclaw,POL",9.0,1,2013
+INA,Jakarta,"Wroclaw,POL",21.0,2,2013
+UZB,Tashkent,"Wroclaw,POL",14.0,2,2013
+ARM,Yerevan,"Almaty,KAZ",10.0,1,2014
+CHN,Beijing,"Almaty,KAZ",6.0,0,2014
+COL,Bogota,"Almaty,KAZ",24.0,2,2014
+IRI,Tehran,"Almaty,KAZ",8.0,1,2014
+JPN,Tokyo,"Almaty,KAZ",13.0,1,2014
+KOR,Seoul,"Almaty,KAZ",7.0,0,2014
+MEX,San Luis Potosi,"Almaty,KAZ",43.0,2,2014
+RUS,Sochi,"Almaty,KAZ",4.0,0,2014
+THA,Chiang Mai,"Almaty,KAZ",11.0,1,2014
+TPE,Kaohsiung,"Almaty,KAZ",25.0,1,2014
+USA,Colorado Springs,"Almaty,KAZ",28.0,2,2014
+BUL,Sofia,"Almaty,KAZ",8.0,1,2014
+CAN,Montreal,"Almaty,KAZ",19.0,1,2014
+ESP,Madrid,"Almaty,KAZ",11.0,1,2014
+FRA,Paris,"Almaty,KAZ",11.0,1,2014
+POL,Warsaw,"Almaty,KAZ",10.0,1,2014
+TUR,Ankara,"Almaty,KAZ",9.0,1,2014
+VEN,Caracas,"Almaty,KAZ",29.0,1,2014
+BLR,Minsk,"Almaty,KAZ",5.0,0,2014
+ECU,Quito,"Almaty,KAZ",28.0,2,2014
+EGY,Cairo,"Almaty,KAZ",9.0,1,2014
+GEO,Tbilisi,"Almaty,KAZ",4.0,0,2014
+INA,Jakarta,"Almaty,KAZ",13.0,1,2014
+,Ta+A5:A55shkent,"Almaty,KAZ",2.0,0,2014
+ARM,Yerevan,"Houston,USA",20.0,1,2015
+CHN,Beijing,"Houston,USA",17.0,1,2015
+COL,Bogota,"Houston,USA",5.0,0,2015
+IRI,Tehran,"Houston,USA",19.0,1,2015
+JPN,Tokyo,"Houston,USA",12.0,0,2015
+KAZ,Almaty,"Houston,USA",23.0,1,2015
+KOR,Seoul,"Houston,USA",16.0,1,2015
+MEX,San Luis Potosi,"Houston,USA",2.0,0,2015
+RUS,Sochi,"Houston,USA",19.0,1,2015
+THA,Chiang Mai,"Houston,USA",22.0,1,2015
+TPE,Kaohsiung,"Houston,USA",17.0,1,2015
+USA,Colorado Springs,"Houston,USA",2.0,0,2015
+BUL,Sofia,"Houston,USA",16.0,1,2015
+CAN,Montreal,"Houston,USA",5.0,0,2015
+ESP,Madrid,"Houston,USA",14.0,1,2015
+FRA,Paris,"Houston,USA",11.0,0,2015
+POL,Warsaw,"Houston,USA",14.0,1,2015
+TUR,Ankara,"Houston,USA",16.0,1,2015
+VEN,Caracas,"Houston,USA",23.0,2,2015
+BLR,Minsk,"Houston,USA",27.0,2,2015
+ECU,Quito,"Houston,USA",5.0,0,2015
+EGY,Cairo,"Houston,USA",17.0,1,2015
+GEO,Tbilisi,"Houston,USA",17.0,1,2015
+INA,Jakarta,"Houston,USA",21.0,1,2015
+UZB,Tashkent,"Houston,USA",20.0,1,2015
+ARM,Yerevan,"Anaheim,USA",19.0,1,2017
+CHN,Beijing,"Anaheim,USA",14.0,1,2017
+COL,Bogota,"Anaheim,USA",10.0,1,2017
+IRI,Tehran,"Anaheim,USA",19.0,1,2017
+JPN,Tokyo,"Anaheim,USA",10.0,0,2017
+KAZ,Almaty,"Anaheim,USA",20.0,1,2017
+KOR,Seoul,"Anaheim,USA",11.0,0,2017
+MEX,San Luis Potosi,"Anaheim,USA",7.0,1,2017
+RUS,Sochi,"Anaheim,USA",18.0,1,2017
+THA,Chiang Mai,"Anaheim,USA",16.0,1,2017
+TPE,Kaohsiung,"Anaheim,USA",14.0,1,2017
+USA,Colorado Springs,"Anaheim,USA",5.0,1,2017
+BUL,Sofia,"Anaheim,USA",16.0,1,2017
+CAN,Montreal,"Anaheim,USA",6.0,0,2017
+ESP,Madrid,"Anaheim,USA",13.0,0,2017
+FRA,Paris,"Anaheim,USA",12.0,0,2017
+POL,Warsaw,"Anaheim,USA",13.0,0,2017
+TUR,Ankara,"Anaheim,USA",17.0,1,2017
+VEN,Caracas,"Anaheim,USA",20.0,2,2017
+BLR,Minsk,"Anaheim,USA",37.0,1,2017
+ECU,Quito,"Anaheim,USA",11.0,1,2017
+EGY,Cairo,"Anaheim,USA",18.0,1,2017
+GEO,Tbilisi,"Anaheim,USA",17.0,1,2017
+INA,Jakarta,"Anaheim,USA",18.0,1,2017
+UZB,Tashkent,"Anaheim,USA",21.0,1,2017
+ARM,Yerevan,"Ashgabat,TKM",15.0,1,2018
+CHN,Beijing,"Ashgabat,TKM",17.0,1,2018
+COL,Bogota,"Ashgabat,TKM",22.0,1,2018
+IRI,Tehran,"Ashgabat,TKM",7.0,1,2018
+JPN,Tokyo,"Ashgabat,TKM",21.0,1,2018
+KAZ,Almaty,"Ashgabat,TKM",15.0,1,2018
+KOR,Seoul,"Ashgabat,TKM",20.0,1,2018
+MEX,San Luis Potosi,"Ashgabat,TKM",27.0,3,2018
+RUS,Sochi,"Ashgabat,TKM",11.0,1,2018
+THA,Chiang Mai,"Ashgabat,TKM",24.0,2,2018
+TPE,Kaohsiung,"Ashgabat,TKM",23.0,2,2018
+USA,Colorado Springs,"Ashgabat,TKM",28.0,3,2018
+BUL,Sofia,"Ashgabat,TKM",7.0,1,2018
+CAN,Montreal,"Ashgabat,TKM",21.0,1,2018
+ESP,Madrid,"Ashgabat,TKM",10.0,1,2018
+FRA,Paris,"Ashgabat,TKM",9.0,1,2018
+POL,Warsaw,"Ashgabat,TKM",8.0,1,2018
+TUR,Ankara,"Ashgabat,TKM",7.0,1,2018
+VEN,Caracas,"Ashgabat,TKM",20.0,1,2018
+BLR,Minsk,"Ashgabat,TKM",16.0,1,2018
+ECU,Quito,"Ashgabat,TKM",27.0,3,2018
+EGY,Cairo,"Ashgabat,TKM",8.0,1,2018
+GEO,Tbilisi,"Ashgabat,TKM",8.0,1,2018
+INA,Jakarta,"Ashgabat,TKM",16.0,1,2018
+UZB,Tashkent,"Ashgabat,TKM",10.0,1,2018

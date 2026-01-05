@@ -1,0 +1,103 @@
+================================================================================
+两模型完整结果：连续时差 vs 分组时差（含交互项）
+================================================================================
+生成时间: 2025-12-12 14:40:00
+
+数据概况：
+  样本量: 2102
+  运动员数: 646
+  平均参赛次数: 3.25
+
+中心化信息：
+  Travel_Duration: mean=15.6909, std=7.5811
+  Timezone_Diff_hours: mean=1.5617, std=7.2232
+
+时差分组统计：
+  Minimal: 403 (19.2%)
+  East_Small: 97 (4.6%)
+  East_Medium: 47 (2.2%)
+  East_Large: 422 (20.1%)
+  West_Small: 314 (14.9%)
+  West_Medium: 383 (18.2%)
+  West_Large: 436 (20.7%)
+
+================================================================================
+
+【Model1_Continuous: 连续时差 + 交互项】
+--------------------------------------------------------------------------------
+公式: Sinclair_Total ~ Sex_clean + Travel_Duration_c * Timezone_Diff_hours_c + (1|Athlete_ID)
+参数数量: 6
+
+                         Mixed Linear Model Regression Results
+=======================================================================================
+Model:                     MixedLM          Dependent Variable:          Sinclair_Total
+No. Observations:          2102             Method:                      REML          
+No. Groups:                646              Scale:                       234.9417      
+Min. group size:           2                Log-Likelihood:              -10129.8419   
+Max. group size:           11               Converged:                   Yes           
+Mean group size:           3.3                                                         
+---------------------------------------------------------------------------------------
+                                         Coef.   Std.Err.    z    P>|z|  [0.025  0.975]
+---------------------------------------------------------------------------------------
+Intercept                                220.032    4.259  51.664 0.000 211.684 228.379
+Sex_clean[T.Women]                       -82.273    6.050 -13.600 0.000 -94.130 -70.416
+Travel_Duration_c                          0.080    0.054   1.487 0.137  -0.025   0.185
+Timezone_Diff_hours_c                     -0.134    0.089  -1.498 0.134  -0.309   0.041
+Travel_Duration_c:Timezone_Diff_hours_c   -0.009    0.008  -1.095 0.273  -0.026   0.007
+Group Var                               6143.467   28.144                              
+=======================================================================================
+
+
+模型指标：
+  AIC: 20273.68
+  BIC: 20313.24
+  Log-Likelihood (ML): -10129.8420
+  ICC: 0.9632
+  自由度: 6
+
+================================================================================
+
+【Model2_Grouped: 分组时差 + 交互项】
+--------------------------------------------------------------------------------
+公式: Sinclair_Total ~ Sex_clean + Travel_Duration_c * Timezone_Group + (1|Athlete_ID)
+参数数量: 16
+
+                             Mixed Linear Model Regression Results
+===============================================================================================
+Model:                         MixedLM            Dependent Variable:            Sinclair_Total
+No. Observations:              2102               Method:                        REML          
+No. Groups:                    646                Scale:                         233.6699      
+Min. group size:               2                  Log-Likelihood:                -10110.1029   
+Max. group size:               11                 Converged:                     Yes           
+Mean group size:               3.3                                                             
+-----------------------------------------------------------------------------------------------
+                                                 Coef.   Std.Err.    z    P>|z|  [0.025  0.975]
+-----------------------------------------------------------------------------------------------
+Intercept                                        221.244    4.651  47.567 0.000 212.128 230.361
+Sex_clean[T.Women]                               -82.640    6.055 -13.648 0.000 -94.507 -70.772
+Timezone_Group[T.East_Small]                      -4.183    2.838  -1.474 0.141  -9.745   1.379
+Timezone_Group[T.East_Medium]                     -3.575    3.745  -0.955 0.340 -10.914   3.765
+Timezone_Group[T.East_Large]                      -3.440    2.730  -1.260 0.208  -8.790   1.910
+Timezone_Group[T.West_Small]                       0.067    2.224   0.030 0.976  -4.292   4.426
+Timezone_Group[T.West_Medium]                      1.297    2.239   0.579 0.562  -3.091   5.685
+Timezone_Group[T.West_Large]                      -3.001    2.271  -1.321 0.186  -7.453   1.450
+Travel_Duration_c                                  0.149    0.193   0.769 0.442  -0.230   0.527
+Travel_Duration_c:Timezone_Group[T.East_Small]    -0.321    0.381  -0.843 0.399  -1.067   0.425
+Travel_Duration_c:Timezone_Group[T.East_Medium]   -0.342    0.458  -0.748 0.455  -1.239   0.555
+Travel_Duration_c:Timezone_Group[T.East_Large]     0.292    0.245   1.191 0.234  -0.188   0.772
+Travel_Duration_c:Timezone_Group[T.West_Small]     0.217    0.258   0.842 0.400  -0.288   0.722
+Travel_Duration_c:Timezone_Group[T.West_Medium]   -0.112    0.293  -0.384 0.701  -0.687   0.462
+Travel_Duration_c:Timezone_Group[T.West_Large]    -0.091    0.245  -0.372 0.710  -0.570   0.389
+Group Var                                       6159.805   28.337                              
+===============================================================================================
+
+
+模型指标：
+  AIC: 20254.21
+  BIC: 20350.27
+  Log-Likelihood (ML): -10110.1070
+  ICC: 0.9635
+  自由度: 16
+
+================================================================================
+

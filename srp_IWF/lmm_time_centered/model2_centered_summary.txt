@@ -1,0 +1,26 @@
+Model 2 (Mean-Centered with Interaction)
+======================================================================
+Formula: Sinclair_Total ~ Sex_clean + Travel_Duration_c * Timezone_Diff_hours_c + (1|Nation)
+
+Centering Info:
+  Travel_Duration: mean=15.6909, std=7.5811
+  Timezone_Diff_hours: mean=1.5617, std=7.2232
+
+                         Mixed Linear Model Regression Results
+=======================================================================================
+Model:                     MixedLM          Dependent Variable:          Sinclair_Total
+No. Observations:          2659             Method:                      REML          
+No. Groups:                13               Scale:                       5347.4059     
+Min. group size:           103              Log-Likelihood:              -15207.8347   
+Max. group size:           282              Converged:                   Yes           
+Mean group size:           204.5                                                       
+---------------------------------------------------------------------------------------
+                                         Coef.   Std.Err.    z    P>|z|  [0.025  0.975]
+---------------------------------------------------------------------------------------
+Intercept                                225.754    9.586  23.550 0.000 206.965 244.543
+Sex_clean[T.Women]                       -91.569    2.913 -31.433 0.000 -97.278 -85.859
+Travel_Duration_c                          0.286    0.208   1.378 0.168  -0.121   0.693
+Timezone_Diff_hours_c                     -0.299    0.343  -0.872 0.383  -0.972   0.373
+Travel_Duration_c:Timezone_Diff_hours_c    0.002    0.031   0.050 0.960  -0.060   0.063
+Group Var                               1141.720    6.587                              
+=======================================================================================

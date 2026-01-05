@@ -1,0 +1,25 @@
+LMM with Travel Duration - Analysis Summary
+Run time: 2025-12-10T15:50:48.347141
+
+============================================================
+Models:
+  Model 1: Sinclair_Total ~ Sex + Travel_Duration + Timezone_Diff + (1|Nation)
+  Model 2: Sinclair_Total ~ Sex + Travel_Duration * Timezone_Diff + (1|Nation)
+
+============================================================
+Data Summary:
+  Total rows in merged data: 3184
+  Rows used for modeling: 2659
+  Rows skipped (missing Travel_Duration): 141
+
+============================================================
+Output Files:
+  - model1_summary.txt: Model 1 detailed results
+  - model2_summary.txt: Model 2 detailed results
+  - pred_vs_obs_model1.png: Model 1 predictions
+  - pred_vs_obs_model2.png: Model 2 predictions
+  - interaction_travel_timezone_model2.png: Interaction effects
+  - coef_model1.png: Model 1 coefficients
+  - coef_model2.png: Model 2 coefficients
+  - merged_full_with_travel.csv: Complete merged dataset
+  - model_input_with_travel.csv: Model input data
