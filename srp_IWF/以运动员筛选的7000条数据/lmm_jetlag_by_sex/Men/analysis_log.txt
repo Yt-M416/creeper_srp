@@ -1,0 +1,27 @@
+================================================================================
+LMM JetLag by Sex - Men
+Run time: 2026-03-18T15:49:21
+================================================================================
+Rows after sex filter: 3883
+
+JetLagGroup_dir counts:
+JetLagGroup_dir
+Minimal(0-3h)    1662
+West_3-6h         311
+West_6-9h         433
+West_>=9h         415
+East_3-6h         441
+East_6-9h         325
+East_>=9h         296
+
+Rows after clean: 3883
+Athletes: 1322
+
+Model A (abs-only): AIC=38825.2, BIC=38862.8, ICC=0.9563
+Model B (directional): AIC=38830.4, BIC=38886.8, ICC=0.9563
+dAIC(B-A) = +5.2
+
+Contrast Tests (Model B): East vs West at same magnitude
+  3-6h: [FAILED] tuple index out of range
+  6-9h: [FAILED] tuple index out of range
+  >=9h: [FAILED] tuple index out of range

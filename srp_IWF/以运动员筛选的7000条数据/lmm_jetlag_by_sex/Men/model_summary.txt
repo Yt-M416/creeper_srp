@@ -1,0 +1,50 @@
+================================================================================
+Model A: Abs-only (Men)
+Formula: Sinclair_Total ~ C(JetLagGroup_abs) + (1|Athlete_ID)
+ICC: 0.9563
+
+                  Mixed Linear Model Regression Results
+=========================================================================
+Model:                 MixedLM     Dependent Variable:     Sinclair_Total
+No. Observations:      3883        Method:                 REML          
+No. Groups:            1322        Scale:                  325.0653      
+Min. group size:       1           Log-Likelihood:         -19406.5970   
+Max. group size:       13          Converged:              Yes           
+Mean group size:       2.9                                               
+-------------------------------------------------------------------------
+                            Coef.   Std.Err.   z    P>|z|  [0.025  0.975]
+-------------------------------------------------------------------------
+Intercept                   219.160    2.379 92.138 0.000 214.498 223.822
+C(JetLagGroup_abs)[T.3-6h]    0.485    0.982  0.494 0.621  -1.440   2.410
+C(JetLagGroup_abs)[T.6-9h]   -0.442    1.005 -0.440 0.660  -2.411   1.528
+C(JetLagGroup_abs)[T.>=9h]   -0.314    0.986 -0.319 0.750  -2.248   1.619
+Group Var                  7110.183   19.242                             
+=========================================================================
+
+
+================================================================================
+* Model B: Directional (Men)
+Formula: Sinclair_Total ~ C(JetLagGroup_dir) + (1|Athlete_ID)
+Ref group: Minimal(0-3h)
+ICC: 0.9563
+
+                    Mixed Linear Model Regression Results
+==============================================================================
+Model:                  MixedLM       Dependent Variable:       Sinclair_Total
+No. Observations:       3883          Method:                   REML          
+No. Groups:             1322          Scale:                    325.2361      
+Min. group size:        1             Log-Likelihood:           -19406.1951   
+Max. group size:        13            Converged:                Yes           
+Mean group size:        2.9                                                   
+------------------------------------------------------------------------------
+                                 Coef.   Std.Err.   z    P>|z|  [0.025  0.975]
+------------------------------------------------------------------------------
+Intercept                        219.147    2.380 92.077 0.000 214.482 223.812
+C(JetLagGroup_dir)[T.West_3-6h]    1.326    1.477  0.897 0.370  -1.570   4.221
+C(JetLagGroup_dir)[T.West_6-9h]   -0.161    1.214 -0.133 0.894  -2.542   2.219
+C(JetLagGroup_dir)[T.West_>=9h]   -0.220    1.174 -0.187 0.851  -2.521   2.081
+C(JetLagGroup_dir)[T.East_3-6h]    0.003    1.203  0.003 0.998  -2.355   2.361
+C(JetLagGroup_dir)[T.East_6-9h]   -0.940    1.483 -0.633 0.527  -3.847   1.968
+C(JetLagGroup_dir)[T.East_>=9h]   -0.417    1.524 -0.274 0.784  -3.404   2.569
+Group Var                       7114.803   19.263                             
+==============================================================================

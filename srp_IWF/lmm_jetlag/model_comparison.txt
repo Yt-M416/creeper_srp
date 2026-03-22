@@ -1,0 +1,45 @@
+==========================================================================================
+Model Comparison: Abs-only vs Directional vs Continuous
+==========================================================================================
+
+Model        Formula                                                             AIC        BIC      ICC
+----------------------------------------------------------------------------------------------------
+A (abs)      Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs)                    22384.3    22424.5   0.9624
+B (dir) *    Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir)                    22385.5    22442.9   0.9624
+C (cont)     Sinclair_Total ~ C(Sex) + JetLag_signed                         22378.4    22407.1   0.9625
+
+  dAIC(A vs best): +5.9
+  dAIC(B vs best): +7.1
+  dAIC(C vs best): +0.0
+
+Interpretation:
+  dAIC < 2:  models essentially equivalent
+  dAIC 2-7:  some evidence for better model
+  dAIC > 10: strong evidence for better model
+
+==========================================================================================
+Model B (Directional) - JetLagGroup coefficients
+  Reference group: Minimal(0-3h)
+  Positive coef = higher Sinclair than ref; Negative = lower
+------------------------------------------------------------------------------------------
+  C(JetLagGroup_dir)[T.West_3-6h]                         coef=-0.4033  p=0.7604 
+  C(JetLagGroup_dir)[T.West_6-9h]                         coef=+2.0134  p=0.1668 
+  C(JetLagGroup_dir)[T.West_>=9h]                         coef=-0.3737  p=0.7919 
+  C(JetLagGroup_dir)[T.East_3-6h]                         coef=+0.3978  p=0.8519 
+  C(JetLagGroup_dir)[T.East_6-9h]                         coef=-2.0718  p=0.1618 
+  C(JetLagGroup_dir)[T.East_>=9h]                         coef=-0.7203  p=0.5392 
+
+==========================================================================================
+Contrast Tests: East vs West at same magnitude
+  H0: coef(East_Xh) - coef(West_Xh) = 0
+  (both relative to Minimal(0-3h), so difference = East effect - West effect)
+------------------------------------------------------------------------------------------
+  3-6h: East-West     diff=+0.8011  se=2.3904  p=0.7375 
+  6-9h: East-West     diff=-4.0852  se=1.8845  p=0.0302 *
+  >=9h: East-West     diff=-0.3466  se=1.6287  p=0.8315 
+
+Interpretation:
+  If p < 0.05, the effect of jet lag differs significantly by direction
+  at that magnitude level, supporting direction-specific modeling.
+  If all p > 0.05, abs-only grouping may be sufficient for this dataset.
+==========================================================================================

@@ -15,7 +15,7 @@ import statsmodels.formula.api as smf
 from scipy.stats import chi2
 import warnings
 import matplotlib.pyplot as plt
- 
+
 plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']  # 使用微软雅黑字体
 plt.rcParams['axes.unicode_minus'] = False  # 处理负号显示异常
 

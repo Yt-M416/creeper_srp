@@ -1,0 +1,35 @@
+LMM JetLag by Sex - Overview (* with Directional Groups)
+==========================================================================================
+Run time: 2026-03-18T15:49:52
+
+[Men] rows=3883, athletes=1322
+  Model A (abs-only):    AIC=38825.2, BIC=38862.8, ICC=0.9563
+  Model B (directional): AIC=38830.4, BIC=38886.8, ICC=0.9563
+  dAIC(B-A) = +5.2  (negative = B better)
+
+  Model B coefficients (ref=Minimal(0-3h)):
+    West_>=9h            coef=-0.2198  p=0.8515 
+    West_6-9h            coef=-0.1615  p=0.8942 
+    West_3-6h            coef=+1.3256  p=0.3696 
+    East_3-6h            coef=+0.0035  p=0.9977 
+    East_6-9h            coef=-0.9396  p=0.5265 
+    East_>=9h            coef=-0.4171  p=0.7843 
+
+[Women] rows=3121, athletes=1018
+  Model A (abs-only):    AIC=28268.1, BIC=28304.3, ICC=0.9491
+  Model B (directional): AIC=28269.8, BIC=28324.2, ICC=0.9491
+  dAIC(B-A) = +1.8  (negative = B better)
+
+  Model B coefficients (ref=Minimal(0-3h)):
+    West_>=9h            coef=+1.9119  p=0.0553 .
+    West_6-9h            coef=+0.1728  p=0.8454 
+    West_3-6h            coef=+1.2496  p=0.2312 
+    East_3-6h            coef=-1.0156  p=0.2776 
+    East_6-9h            coef=+0.3976  p=0.6869 
+    East_>=9h            coef=+0.7672  p=0.3976 
+
+==========================================================================================
+Key question: Do East and West show different effects at the same magnitude?
+If contrast p < 0.05, directional modeling captures real asymmetry.
+If not, the direction effect may be too small to detect with this sample.
+==========================================================================================

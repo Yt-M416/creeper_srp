@@ -1,0 +1,71 @@
+================================================================================
+LMM JetLag (Circular + Directional) - START
+Run time: 2026-03-18T16:00:23
+================================================================================
+Loaded: iwf_data_with_absjetlag_athlete2plus.csv
+Rows: 8133, Columns: 24
+STEP 1 - Drop NA core fields: 8133 -> 7004
+STEP 2 - JetLag computed; drop NA: 7004 -> 7004
+
+JetLagGroup_abs counts (原版分组，不区分方向):
+JetLagGroup_abs
+0-3h    2824
+3-6h    1398
+6-9h    1465
+>=9h    1317
+
+JetLagGroup_dir counts (★方向性分组):
+JetLagGroup_dir
+Minimal(0-3h)    2824
+West_3-6h         621
+West_6-9h         813
+West_>=9h         649
+East_3-6h         777
+East_6-9h         652
+East_>=9h         668
+
+STEP 3 - Sinclair_Total computed; drop NA: 7004 -> 7004
+
+Data summary (post-clean):
+  Rows used (pre-model): 7004
+  Athletes (Athlete_ID): 2339
+  Nations: 127
+  Mean JetLag_abs:    4.557 h
+  Mean JetLag_signed: -0.025 h
+  Max  JetLag_abs:    12.000 h
+
+STEP 4 - Athlete participation frequency:
+  参赛 1 次: 248 名运动员
+  参赛 2 次: 957 名运动员
+  参赛 3 次: 481 名运动员
+  参赛 4 次: 296 名运动员
+  参赛 5 次: 158 名运动员
+  参赛 6 次: 92 名运动员
+  参赛 7 次: 48 名运动员
+  参赛 8 次: 25 名运动员
+  参赛 9 次: 18 名运动员
+  参赛 10 次: 6 名运动员
+  参赛 11 次: 7 名运动员
+  参赛 12 次: 1 名运动员
+  参赛 13 次: 2 名运动员
+  Plot saved: lmm_jetlag\athlete_participation_frequency.png
+
+Saved model input data: lmm_jetlag\data_used_for_model.csv
+
+================================================================================
+STEP 6 - Fitting 3 models for comparison
+================================================================================
+
+Model A (abs-only, baseline): Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs) + (1|Athlete_ID)
+
+Model B (directional, ★fix): Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1|Athlete_ID)
+
+Model C (continuous signed): Sinclair_Total ~ C(Sex) + JetLag_signed + (1|Athlete_ID)
+
+Model comparison saved: lmm_jetlag\model_comparison.txt
+Model summaries saved: lmm_jetlag\model_summary.txt
+
+All output files saved to: D:\Code\Python\Creeper\srp_IWF\lmm_jetlag
+================================================================================
+LMM JetLag (Circular + Directional) - END
+================================================================================

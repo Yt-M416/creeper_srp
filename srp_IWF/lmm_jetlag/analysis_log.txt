@@ -1,0 +1,69 @@
+================================================================================
+LMM JetLag (Circular + Directional) - START
+Run time: 2026-03-21T16:12:45
+================================================================================
+Loaded: iwf_data_top13_athlete2plus_circular.csv
+Rows: 2636, Columns: 24
+STEP 1 - Drop NA core fields: 2636 -> 2308
+STEP 2 - JetLag computed; drop NA: 2308 -> 2308
+
+JetLagGroup_abs counts (原版分组，不区分方向):
+JetLagGroup_abs
+0-3h    809
+3-6h    430
+6-9h    476
+>=9h    593
+
+JetLagGroup_dir counts (★方向性分组):
+JetLagGroup_dir
+Minimal(0-3h)    809
+West_3-6h        346
+West_6-9h        250
+West_>=9h        204
+East_3-6h         84
+East_6-9h        226
+East_>=9h        389
+
+STEP 3 - Sinclair_Total computed; drop NA: 2308 -> 2308
+
+Data summary (post-clean):
+  Rows used (pre-model): 2308
+  Athletes (Athlete_ID): 756
+  Nations: 13
+  Mean JetLag_abs:    5.320 h
+  Mean JetLag_signed: 0.153 h
+  Max  JetLag_abs:    12.000 h
+
+STEP 4 - Athlete participation frequency:
+  参赛 1 次: 65 名运动员
+  参赛 2 次: 302 名运动员
+  参赛 3 次: 165 名运动员
+  参赛 4 次: 106 名运动员
+  参赛 5 次: 59 名运动员
+  参赛 6 次: 26 名运动员
+  参赛 7 次: 12 名运动员
+  参赛 8 次: 11 名运动员
+  参赛 9 次: 6 名运动员
+  参赛 10 次: 1 名运动员
+  参赛 11 次: 3 名运动员
+  Plot saved: lmm_jetlag\athlete_participation_frequency.png
+
+Saved model input data: lmm_jetlag\data_used_for_model.csv
+
+================================================================================
+STEP 6 - Fitting 3 models for comparison
+================================================================================
+
+Model A (abs-only, baseline): Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs) + (1|Athlete_ID)
+
+Model B (directional, ★fix): Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1|Athlete_ID)
+
+Model C (continuous signed): Sinclair_Total ~ C(Sex) + JetLag_signed + (1|Athlete_ID)
+
+Model comparison saved: lmm_jetlag\model_comparison.txt
+Model summaries saved: lmm_jetlag\model_summary.txt
+
+All output files saved to: D:\Code\Python\Creeper\srp_IWF\lmm_jetlag
+================================================================================
+LMM JetLag (Circular + Directional) - END
+================================================================================

@@ -1,0 +1,27 @@
+================================================================================
+LMM JetLag by Sex - Women
+Run time: 2026-03-18T15:49:38
+================================================================================
+Rows after sex filter: 3121
+
+JetLagGroup_dir counts:
+JetLagGroup_dir
+Minimal(0-3h)    1162
+West_3-6h         310
+West_6-9h         380
+West_>=9h         234
+East_3-6h         336
+East_6-9h         327
+East_>=9h         372
+
+Rows after clean: 3121
+Athletes: 1018
+
+Model A (abs-only): AIC=28268.1, BIC=28304.3, ICC=0.9491
+Model B (directional): AIC=28269.8, BIC=28324.2, ICC=0.9491
+dAIC(B-A) = +1.8
+
+Contrast Tests (Model B): East vs West at same magnitude
+  3-6h: [FAILED] tuple index out of range
+  6-9h: [FAILED] tuple index out of range
+  >=9h: [FAILED] tuple index out of range
