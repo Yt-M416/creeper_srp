@@ -1,75 +1,81 @@
 ================================================================================
 Model A: Abs-only JetLagGroup (baseline, same as original)
 Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs) + (1|Athlete_ID)
-ICC: 0.9624
+ICC: 0.7521
 
-                  Mixed Linear Model Regression Results
-==========================================================================
-Model:                  MixedLM     Dependent Variable:     Sinclair_Total
-No. Observations:       2308        Method:                 REML          
-No. Groups:             756         Scale:                  236.2686      
-Min. group size:        1           Log-Likelihood:         -11185.1435   
-Max. group size:        11          Converged:              Yes           
-Mean group size:        3.1                                               
---------------------------------------------------------------------------
-                            Coef.   Std.Err.    z    P>|z|  [0.025  0.975]
---------------------------------------------------------------------------
-Intercept                   222.591    3.887  57.266 0.000 214.973 230.210
-C(Sex)[T.Women]             -86.647    5.578 -15.534 0.000 -97.580 -75.715
-C(JetLagGroup_abs)[T.3-6h]   -0.455    1.167  -0.390 0.696  -2.742   1.831
-C(JetLagGroup_abs)[T.6-9h]    0.041    1.117   0.036 0.971  -2.148   2.229
-C(JetLagGroup_abs)[T.>=9h]   -0.424    0.988  -0.429 0.668  -2.362   1.513
-Group Var                  6053.694   25.815                              
-==========================================================================
+                    Mixed Linear Model Regression Results
+==============================================================================
+Model:                  MixedLM       Dependent Variable:       Sinclair_Total
+No. Observations:       2308          Method:                   REML          
+No. Groups:             756           Scale:                    174.8133      
+Min. group size:        1             Log-Likelihood:           -10072.1699   
+Max. group size:        11            Converged:                Yes           
+Mean group size:        3.1                                                   
+------------------------------------------------------------------------------
+                              Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+------------------------------------------------------------------------------
+Intercept                     435.651    1.357 321.097 0.000  432.992  438.311
+C(Sex)[T.Women]              -149.956    1.778 -84.362 0.000 -153.439 -146.472
+C(JetLagGroup_abs)[T.2-4h]     -1.195    1.036  -1.153 0.249   -3.225    0.835
+C(JetLagGroup_abs)[T.4-6h]     -0.833    1.199  -0.695 0.487   -3.183    1.516
+C(JetLagGroup_abs)[T.6-8h]     -1.301    1.264  -1.029 0.303   -3.779    1.177
+C(JetLagGroup_abs)[T.8-10h]    -5.865    1.092  -5.370 0.000   -8.006   -3.724
+C(JetLagGroup_abs)[T.10-12h]   -0.761    1.013  -0.751 0.453   -2.746    1.225
+Group Var                     530.330    2.872                                
+==============================================================================
 
 
 ================================================================================
 * Model B: Directional JetLagGroup (FIXED version)
 Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1|Athlete_ID)
 Ref group: Minimal(0-3h)
-ICC: 0.9624
+ICC: 0.7513
 
-                     Mixed Linear Model Regression Results
-===============================================================================
-Model:                   MixedLM       Dependent Variable:       Sinclair_Total
-No. Observations:        2308          Method:                   REML          
-No. Groups:              756           Scale:                    236.1171      
-Min. group size:         1             Log-Likelihood:           -11182.7414   
-Max. group size:         11            Converged:                Yes           
-Mean group size:         3.1                                                   
--------------------------------------------------------------------------------
-                                 Coef.   Std.Err.    z    P>|z|  [0.025  0.975]
--------------------------------------------------------------------------------
-Intercept                        222.618    3.885  57.298 0.000 215.003 230.233
-C(Sex)[T.Women]                  -86.756    5.574 -15.564 0.000 -97.682 -75.831
-C(JetLagGroup_dir)[T.West_3-6h]   -0.403    1.322  -0.305 0.760  -2.995   2.189
-C(JetLagGroup_dir)[T.West_6-9h]    2.013    1.456   1.383 0.167  -0.841   4.868
-C(JetLagGroup_dir)[T.West_>=9h]   -0.374    1.417  -0.264 0.792  -3.150   2.403
-C(JetLagGroup_dir)[T.East_3-6h]    0.398    2.130   0.187 0.852  -3.777   4.573
-C(JetLagGroup_dir)[T.East_6-9h]   -2.072    1.481  -1.399 0.162  -4.974   0.831
-C(JetLagGroup_dir)[T.East_>=9h]   -0.720    1.173  -0.614 0.539  -3.019   1.579
-Group Var                       6047.249   25.809                              
-===============================================================================
+                       Mixed Linear Model Regression Results
+===================================================================================
+Model:                     MixedLM        Dependent Variable:        Sinclair_Total
+No. Observations:          2308           Method:                    REML          
+No. Groups:                756            Scale:                     174.1281      
+Min. group size:           1              Log-Likelihood:            -10063.8022   
+Max. group size:           11             Converged:                 Yes           
+Mean group size:           3.1                                                     
+-----------------------------------------------------------------------------------
+                                   Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+-----------------------------------------------------------------------------------
+Intercept                          435.676    1.353 321.944 0.000  433.023  438.328
+C(Sex)[T.Women]                   -149.775    1.773 -84.498 0.000 -153.249 -146.301
+C(JetLagGroup_dir)[T.West_2-4h]     -0.177    1.138  -0.156 0.876   -2.408    2.053
+C(JetLagGroup_dir)[T.West_4-6h]     -0.644    1.297  -0.497 0.619   -3.186    1.898
+C(JetLagGroup_dir)[T.West_6-8h]     -1.941    1.427  -1.360 0.174   -4.737    0.855
+C(JetLagGroup_dir)[T.West_8-10h]    -2.086    1.884  -1.107 0.268   -5.779    1.608
+C(JetLagGroup_dir)[T.West_10-12h]    0.789    1.377   0.573 0.567   -1.910    3.488
+C(JetLagGroup_dir)[T.East_2-4h]     -3.584    1.653  -2.169 0.030   -6.824   -0.345
+C(JetLagGroup_dir)[T.East_4-6h]     -2.221    2.510  -0.885 0.376   -7.140    2.698
+C(JetLagGroup_dir)[T.East_6-8h]     -0.132    2.233  -0.059 0.953   -4.508    4.245
+C(JetLagGroup_dir)[T.East_8-10h]    -7.470    1.222  -6.111 0.000   -9.867   -5.074
+C(JetLagGroup_dir)[T.East_10-12h]   -1.825    1.199  -1.521 0.128   -4.175    0.526
+Group Var                          526.154    2.868                                
+===================================================================================
 
 
 ================================================================================
 Model C: Continuous JetLag_signed
 Formula: Sinclair_Total ~ C(Sex) + JetLag_signed + (1|Athlete_ID)
-ICC: 0.9625
+ICC: 0.7524
 
-             Mixed Linear Model Regression Results
-===============================================================
-Model:             MixedLM  Dependent Variable:  Sinclair_Total
-No. Observations:  2308     Method:              REML          
-No. Groups:        756      Scale:               235.6623      
-Min. group size:   1        Log-Likelihood:      -11184.1970   
-Max. group size:   11       Converged:           Yes           
-Mean group size:   3.1                                         
----------------------------------------------------------------
-                 Coef.   Std.Err.    z    P>|z|  [0.025  0.975]
----------------------------------------------------------------
-Intercept        222.362    3.855  57.675 0.000 214.806 229.919
-C(Sex)[T.Women]  -86.590    5.577 -15.527 0.000 -97.520 -75.660
-JetLag_signed     -0.094    0.063  -1.489 0.136  -0.217   0.030
-Group Var       6054.693   25.839                              
-===============================================================
+              Mixed Linear Model Regression Results
+=================================================================
+Model:               MixedLM  Dependent Variable:  Sinclair_Total
+No. Observations:    2308     Method:              REML          
+No. Groups:          756      Scale:               175.9484      
+Min. group size:     1        Log-Likelihood:      -10082.1811   
+Max. group size:     11       Converged:           Yes           
+Mean group size:     3.1                                         
+-----------------------------------------------------------------
+                 Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+-----------------------------------------------------------------
+Intercept        434.087    1.224 354.733 0.000  431.688  436.485
+C(Sex)[T.Women] -149.960    1.783 -84.101 0.000 -153.455 -146.465
+JetLag_signed     -0.187    0.053  -3.532 0.000   -0.290   -0.083
+Group Var        534.635    2.878                                
+=================================================================

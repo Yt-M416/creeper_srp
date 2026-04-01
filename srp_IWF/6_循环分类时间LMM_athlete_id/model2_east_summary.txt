@@ -1,0 +1,23 @@
+Model 2: Eastward Flight Subsample
+随机截距: Athlete_ID
+
+                      Mixed Linear Model Regression Results
+=================================================================================
+Model:                   MixedLM        Dependent Variable:        Sinclair_Total
+No. Observations:        842            Method:                    REML          
+No. Groups:              494            Scale:                     205.3514      
+Min. group size:         1              Log-Likelihood:            -3750.6924    
+Max. group size:         7              Converged:                 Yes           
+Mean group size:         1.7                                                     
+---------------------------------------------------------------------------------
+                                    Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+---------------------------------------------------------------------------------
+Intercept                          287.727    2.234 128.786 0.000 283.348 292.105
+C(Sex)[T.Male]                     147.327    2.057  71.633 0.000 143.296 151.358
+C(Circular_Time_Group)[T.[2, 4)]     1.315    2.569   0.512 0.609  -3.720   6.349
+C(Circular_Time_Group)[T.[4, 6)]     4.467    3.555   1.257 0.209  -2.501  11.436
+C(Circular_Time_Group)[T.[6, 8)]     0.680    3.056   0.223 0.824  -5.310   6.671
+C(Circular_Time_Group)[T.[8, 10)]  -10.806    2.097  -5.154 0.000 -14.916  -6.697
+C(Circular_Time_Group)[T.[10, 12)]  -2.559    2.227  -1.149 0.251  -6.923   1.806
+Group Var                          372.074    3.827                              
+=================================================================================

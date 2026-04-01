@@ -4,13 +4,13 @@ Model Comparison: Abs-only vs Directional vs Continuous
 
 Model        Formula                                                             AIC        BIC      ICC
 ----------------------------------------------------------------------------------------------------
-A (abs)      Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs)                    22384.3    22424.5   0.9624
-B (dir) *    Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir)                    22385.5    22442.9   0.9624
-C (cont)     Sinclair_Total ~ C(Sex) + JetLag_signed                         22378.4    22407.1   0.9625
+A (abs)      Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs)                    20162.3    20214.0   0.7521
+B (dir) *    Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir)                    20155.6    20236.0   0.7513
+C (cont)     Sinclair_Total ~ C(Sex) + JetLag_signed                         20174.4    20203.1   0.7524
 
-  dAIC(A vs best): +5.9
-  dAIC(B vs best): +7.1
-  dAIC(C vs best): +0.0
+  dAIC(A vs best): +6.7
+  dAIC(B vs best): +0.0
+  dAIC(C vs best): +18.8
 
 Interpretation:
   dAIC < 2:  models essentially equivalent
@@ -22,21 +22,27 @@ Model B (Directional) - JetLagGroup coefficients
   Reference group: Minimal(0-3h)
   Positive coef = higher Sinclair than ref; Negative = lower
 ------------------------------------------------------------------------------------------
-  C(JetLagGroup_dir)[T.West_3-6h]                         coef=-0.4033  p=0.7604 
-  C(JetLagGroup_dir)[T.West_6-9h]                         coef=+2.0134  p=0.1668 
-  C(JetLagGroup_dir)[T.West_>=9h]                         coef=-0.3737  p=0.7919 
-  C(JetLagGroup_dir)[T.East_3-6h]                         coef=+0.3978  p=0.8519 
-  C(JetLagGroup_dir)[T.East_6-9h]                         coef=-2.0718  p=0.1618 
-  C(JetLagGroup_dir)[T.East_>=9h]                         coef=-0.7203  p=0.5392 
+  C(JetLagGroup_dir)[T.West_2-4h]                         coef=-0.1775  p=0.8761 
+  C(JetLagGroup_dir)[T.West_4-6h]                         coef=-0.6442  p=0.6194 
+  C(JetLagGroup_dir)[T.West_6-8h]                         coef=-1.9407  p=0.1737 
+  C(JetLagGroup_dir)[T.West_8-10h]                        coef=-2.0859  p=0.2683 
+  C(JetLagGroup_dir)[T.West_10-12h]                       coef=+0.7891  p=0.5667 
+  C(JetLagGroup_dir)[T.East_2-4h]                         coef=-3.5844  p=0.0301 *
+  C(JetLagGroup_dir)[T.East_4-6h]                         coef=-2.2213  p=0.3761 
+  C(JetLagGroup_dir)[T.East_6-8h]                         coef=-0.1315  p=0.9530 
+  C(JetLagGroup_dir)[T.East_8-10h]                        coef=-7.4705  p=0.0000 ***
+  C(JetLagGroup_dir)[T.East_10-12h]                       coef=-1.8247  p=0.1281 
 
 ==========================================================================================
 Contrast Tests: East vs West at same magnitude
   H0: coef(East_Xh) - coef(West_Xh) = 0
   (both relative to Minimal(0-3h), so difference = East effect - West effect)
 ------------------------------------------------------------------------------------------
-  3-6h: East-West     diff=+0.8011  se=2.3904  p=0.7375 
-  6-9h: East-West     diff=-4.0852  se=1.8845  p=0.0302 *
-  >=9h: East-West     diff=-0.3466  se=1.6287  p=0.8315 
+  2-4h: East-West     diff=-3.4070  se=1.7512  p=0.0517 .
+  4-6h: East-West     diff=-1.5771  se=2.6961  p=0.5586 
+  6-8h: East-West     diff=+1.8092  se=2.4735  p=0.4645 
+  8-10h: East-West    diff=-5.3846  se=2.0845  p=0.0098 **
+  10-12h: East-West   diff=-2.6138  se=1.5605  p=0.0939 .
 
 Interpretation:
   If p < 0.05, the effect of jet lag differs significantly by direction

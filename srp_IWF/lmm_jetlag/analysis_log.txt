@@ -1,6 +1,6 @@
 ================================================================================
 LMM JetLag (Circular + Directional) - START
-Run time: 2026-03-21T16:12:45
+Run time: 2026-03-23T12:09:49
 ================================================================================
 Loaded: iwf_data_top13_athlete2plus_circular.csv
 Rows: 2636, Columns: 24
@@ -9,20 +9,26 @@ STEP 2 - JetLag computed; drop NA: 2308 -> 2308
 
 JetLagGroup_abs counts (原版分组，不区分方向):
 JetLagGroup_abs
-0-3h    809
-3-6h    430
-6-9h    476
->=9h    593
+0-2h      511
+2-4h      427
+4-6h      301
+6-8h      262
+8-10h     381
+10-12h    426
 
 JetLagGroup_dir counts (★方向性分组):
 JetLagGroup_dir
-Minimal(0-3h)    809
-West_3-6h        346
-West_6-9h        250
-West_>=9h        204
-East_3-6h         84
-East_6-9h        226
-East_>=9h        389
+Minimal(0-2h)    511
+West_2-4h        308
+West_4-6h        257
+West_6-8h        212
+West_8-10h        82
+West_10-12h      160
+East_2-4h        119
+East_4-6h         44
+East_6-8h         50
+East_8-10h       299
+East_10-12h      266
 
 STEP 3 - Sinclair_Total computed; drop NA: 2308 -> 2308
 

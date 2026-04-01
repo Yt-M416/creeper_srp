@@ -32,16 +32,16 @@ INPUT_CSV = "iwf_data_top13_athlete2plus_circular.csv"
 OUTPUT_DIR = "lmm_jetlag_by_sex"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-ABS_GROUP_ORDER = ["0-3h", "3-6h", "6-9h", ">=9h"]
+ABS_GROUP_ORDER = ["0-2h", "2-4h", "4-6h", "6-8h", "8-10h", "10-12h"]
 DIRECTIONAL_GROUP_ORDER = [
-    "Minimal(0-3h)",
-    "West_3-6h", "West_6-9h", "West_>=9h",
-    "East_3-6h", "East_6-9h", "East_>=9h",
+    "Minimal(0-2h)",
+    "West_2-4h", "West_4-6h", "West_6-8h", "West_8-10h", "West_10-12h",
+    "East_2-4h", "East_4-6h", "East_6-8h", "East_8-10h", "East_10-12h",
 ]
 DIRECTIONAL_PLOT_ORDER = [
-    "West_>=9h", "West_6-9h", "West_3-6h",
-    "Minimal(0-3h)",
-    "East_3-6h", "East_6-9h", "East_>=9h",
+    "West_10-12h", "West_8-10h", "West_6-8h", "West_4-6h", "West_2-4h",
+    "Minimal(0-2h)",
+    "East_2-4h", "East_4-6h", "East_6-8h", "East_8-10h", "East_10-12h",
 ]
 
 
@@ -65,17 +65,22 @@ def setup_plot_style() -> None:
 
 
 def calculate_sinclair(total, body_weight, sex):
+    """IWF 官方 Sinclair Total（2021-2024 周期）"""
     try:
         total = float(total); bw = float(body_weight)
     except Exception:
         return np.nan
-    params = {"Men": {"a": -0.794358141, "A": 174.393}, "Women": {"a": -0.897260740, "A": 148.026}}
+    params = {"Men": {"A": 0.722762521, "b": 193.609}, "Women": {"A": 0.787004341, "b": 153.757}}
     s = str(sex).strip().title()
     if s not in params or pd.isna(total) or pd.isna(bw) or bw <= 0:
         return np.nan
-    A, a = params[s]["A"], params[s]["a"]
-    coeff = 1.0 if bw > A else np.exp(a * (np.log(bw / A) ** 2))
-    return total * coeff
+    A, b = params[s]["A"], params[s]["b"]
+    if bw > b:
+        sc = 1.0
+    else:
+        X = np.log10(bw / b)       # log10，不是 ln
+        sc = 10 ** (A * X**2)      # 10^(...)，不是 exp(...)
+    return total * sc
 
 
 def extract_sex_from_event(event):
@@ -94,26 +99,32 @@ def circular_jetlag_signed(venue_off, athlete_off):
 def build_jetlag_group_abs(jetlag_abs):
     if pd.isna(jetlag_abs): return None
     x = float(jetlag_abs)
-    if x < 3: return "0-3h"
-    if x < 6: return "3-6h"
-    if x < 9: return "6-9h"
-    return ">=9h"
+    if x < 2: return "0-2h"
+    if x < 4: return "2-4h"
+    if x < 6: return "4-6h"
+    if x < 8: return "6-8h"
+    if x < 10: return "8-10h"
+    return "10-12h"
 
 
 def build_jetlag_group_directional(jetlag_signed):
-    """7 档方向性分组，Minimal(0-3h) 合并做参照组。"""
+    """11档方向性分组（2h一档），Minimal(0-2h)做参照组。"""
     if pd.isna(jetlag_signed): return None
     x = float(jetlag_signed)
     absx = abs(x)
-    if absx < 3: return "Minimal(0-3h)"
+    if absx < 2: return "Minimal(0-2h)"
     if x > 0:
-        if absx < 6: return "East_3-6h"
-        if absx < 9: return "East_6-9h"
-        return "East_>=9h"
+        if absx < 4: return "East_2-4h"
+        if absx < 6: return "East_4-6h"
+        if absx < 8: return "East_6-8h"
+        if absx < 10: return "East_8-10h"
+        return "East_10-12h"
     else:
-        if absx < 6: return "West_3-6h"
-        if absx < 9: return "West_6-9h"
-        return "West_>=9h"
+        if absx < 4: return "West_2-4h"
+        if absx < 6: return "West_4-6h"
+        if absx < 8: return "West_6-8h"
+        if absx < 10: return "West_8-10h"
+        return "West_10-12h"
 
 
 def write_text(path, text):
@@ -189,36 +200,33 @@ def run_one_sex(df_all: pd.DataFrame, sex: str) -> dict:
 
     # Contrast tests for Model B
     log("\nContrast Tests (Model B): East vs West at same magnitude")
-    param_names = list(res_b.params.index)
-    name_to_idx = {n: i for i, n in enumerate(param_names)}
+    fe_names = list(res_b.fe_params.index)
+    fe_idx = {n: i for i, n in enumerate(fe_names)}
 
     contrast_results = {}
     for mag_label, east_key, west_key in [
-        ("3-6h", "C(JetLagGroup_dir)[T.East_3-6h]", "C(JetLagGroup_dir)[T.West_3-6h]"),
-        ("6-9h", "C(JetLagGroup_dir)[T.East_6-9h]", "C(JetLagGroup_dir)[T.West_6-9h]"),
-        (">=9h", "C(JetLagGroup_dir)[T.East_>=9h]", "C(JetLagGroup_dir)[T.West_>=9h]"),
+        ("2-4h", "C(JetLagGroup_dir)[T.East_2-4h]", "C(JetLagGroup_dir)[T.West_2-4h]"),
+        ("4-6h", "C(JetLagGroup_dir)[T.East_4-6h]", "C(JetLagGroup_dir)[T.West_4-6h]"),
+        ("6-8h", "C(JetLagGroup_dir)[T.East_6-8h]", "C(JetLagGroup_dir)[T.West_6-8h]"),
+        ("8-10h", "C(JetLagGroup_dir)[T.East_8-10h]", "C(JetLagGroup_dir)[T.West_8-10h]"),
+        ("10-12h", "C(JetLagGroup_dir)[T.East_10-12h]", "C(JetLagGroup_dir)[T.West_10-12h]"),
     ]:
-        v = np.zeros(len(param_names), dtype=float)
-        ok = True
-        if east_key in name_to_idx:
-            v[name_to_idx[east_key]] = 1.0
-        else:
-            ok = False
-        if west_key in name_to_idx:
-            v[name_to_idx[west_key]] = -1.0
-        else:
-            ok = False
-        if ok:
-            try:
-                t = res_b.t_test(v)
-                est = float(np.asarray(t.effect).flat[0])
-                se  = float(np.asarray(t.sd).flat[0])
-                p   = float(np.asarray(t.pvalue).flat[0])
-                sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "." if p < 0.1 else ""
-                log(f"  {mag_label}: East-West diff={est:+.4f}, se={se:.4f}, p={p:.4f} {sig}")
-                contrast_results[mag_label] = {"diff": est, "p": p}
-            except Exception as e:
-                log(f"  {mag_label}: [FAILED] {e}")
+        if east_key not in fe_idx or west_key not in fe_idx:
+            log(f"  {mag_label}: [SKIP] param not found in fe_params")
+            continue
+        v = np.zeros((1, res_b.k_fe), dtype=float)
+        v[0, fe_idx[east_key]] = 1.0
+        v[0, fe_idx[west_key]] = -1.0
+        try:
+            t = res_b.t_test(v)
+            est = float(np.asarray(t.effect).flat[0])
+            se  = float(np.asarray(t.sd).flat[0])
+            p   = float(np.asarray(t.pvalue).flat[0])
+            sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "." if p < 0.1 else ""
+            log(f"  {mag_label}: East-West diff={est:+.4f}, se={se:.4f}, p={p:.4f} {sig}")
+            contrast_results[mag_label] = {"diff": est, "p": p}
+        except Exception as e:
+            log(f"  {mag_label}: [FAILED] {e}")
 
     # Write summary
     with open(summary_path, "w", encoding="utf-8") as f:

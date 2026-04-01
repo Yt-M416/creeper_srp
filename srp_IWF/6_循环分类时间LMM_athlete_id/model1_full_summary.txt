@@ -1,0 +1,30 @@
+Model 1: Full Sample Main Effects
+随机截距: Athlete_ID
+数据: 2104 rows, 748 groups
+
+                      Mixed Linear Model Regression Results
+==================================================================================
+Model:                    MixedLM        Dependent Variable:        Sinclair_Total
+No. Observations:         2104           Method:                    REML          
+No. Groups:               748            Scale:                     175.7514      
+Min. group size:          1              Log-Likelihood:            -9194.8034    
+Max. group size:          11             Converged:                 Yes           
+Mean group size:          2.8                                                     
+----------------------------------------------------------------------------------
+                                     Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+----------------------------------------------------------------------------------
+Intercept                           286.255    1.889 151.499 0.000 282.551 289.958
+C(Sex)[T.Male]                      149.461    1.783  83.807 0.000 145.965 152.956
+C(Circular_Time_Group)[T.[-10, -8)]  -3.984    2.348  -1.696 0.090  -8.586   0.619
+C(Circular_Time_Group)[T.[-8, -6)]   -1.917    2.127  -0.901 0.368  -6.087   2.253
+C(Circular_Time_Group)[T.[-6, -4)]    0.470    1.743   0.270 0.787  -2.946   3.887
+C(Circular_Time_Group)[T.[-4, -2)]   -0.778    1.748  -0.445 0.657  -4.204   2.649
+C(Circular_Time_Group)[T.[-2, 0)]     0.381    1.570   0.243 0.808  -2.696   3.457
+C(Circular_Time_Group)[T.[0, 2)]     -1.648    1.998  -0.825 0.409  -5.564   2.268
+C(Circular_Time_Group)[T.[2, 4)]     -3.826    2.047  -1.869 0.062  -7.838   0.187
+C(Circular_Time_Group)[T.[4, 6)]     -2.121    2.864  -0.741 0.459  -7.734   3.492
+C(Circular_Time_Group)[T.[6, 8)]     -0.149    2.697  -0.055 0.956  -5.434   5.137
+C(Circular_Time_Group)[T.[8, 10)]    -8.135    1.777  -4.578 0.000 -11.618  -4.652
+C(Circular_Time_Group)[T.[10, 12)]   -1.293    1.772  -0.730 0.466  -4.765   2.180
+Group Var                           518.881    2.923                              
+==================================================================================

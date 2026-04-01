@@ -43,22 +43,20 @@ INPUT_CSV = "iwf_data_top13_athlete2plus_circular.csv"
 OUTPUT_DIR = "lmm_jetlag"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# 分组类别顺序
-ABS_GROUP_ORDER = ["0-3h", "3-6h", "6-9h", ">=9h"]
-# ★ Minimal(0-3h) 必须是第一个 category，
-#   这样 statsmodels treatment coding 会自动把它当参照组。
-#   图表的 x 轴顺序用 PLOT_ORDER 单独控制。
+# 分组类别顺序（2h一档，与同学保持一致）
+ABS_GROUP_ORDER = ["0-2h", "2-4h", "4-6h", "6-8h", "8-10h", "10-12h"]
+# ★ Minimal(0-2h) 必须是第一个 category（statsmodels 参照组）
 DIRECTIONAL_GROUP_ORDER = [
-    "Minimal(0-3h)",
-    "West_3-6h", "West_6-9h", "West_>=9h",
-    "East_3-6h", "East_6-9h", "East_>=9h",
+    "Minimal(0-2h)",
+    "West_2-4h", "West_4-6h", "West_6-8h", "West_8-10h", "West_10-12h",
+    "East_2-4h", "East_4-6h", "East_6-8h", "East_8-10h", "East_10-12h",
 ]
 
 # 图表横轴用这个顺序（从西到东，直观）
 DIRECTIONAL_PLOT_ORDER = [
-    "West_>=9h", "West_6-9h", "West_3-6h",
-    "Minimal(0-3h)",
-    "East_3-6h", "East_6-9h", "East_>=9h",
+    "West_10-12h", "West_8-10h", "West_6-8h", "West_4-6h", "West_2-4h",
+    "Minimal(0-2h)",
+    "East_2-4h", "East_4-6h", "East_6-8h", "East_8-10h", "East_10-12h",
 ]
 
 
@@ -81,25 +79,23 @@ def setup_plot_style() -> None:
     sns.set_theme(style="whitegrid", font_scale=1.1)
 
 
-def calculate_sinclair(total: float, body_weight: float, sex: str) -> float:
+def calculate_sinclair(total, body_weight, sex):
+    """IWF 官方 Sinclair Total（2021-2024 周期）"""
     try:
-        total = float(total)
-        bw = float(body_weight)
+        total = float(total); bw = float(body_weight)
     except Exception:
         return np.nan
-    params = {
-        "Men": {"a": -0.794358141, "A": 174.393},
-        "Women": {"a": -0.897260740, "A": 148.026},
-    }
+    params = {"Men": {"A": 0.722762521, "b": 193.609}, "Women": {"A": 0.787004341, "b": 153.757}}
     s = str(sex).strip().title()
-    if s not in ("Men", "Women"):
+    if s not in params or pd.isna(total) or pd.isna(bw) or bw <= 0:
         return np.nan
-    if pd.isna(total) or pd.isna(bw) or bw <= 0:
-        return np.nan
-    A = params[s]["A"]
-    a = params[s]["a"]
-    coeff = 1.0 if bw > A else np.exp(a * (np.log(bw / A) ** 2))
-    return total * coeff
+    A, b = params[s]["A"], params[s]["b"]
+    if bw > b:
+        sc = 1.0
+    else:
+        X = np.log10(bw / b)       # log10，不是 ln
+        sc = 10 ** (A * X**2)      # 10^(...)，不是 exp(...)
+    return total * sc
 
 
 def extract_sex_from_event(event: object) -> Optional[str]:
@@ -128,47 +124,52 @@ def circular_jetlag_signed(venue_off: float, athlete_off: float) -> float:
 
 
 def build_jetlag_group_abs(jetlag_abs: float) -> Optional[str]:
-    """原版分组：仅按绝对值，4 档。用于 Model A（基线）。"""
+    """按绝对值分组（2h一档，6档）。用于 Model A。"""
     if pd.isna(jetlag_abs):
         return None
     x = float(jetlag_abs)
-    if x < 3:   return "0-3h"
-    if x < 6:   return "3-6h"
-    if x < 9:   return "6-9h"
-    return ">=9h"
+    if x < 2:   return "0-2h"
+    if x < 4:   return "2-4h"
+    if x < 6:   return "4-6h"
+    if x < 8:   return "6-8h"
+    if x < 10:  return "8-10h"
+    return "10-12h"
 
 
 def build_jetlag_group_directional(jetlag_signed: float) -> Optional[str]:
     """
-    ★ 方向性分组：7 档。用于 Model B。
+    ★ 方向性分组：11 档（2h一档）。用于 Model B。
 
-    |signed| < 3       → "Minimal(0-3h)"   （参照组，不区分东西）
-    signed ∈ [+3, +6)  → "East_3-6h"
-    signed ∈ [+6, +9)  → "East_6-9h"
-    signed ∈ [+9, +12] → "East_>=9h"
-    signed ∈ (-6, -3]  → "West_3-6h"
-    signed ∈ (-9, -6]  → "West_6-9h"
-    signed ∈ [-12, -9] → "West_>=9h"
-
-    0-3h 不区分方向的理由：
-      - <3h 时差对昼夜节律扰动很小，方向差异无实际意义
-      - 合并后样本量最大，做参照组统计功效最好
-      - 所有其他系数的含义都是"相对于几乎无时差状态的影响"，解释直观
+    |signed| < 2       → "Minimal(0-2h)"（参照组）
+    signed ∈ [+2, +4)  → "East_2-4h"
+    signed ∈ [+4, +6)  → "East_4-6h"
+    signed ∈ [+6, +8)  → "East_6-8h"
+    signed ∈ [+8, +10) → "East_8-10h"
+    signed ∈ [+10,+12] → "East_10-12h"
+    signed ∈ (-4, -2]  → "West_2-4h"
+    signed ∈ (-6, -4]  → "West_4-6h"
+    signed ∈ (-8, -6]  → "West_6-8h"
+    signed ∈ (-10,-8]  → "West_8-10h"
+    signed ∈ [-12,-10] → "West_10-12h"
     """
     if pd.isna(jetlag_signed):
         return None
     x = float(jetlag_signed)
     absx = abs(x)
-    if absx < 3:
-        return "Minimal(0-3h)"
+    if absx < 2:
+        return "Minimal(0-2h)"
     if x > 0:  # 向东
-        if absx < 6:   return "East_3-6h"
-        if absx < 9:   return "East_6-9h"
-        return "East_>=9h"
+        if absx < 4:   return "East_2-4h"
+        if absx < 6:   return "East_4-6h"
+        if absx < 8:   return "East_6-8h"
+        if absx < 10:  return "East_8-10h"
+        return "East_10-12h"
     else:       # 向西
-        if absx < 6:   return "West_3-6h"
-        if absx < 9:   return "West_6-9h"
-        return "West_>=9h"
+        if absx < 4:   return "West_2-4h"
+        if absx < 6:   return "West_4-6h"
+        if absx < 8:   return "West_6-8h"
+        if absx < 10:  return "West_8-10h"
+        return "West_10-12h"
 
 
 def log_write(fp, msg: str) -> None:
@@ -416,19 +417,29 @@ def main() -> None:
                 comp_lines.append(f"  {label:<18}  [FAILED] {e}")
 
         contrast_east_vs_west(
-            "3-6h: East-West",
-            "C(JetLagGroup_dir)[T.East_3-6h]",
-            "C(JetLagGroup_dir)[T.West_3-6h]",
+            "2-4h: East-West",
+            "C(JetLagGroup_dir)[T.East_2-4h]",
+            "C(JetLagGroup_dir)[T.West_2-4h]",
         )
         contrast_east_vs_west(
-            "6-9h: East-West",
-            "C(JetLagGroup_dir)[T.East_6-9h]",
-            "C(JetLagGroup_dir)[T.West_6-9h]",
+            "4-6h: East-West",
+            "C(JetLagGroup_dir)[T.East_4-6h]",
+            "C(JetLagGroup_dir)[T.West_4-6h]",
         )
         contrast_east_vs_west(
-            ">=9h: East-West",
-            "C(JetLagGroup_dir)[T.East_>=9h]",
-            "C(JetLagGroup_dir)[T.West_>=9h]",
+            "6-8h: East-West",
+            "C(JetLagGroup_dir)[T.East_6-8h]",
+            "C(JetLagGroup_dir)[T.West_6-8h]",
+        )
+        contrast_east_vs_west(
+            "8-10h: East-West",
+            "C(JetLagGroup_dir)[T.East_8-10h]",
+            "C(JetLagGroup_dir)[T.West_8-10h]",
+        )
+        contrast_east_vs_west(
+            "10-12h: East-West",
+            "C(JetLagGroup_dir)[T.East_10-12h]",
+            "C(JetLagGroup_dir)[T.West_10-12h]",
         )
 
         comp_lines.append("")

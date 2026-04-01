@@ -15,10 +15,8 @@ preprocess2-athlete.py（修正版）
        - JetLag_abs：|JetLag_signed|，范围 [0, 12]
        - 保留 Athlete_UTC_offset / Venue_UTC_offset 供下游脚本直接使用
   4. 新增运动员参赛次数分布统计，输出 athlete_participation_stats.txt
-
-输出：
-  - iwf_data_with_absjetlag_athlete2plus.csv
-  - athlete_participation_stats.txt
+输入：check_data文件夹下的所有xlsx文件
+输出：iwf_data_top13_athlete2plus_circular.csv
 """
 
 from __future__ import annotations
