@@ -1,0 +1,17 @@
+Age Distribution Summary (record-level)
+============================================================
+N records (all): 2636
+N records (valid age): 2636
+Missing age: 0
+
+Mean age: 24.29
+Std age: 3.79
+Median age: 24.02
+Min age: 15.07
+Max age: 39.72
+
+Percentiles:
+  P10: 19.56
+  P25: 21.53
+  P75: 26.73
+  P90: 29.28

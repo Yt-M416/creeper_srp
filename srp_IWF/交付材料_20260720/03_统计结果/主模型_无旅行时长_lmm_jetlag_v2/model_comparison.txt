@@ -1,0 +1,78 @@
+==========================================================================================
+Likelihood Ratio Test — Model B: overall effect of C(JetLagGroup_dir)
+  H0: all JetLagGroup_dir coefficients (vs Minimal) are jointly zero.
+  Full:  Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1|Athlete_ID), ML
+  Reduced: Sinclair_Total ~ C(Sex) + (1|Athlete_ID), ML
+------------------------------------------------------------------------------------------
+  LogLik (full)    = -9545.063241
+  LogLik (reduced) = -9570.973083
+  LR (chi^2)       = 51.819683
+  df               = 10
+  p-value          = 1.232e-07
+
+==========================================================================================
+Model Comparison: Abs-only vs Directional vs Continuous
+==========================================================================================
+
+Model        Formula                                                             AIC        BIC      ICC
+----------------------------------------------------------------------------------------------------
+A (abs)      Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs)                    19120.2    19171.4   0.7536
+B (dir) *    Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir)                    19118.1    19197.8   0.7527
+C (cont)     Sinclair_Total ~ C(Sex) + JetLag_signed                         19140.6    19169.1   0.7541
+
+==========================================================================================
+Model B (Directional) - JetLagGroup coefficients
+  Reference group: Minimal(0-1h)
+  Positive coef = higher Sinclair than ref; Negative = lower
+------------------------------------------------------------------------------------------
+  C(JetLagGroup_dir)[T.West_2-3h]                         coef=-0.0617  p=0.9578 
+  C(JetLagGroup_dir)[T.West_4-5h]                         coef=-0.2692  p=0.8399 
+  C(JetLagGroup_dir)[T.West_6-7h]                         coef=-1.8311  p=0.2088 
+  C(JetLagGroup_dir)[T.West_8-9h]                         coef=-3.3245  p=0.1075 
+  C(JetLagGroup_dir)[T.West_10-11h]                       coef=+0.9988  p=0.4750 
+  C(JetLagGroup_dir)[T.East_2-3h]                         coef=-3.1228  p=0.0840 .
+  C(JetLagGroup_dir)[T.East_4-5h]                         coef=-1.2568  p=0.6492 
+  C(JetLagGroup_dir)[T.East_6-7h]                         coef=+0.3951  p=0.8633 
+  C(JetLagGroup_dir)[T.East_8-9h]                         coef=-7.7661  p=0.0000 ***
+  C(JetLagGroup_dir)[T.East_10-11h]                       coef=-1.6597  p=0.1794 
+==========================================================================================
+Likelihood Ratio Test — Model C: overall effect of JetLag_signed (continuous)
+  H0: coefficient of JetLag_signed = 0.
+  Full:    Sinclair_Total ~ C(Sex) + JetLag_signed + (1|Athlete_ID), ML
+  Reduced: Sinclair_Total ~ C(Sex) + (1|Athlete_ID), ML
+------------------------------------------------------------------------------------------
+  LogLik (full)    = -9565.303103
+  LogLik (reduced) = -9570.973083
+  LR (chi^2)       = 11.339958
+  df               = 1
+  p-value          = 7.586e-04
+
+==========================================================================================
+Post-hoc contrasts: each group vs Minimal(0-1h)  [FDR-BH corrected]
+  (No Sex × JetLagGroup_dir interaction → model coefficient = emmeans contrast)
+  Group                 Estimate      SE        95%CI             p_raw  sig      p_fdr sig_fdr
+  ----------------------------------------------------------------------------------------
+  West_2-3h              -0.0617  1.1670   [-2.349, +2.226]      0.9578          0.9578        
+  West_4-5h              -0.2692  1.3323   [-2.880, +2.342]      0.8399          0.9578        
+  West_6-7h              -1.8311  1.4567   [-4.686, +1.024]      0.2088          0.4175        
+  West_8-9h              -3.3245  2.0655   [-7.373, +0.724]      0.1075          0.3583        
+  West_10-11h            +0.9988  1.3980   [-1.741, +3.739]      0.4750          0.7916        
+  East_2-3h              -3.1228  1.8071   [-6.665, +0.419]      0.0840    .     0.3583        
+  East_4-5h              -1.2568  2.7632   [-6.673, +4.159]      0.6492          0.9275        
+  East_6-7h              +0.3951  2.2943   [-4.102, +4.892]      0.8633          0.9578        
+  East_8-9h              -7.7661  1.2752  [-10.265, -5.267]      0.0000  ***     0.0000     ***
+  East_10-11h            -1.6597  1.2361   [-4.082, +0.763]      0.1794          0.4175        
+  Reference: Minimal(0-1h)
+  Sig codes: *** p<.001  ** p<.01  * p<.05  . p<.1
+
+==========================================================================================
+Contrast Tests: East vs West at same magnitude
+  H0: coef(East_Xh) - coef(West_Xh) = 0
+  (both relative to Minimal(0-1h), so difference = East effect - West effect)
+------------------------------------------------------------------------------------------
+  2-3h: East-West     diff=-3.0610  se=1.8665  p=0.1010 
+  4-5h: East-West     diff=-0.9876  se=2.9271  p=0.7358 
+  6-7h: East-West     diff=+2.2262  se=2.5066  p=0.3745 
+  8-9h: East-West     diff=-4.4416  se=2.2445  p=0.0478 *
+  10-11h: East-West   diff=-2.6585  se=1.5698  p=0.0904 .
+==========================================================================================

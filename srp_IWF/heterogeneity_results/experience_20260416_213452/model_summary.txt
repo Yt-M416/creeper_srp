@@ -1,0 +1,38 @@
+                               Mixed Linear Model Regression Results
+====================================================================================================
+Model:                          MixedLM              Dependent Variable:              Sinclair_Total
+No. Observations:               2184                 Method:                          REML          
+No. Groups:                     730                  Scale:                           164.6861      
+Min. group size:                1                    Log-Likelihood:                  -9444.7737    
+Max. group size:                11                   Converged:                       Yes           
+Mean group size:                3.0                                                                 
+----------------------------------------------------------------------------------------------------
+                                                    Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+----------------------------------------------------------------------------------------------------
+Intercept                                           431.727    1.641 263.148 0.000  428.511  434.942
+C(Sex)[T.Women]                                    -150.142    1.915 -78.409 0.000 -153.895 -146.389
+C(Group)[T.High]                                      7.076    1.487   4.760 0.000    4.162    9.989
+C(JetLagGroup_dir)[T.West_2-3h]                       1.461    1.592   0.918 0.359   -1.659    4.580
+C(JetLagGroup_dir)[T.West_4-5h]                       2.266    1.794   1.263 0.206   -1.250    5.782
+C(JetLagGroup_dir)[T.West_6-7h]                       0.177    2.112   0.084 0.933   -3.963    4.317
+C(JetLagGroup_dir)[T.West_8-9h]                       2.088    2.949   0.708 0.479   -3.691    7.868
+C(JetLagGroup_dir)[T.West_10-11h]                     4.734    2.266   2.089 0.037    0.292    9.176
+C(JetLagGroup_dir)[T.East_2-3h]                       0.093    2.309   0.040 0.968   -4.432    4.618
+C(JetLagGroup_dir)[T.East_4-5h]                      -0.197    3.667  -0.054 0.957   -7.384    6.990
+C(JetLagGroup_dir)[T.East_6-7h]                      -2.376    3.741  -0.635 0.525   -9.708    4.957
+C(JetLagGroup_dir)[T.East_8-9h]                      -3.673    1.731  -2.122 0.034   -7.066   -0.280
+C(JetLagGroup_dir)[T.East_10-11h]                     0.829    1.964   0.422 0.673   -3.020    4.677
+C(Group)[T.High]:C(JetLagGroup_dir)[T.West_2-3h]     -0.322    2.297  -0.140 0.889   -4.823    4.180
+C(Group)[T.High]:C(JetLagGroup_dir)[T.West_4-5h]     -0.550    2.472  -0.223 0.824   -5.395    4.294
+C(Group)[T.High]:C(JetLagGroup_dir)[T.West_6-7h]      0.806    2.657   0.303 0.762   -4.401    6.013
+C(Group)[T.High]:C(JetLagGroup_dir)[T.West_8-9h]     -4.714    3.874  -1.217 0.224  -12.307    2.880
+C(Group)[T.High]:C(JetLagGroup_dir)[T.West_10-11h]    0.667    2.824   0.236 0.813   -4.869    6.203
+C(Group)[T.High]:C(JetLagGroup_dir)[T.East_2-3h]     -3.630    3.448  -1.053 0.292  -10.389    3.128
+C(Group)[T.High]:C(JetLagGroup_dir)[T.East_4-5h]     -1.160    5.367  -0.216 0.829  -11.679    9.359
+C(Group)[T.High]:C(JetLagGroup_dir)[T.East_6-7h]      5.527    4.641   1.191 0.234   -3.570   14.623
+C(Group)[T.High]:C(JetLagGroup_dir)[T.East_8-9h]     -2.403    2.384  -1.008 0.314   -7.076    2.271
+C(Group)[T.High]:C(JetLagGroup_dir)[T.East_10-11h]    2.762    2.377   1.162 0.245   -1.897    7.420
+TravelDuration_c                                     -0.257    0.065  -3.967 0.000   -0.384   -0.130
+BodyWeight_c                                         -0.018    0.035  -0.517 0.605   -0.088    0.051
+Group Var                                           519.349    2.988                                
+====================================================================================================

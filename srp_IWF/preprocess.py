@@ -1,5 +1,6 @@
 """
 作用：在原有预处理基础上，为 top13 国家添加训练时区并计算与比赛地的时差（考虑夏令时）。
+输入文件：check_data文件夹下的所有xlsx文件
 输出文件：iwf_data_with_tz.csv
 若 competition 字段中无年份（如 '69th MEN’s and 12th WOMEN’s WOR'），则根据届数匹配到实际年份（手动映射 1998–2010）。
 """

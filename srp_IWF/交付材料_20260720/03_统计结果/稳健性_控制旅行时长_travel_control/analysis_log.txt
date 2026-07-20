@@ -1,0 +1,100 @@
+================================================================================
+LMM_jetlag_travel  mode=control  - START
+Run time: 2026-07-20T15:47:06
+================================================================================
+Loaded: athlete_top13_travel.csv
+Rows: 2636, Columns: 25
+STEP 1 - Drop NA (core): 2636 → 2308
+STEP 2 - JetLag computed; drop NA: 2308 → 2308
+STEP 3 - Sinclair computed; drop NA: 2308 → 2308
+
+STEP 4 - TravelDuration missing before drop: 122 / 2308
+  After dropping missing TravelDuration: 2186 rows
+  Athletes: 730
+  TravelDuration  mean=15.67h  std=7.75h
+  TravelDuration_c = TravelDuration - 15.6674  (centered, unit=h)
+
+  JetLagGroup_dir counts (after TravelDuration drop):
+JetLagGroup_dir
+Minimal(0-1h)    443
+West_2-3h        308
+West_4-5h        257
+West_6-7h        212
+West_8-9h         68
+West_10-11h      160
+East_2-3h         97
+East_4-5h         36
+East_6-7h         50
+East_8-9h        289
+East_10-11h      266
+
+  Saved model input data: lmm_jetlag_travel_control\data_used_for_model.csv
+
+================================================================================
+STEP 5 - Model fitting
+================================================================================
+
+[Control mode]
+  Full    : Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c
+  Base B  : Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir)  (no TravelDuration)
+  No-JLag : Sinclair_Total ~ C(Sex) + TravelDuration_c  (no JetLagGroup_dir)
+
+================================================================================
+STEP 6 - Likelihood Ratio Tests (asymptotic chi-square, ML fits)
+================================================================================
+
+LRT-A: Full (JetLag + Travel) vs Base-B (JetLag only)
+  H0: TravelDuration_c coefficient = 0
+  LR=10.8644  df=1  p=9.8029e-04
+  → TravelDuration is a significant covariate (p < .05)
+
+LRT-B: Full (JetLag + Travel) vs No-JLag (Travel only)
+  H0: all JetLagGroup_dir coefficients = 0 (given TravelDuration in model)
+  LR=53.2699  df=10  p=6.6340e-08
+  → JetLagGroup_dir remains significant after controlling TravelDuration
+
+================================================================================
+STEP 7 - Fixed-effect coefficients (REML fit)
+================================================================================
+  sigma_u^2 = 527.0067   sigma_epsilon^2 = 174.4665   ICC = 0.7513
+  AIC = 19109.3  BIC = 19194.6
+  Intercept                                               coef=+433.8555  95%CI=[+430.882,+436.829]  p=0.0000 ***
+  C(Sex)[T.Women]                                         coef=-149.7545  95%CI=[-153.301,-146.208]  p=0.0000 ***
+  C(JetLagGroup_dir)[T.West_2-3h]                         coef=+1.3373  95%CI=[-1.094,+3.769]  p=0.2810 
+  C(JetLagGroup_dir)[T.West_4-5h]                         coef=+1.8436  95%CI=[-1.052,+4.739]  p=0.2120 
+  C(JetLagGroup_dir)[T.West_6-7h]                         coef=+0.8227  95%CI=[-2.437,+4.082]  p=0.6208 
+  C(JetLagGroup_dir)[T.West_8-9h]                         coef=-0.4397  95%CI=[-4.835,+3.955]  p=0.8445 
+  C(JetLagGroup_dir)[T.West_10-11h]                       coef=+5.1653  95%CI=[+1.471,+8.860]  p=0.0061 **
+  C(JetLagGroup_dir)[T.East_2-3h]                         coef=-1.7460  95%CI=[-5.378,+1.886]  p=0.3461 
+  C(JetLagGroup_dir)[T.East_4-5h]                         coef=-0.2520  95%CI=[-5.694,+5.190]  p=0.9277 
+  C(JetLagGroup_dir)[T.East_6-7h]                         coef=+1.6040  95%CI=[-2.944,+6.152]  p=0.4894 
+  C(JetLagGroup_dir)[T.East_8-9h]                         coef=-5.5841  95%CI=[-8.396,-2.773]  p=0.0001 ***
+  C(JetLagGroup_dir)[T.East_10-11h]                       coef=+1.9141  95%CI=[-1.307,+5.136]  p=0.2442 
+  TravelDuration_c                                        coef=-0.2182  95%CI=[-0.348,-0.088]  p=0.0010 **
+
+================================================================================
+STEP 8 - Post-hoc: each JetLagGroup vs Minimal  [FDR-BH]  (control mode)
+================================================================================
+  Note: model has no Sex×JetLag interaction → coef = emmeans trt.vs.ctrl contrast
+  Group                 Estimate      SE  Cohen_d        95%CI             p_raw  sig      p_fdr sig_fdr
+  ------------------------------------------------------------------------------------------------------
+  West_2-3h              +1.3373  1.2406   +0.101   [-1.094,+3.769]       0.2810          0.5621        
+  West_4-5h              +1.8436  1.4772   +0.140   [-1.052,+4.739]       0.2120          0.5621        
+  West_6-7h              +0.8227  1.6629   +0.062   [-2.437,+4.082]       0.6208          0.7760        
+  West_8-9h              -0.4397  2.2424   -0.033   [-4.835,+3.955]       0.8445          0.9277        
+  West_10-11h            +5.1653  1.8849   +0.391   [+1.471,+8.860]       0.0061   **     0.0307       *
+  East_2-3h              -1.7460  1.8530   -0.132   [-5.378,+1.886]       0.3461          0.5768        
+  East_4-5h              -0.2520  2.7766   -0.019   [-5.694,+5.190]       0.9277          0.9277        
+  East_6-7h              +1.6040  2.3206   +0.121   [-2.944,+6.152]       0.4894          0.6992        
+  East_8-9h              -5.5841  1.4345   -0.423   [-8.396,-2.773]       0.0001  ***     0.0010     ***
+  East_10-11h            +1.9141  1.6436   +0.145   [-1.307,+5.136]       0.2442          0.5621        
+
+  Saved: lmm_jetlag_travel_control\emmeans_FDR_travel_control.csv
+  Figure 1 (forest plot, from emmeans_FDR_travel_control.csv) saved: lmm_jetlag_travel_control\fig1_forest_main_effect.png
+
+Model comparison saved: lmm_jetlag_travel_control\model_comparison.txt
+Model summary saved: lmm_jetlag_travel_control\model_summary.txt
+
+================================================================================
+LMM_jetlag_travel  mode=control  - END
+================================================================================

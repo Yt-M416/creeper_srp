@@ -1,5 +1,5 @@
 '''
-从 IWF 官网爬取举重世锦赛数据
+从 IWF 官网爬取举重世锦赛数据， 每个比赛放在一个 sheet 中，输出两个excel
 '''
 
 import requests

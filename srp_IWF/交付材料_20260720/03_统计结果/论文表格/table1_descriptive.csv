@@ -1,0 +1,10 @@
+﻿Metric,Men,Women,Total
+Athletes (n),392,339,730
+Observations (n),1118,1068,2186
+"Age (yr), mean ± SD",24.57 ± 3.69,23.78 ± 4.00,24.18 ± 3.86
+"Body mass (kg), mean ± SD",86.97 ± 26.51,68.82 ± 21.21,78.10 ± 25.71
+"Sinclair Total, mean ± SD",435.69 ± 27.44,286.12 ± 26.19,362.62 ± 79.45
+"Obs. per athlete, median [IQR]",2.0 [2.0–4.0],3.0 [2.0–4.0],3.0 [2.0–4.0]
+Missing: Age (n),0,0,0
+Missing: Body mass (n),0,0,0
+Missing: Sinclair (n),0,0,0

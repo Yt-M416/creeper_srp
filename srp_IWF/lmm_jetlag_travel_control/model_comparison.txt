@@ -1,0 +1,54 @@
+==========================================================================================
+Mode: control  |  Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + (1|Athlete_ID)
+==========================================================================================
+
+Random-effects variance (REML, full model):
+  sigma_u^2 = 527.0067   sigma_epsilon^2 = 174.4665   ICC = 0.7513
+
+LRT-A: Does TravelDuration significantly improve over base Model B (JetLag-only)?
+  Full vs Base-B  |  LR=10.8644  df=1  p=9.8029e-04
+  LogLik (full)    = -9539.631031
+  LogLik (base-B)  = -9545.063241
+  → TravelDuration is a significant covariate.
+
+LRT-B: Is JetLagGroup_dir still significant after controlling TravelDuration?
+  Full vs No-JLag  |  LR=53.2699  df=10  p=6.6340e-08
+  LogLik (full)    = -9539.631031
+  LogLik (no-JLag) = -9566.265999
+  → JetLagGroup_dir remains significant (robust to travel control).
+
+==========================================================================================
+Fixed-effect coefficients (REML):
+  sigma_u^2=527.0067  sigma_epsilon^2=174.4665  ICC=0.7513  AIC=19109.3  BIC=19194.6
+------------------------------------------------------------------------------------------
+  Intercept                                               coef=+433.8555  95%CI=[+430.882,+436.829]  p=0.0000 ***
+  C(Sex)[T.Women]                                         coef=-149.7545  95%CI=[-153.301,-146.208]  p=0.0000 ***
+  C(JetLagGroup_dir)[T.West_2-3h]                         coef=+1.3373  95%CI=[-1.094,+3.769]  p=0.2810 
+  C(JetLagGroup_dir)[T.West_4-5h]                         coef=+1.8436  95%CI=[-1.052,+4.739]  p=0.2120 
+  C(JetLagGroup_dir)[T.West_6-7h]                         coef=+0.8227  95%CI=[-2.437,+4.082]  p=0.6208 
+  C(JetLagGroup_dir)[T.West_8-9h]                         coef=-0.4397  95%CI=[-4.835,+3.955]  p=0.8445 
+  C(JetLagGroup_dir)[T.West_10-11h]                       coef=+5.1653  95%CI=[+1.471,+8.860]  p=0.0061 **
+  C(JetLagGroup_dir)[T.East_2-3h]                         coef=-1.7460  95%CI=[-5.378,+1.886]  p=0.3461 
+  C(JetLagGroup_dir)[T.East_4-5h]                         coef=-0.2520  95%CI=[-5.694,+5.190]  p=0.9277 
+  C(JetLagGroup_dir)[T.East_6-7h]                         coef=+1.6040  95%CI=[-2.944,+6.152]  p=0.4894 
+  C(JetLagGroup_dir)[T.East_8-9h]                         coef=-5.5841  95%CI=[-8.396,-2.773]  p=0.0001 ***
+  C(JetLagGroup_dir)[T.East_10-11h]                       coef=+1.9141  95%CI=[-1.307,+5.136]  p=0.2442 
+  TravelDuration_c                                        coef=-0.2182  95%CI=[-0.348,-0.088]  p=0.0010 **
+
+==========================================================================================
+Post-hoc: each JetLagGroup vs Minimal  [FDR-BH, control mode]
+  Group                 Estimate      SE  Cohen_d        95%CI             p_raw  sig      p_fdr sig_fdr
+  ------------------------------------------------------------------------------------------------------
+  West_2-3h              +1.3373  1.2406   +0.101   [-1.094,+3.769]       0.2810          0.5621        
+  West_4-5h              +1.8436  1.4772   +0.140   [-1.052,+4.739]       0.2120          0.5621        
+  West_6-7h              +0.8227  1.6629   +0.062   [-2.437,+4.082]       0.6208          0.7760        
+  West_8-9h              -0.4397  2.2424   -0.033   [-4.835,+3.955]       0.8445          0.9277        
+  West_10-11h            +5.1653  1.8849   +0.391   [+1.471,+8.860]       0.0061   **     0.0307       *
+  East_2-3h              -1.7460  1.8530   -0.132   [-5.378,+1.886]       0.3461          0.5768        
+  East_4-5h              -0.2520  2.7766   -0.019   [-5.694,+5.190]       0.9277          0.9277        
+  East_6-7h              +1.6040  2.3206   +0.121   [-2.944,+6.152]       0.4894          0.6992        
+  East_8-9h              -5.5841  1.4345   -0.423   [-8.396,-2.773]       0.0001  ***     0.0010     ***
+  East_10-11h            +1.9141  1.6436   +0.145   [-1.307,+5.136]       0.2442          0.5621        
+  Reference: Minimal(0-1h)  |  Cohen's d = beta / sigma_epsilon (13.2086)
+  Sig: *** <.001  ** <.01  * <.05  . <.1
+

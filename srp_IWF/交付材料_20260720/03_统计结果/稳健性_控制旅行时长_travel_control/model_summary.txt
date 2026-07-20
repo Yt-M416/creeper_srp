@@ -1,0 +1,32 @@
+Mode: control
+Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + (1|Athlete_ID)
+sigma_u^2: 527.0067
+sigma_epsilon^2: 174.4665
+ICC: 0.7513
+
+                       Mixed Linear Model Regression Results
+===================================================================================
+Model:                     MixedLM        Dependent Variable:        Sinclair_Total
+No. Observations:          2186           Method:                    REML          
+No. Groups:                730            Scale:                     174.4665      
+Min. group size:           1              Log-Likelihood:            -9525.9632    
+Max. group size:           11             Converged:                 Yes           
+Mean group size:           3.0                                                     
+-----------------------------------------------------------------------------------
+                                   Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+-----------------------------------------------------------------------------------
+Intercept                          433.855    1.517 285.962 0.000  430.882  436.829
+C(Sex)[T.Women]                   -149.754    1.810 -82.753 0.000 -153.301 -146.208
+C(JetLagGroup_dir)[T.West_2-3h]      1.337    1.241   1.078 0.281   -1.094    3.769
+C(JetLagGroup_dir)[T.West_4-5h]      1.844    1.477   1.248 0.212   -1.052    4.739
+C(JetLagGroup_dir)[T.West_6-7h]      0.823    1.663   0.495 0.621   -2.437    4.082
+C(JetLagGroup_dir)[T.West_8-9h]     -0.440    2.242  -0.196 0.845   -4.835    3.955
+C(JetLagGroup_dir)[T.West_10-11h]    5.165    1.885   2.740 0.006    1.471    8.860
+C(JetLagGroup_dir)[T.East_2-3h]     -1.746    1.853  -0.942 0.346   -5.378    1.886
+C(JetLagGroup_dir)[T.East_4-5h]     -0.252    2.777  -0.091 0.928   -5.694    5.190
+C(JetLagGroup_dir)[T.East_6-7h]      1.604    2.321   0.691 0.489   -2.944    6.152
+C(JetLagGroup_dir)[T.East_8-9h]     -5.584    1.434  -3.893 0.000   -8.396   -2.773
+C(JetLagGroup_dir)[T.East_10-11h]    1.914    1.644   1.165 0.244   -1.307    5.136
+TravelDuration_c                    -0.218    0.066  -3.288 0.001   -0.348   -0.088
+Group Var                          527.007    2.945                                
+===================================================================================

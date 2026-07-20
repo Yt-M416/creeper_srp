@@ -1,0 +1,44 @@
+================================================================================
+LMM JetLag V2 (Travel-available subset) - START
+Run time: 2026-07-20T15:46:42
+================================================================================
+Loaded: athlete_top13_travel.csv
+Rows: 2636, Columns: 25
+STEP 1 - Drop NA core fields: 2636 -> 2308
+STEP 2 - JetLag computed; drop NA: 2308 -> 2308
+STEP 3 - Sinclair_Total computed; drop NA: 2308 -> 2308
+STEP 4 - TravelDuration missing before subset: 122 / 2308
+STEP 4 - Restrict to travel-available subset: 2186 rows
+
+JetLagGroup_dir counts (travel-available subset):
+JetLagGroup_dir
+Minimal(0-1h)    443
+West_2-3h        308
+West_4-5h        257
+West_6-7h        212
+West_8-9h         68
+West_10-11h      160
+East_2-3h         97
+East_4-5h         36
+East_6-7h         50
+East_8-9h        289
+East_10-11h      266
+
+Data summary (post-clean):
+  Rows used (pre-model): 2186
+  Athletes (Athlete_ID): 730
+  Nations: 13
+  Mean JetLag_abs:    5.484 h
+  Mean JetLag_signed: 0.143 h
+  Max  JetLag_abs:    12.000 h
+Saved model input data: lmm_jetlag_v2\data_used_for_model.csv
+
+================================================================================
+STEP 5 - Fitting 3 models for comparison
+================================================================================
+Model comparison saved: lmm_jetlag_v2\model_comparison.txt
+Model summaries saved: lmm_jetlag_v2\model_summary.txt
+All output files saved to: D:\Code\Python\Creeper\srp_IWF\lmm_jetlag_v2
+================================================================================
+LMM JetLag V2 (Travel-available subset) - END
+================================================================================

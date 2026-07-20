@@ -1,0 +1,159 @@
+Heterogeneity Results Combined Summary
+
+====================================================================================================
+ROOT: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results
+====================================================================================================
+[heterogeneity_summary.md]
+# Heterogeneity Summary
+
+Run time: 2026-04-16T21:35:25
+
+| Analysis | N | LR | df | p | Status |
+|---|---:|---:|---:|---:|---|
+| sex | 2184 | 3.662 | 10 | 9.613e-01 | ok |
+| age | 2184 | 12.639 | 10 | 2.445e-01 | ok |
+| experience | 2184 | 8.854 | 10 | 5.460e-01 | ok |
+| weight | 2184 | 18.752 | 30 | 9.450e-01 | ok |
+| sensitivity_Age_c | 2184 | 0.119 | 1 | 7.305e-01 | ok |
+| sensitivity_BodyWeight_c | 2184 | 0.289 | 1 | 5.908e-01 | ok |
+| sensitivity_Cumulative_Exp_c | 2184 | 0.936 | 1 | 3.333e-01 | ok |
+
+[run_log snapshot]
+
+========================================================================================
+阶段1：数据预处理
+========================================================================================
+原始行数: 2636
+去重后行数: 2634 (移除 2)
+[INFO] JetLag_signed 已存在，直接读取并转数值。
+[INFO] Sinclair_Total 不存在，已按 IWF 参数计算。
+核心变量缺失清理: 2634 -> 2184
+运动员数量: 730
+
+JetLagGroup_dir 分布:
+JetLagGroup_dir
+Minimal(0-1h)    443
+West_2-3h        308
+West_4-5h        256
+West_6-7h        212
+West_8-9h         68
+West_10-11h      160
+East_2-3h         97
+East_4-5h         36
+East_6-7h         50
+East_8-9h        288
+East_10-11h      266
+
+[analysis folders found: 7]
+
+[age_20260416_213447]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results\age_20260416_213447
+- sample_size: 2184
+- group_levels: ['Young', 'Old']
+- full_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+- reduced_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir)
+- lrt: LR=12.639313, df=10, p=2.445430e-01
+
+[experience_20260416_213452]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results\experience_20260416_213452
+- sample_size: 2184
+- group_levels: ['Low', 'High']
+- full_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+- reduced_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir)
+- lrt: LR=8.854210, df=10, p=5.459934e-01
+
+[sensitivity_Age_c_20260416_213505]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results\sensitivity_Age_c_20260416_213505
+- sample_size: 2184
+- group_levels: NA
+- full_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Age_c + Age_c:JetLag_signed
+- reduced_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Age_c
+- lrt: LR=NA, df=NA, p=7.305455e-01
+- sensitivity_primary(continuous×continuous): LR=0.118688, df=1, p=7.304623e-01, coef=0.004236
+- sensitivity_secondary(continuous×categorical): LR=16.988914, df=10, p=7.460964e-02
+
+[sensitivity_BodyWeight_c_20260416_213512]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results\sensitivity_BodyWeight_c_20260416_213512
+- sample_size: 2184
+- group_levels: NA
+- full_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + JetLag_signed + BodyWeight_c + BodyWeight_c:JetLag_signed
+- reduced_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + JetLag_signed + BodyWeight_c
+- lrt: LR=NA, df=NA, p=5.917087e-01
+- sensitivity_primary(continuous×continuous): LR=0.289168, df=1, p=5.907544e-01, coef=-0.001143
+- sensitivity_secondary(continuous×categorical): LR=9.123399, df=10, p=5.204340e-01
+
+[sensitivity_Cumulative_Exp_c_20260416_213518]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results\sensitivity_Cumulative_Exp_c_20260416_213518
+- sample_size: 2184
+- group_levels: NA
+- full_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Cumulative_Exp_c + Cumulative_Exp_c:JetLag_signed
+- reduced_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Cumulative_Exp_c
+- lrt: LR=NA, df=NA, p=3.342344e-01
+- sensitivity_primary(continuous×continuous): LR=0.936128, df=1, p=3.332755e-01, coef=0.025173
+- sensitivity_secondary(continuous×categorical): LR=10.865943, df=10, p=3.680573e-01
+
+[sex_20260416_213441]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results\sex_20260416_213441
+- sample_size: 2184
+- group_levels: ['Men', 'Women']
+- full_formula: Sinclair_Total ~ TravelDuration_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+- reduced_formula: Sinclair_Total ~ TravelDuration_c + C(Group) + C(JetLagGroup_dir)
+- lrt: LR=3.662028, df=10, p=9.613084e-01
+
+[weight_20260416_213458]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_results\weight_20260416_213458
+- sample_size: 2184
+- group_levels: ['Light', 'Middle', 'Heavy', 'SuperHeavy']
+- full_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+- reduced_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir)
+- lrt: LR=18.752114, df=30, p=9.450464e-01
+
+
+====================================================================================================
+ROOT: D:\Code\Python\Creeper\srp_IWF\heterogeneity_年龄经验调整版
+====================================================================================================
+[heterogeneity_summary.md]
+# Heterogeneity Summary
+
+Run time: 2026-04-16T21:32:20
+
+| Analysis | N | LR | df | p | Status |
+|---|---:|---:|---:|---:|---|
+| age_adjusted | 2184 | 7.715 | 10 | 6.567e-01 | ok |
+
+[run_log snapshot]
+
+========================================================================================
+阶段1：数据预处理
+========================================================================================
+原始行数: 2636
+去重后行数: 2634 (移除 2)
+[INFO] JetLag_signed 已存在，直接读取并转数值。
+[INFO] Sinclair_Total 不存在，已按 IWF 参数计算。
+核心变量缺失清理: 2634 -> 2184
+运动员数量: 730
+
+JetLagGroup_dir 分布:
+JetLagGroup_dir
+Minimal(0-1h)    443
+West_2-3h        308
+West_4-5h        256
+West_6-7h        212
+West_8-9h         68
+West_10-11h      160
+East_2-3h         97
+East_4-5h         36
+East_6-7h         50
+East_8-9h        288
+East_10-11h      266
+
+[analysis folders found: 1]
+
+[age_adjusted_20260416_213214]
+- path: D:\Code\Python\Creeper\srp_IWF\heterogeneity_年龄经验调整版\age_adjusted_20260416_213214
+- sample_size: 2184
+- group_levels: ['Young', 'Old']
+- full_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
+- reduced_formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
+- lrt: LR=7.714976, df=10, p=6.566550e-01
+

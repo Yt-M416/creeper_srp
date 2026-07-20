@@ -1,0 +1,22 @@
+Mode: main
+Formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + (1|Athlete_ID)
+sigma_u^2: 541.3534
+sigma_epsilon^2: 177.4294
+ICC: 0.7532
+
+              Mixed Linear Model Regression Results
+==================================================================
+Model:              MixedLM   Dependent Variable:   Sinclair_Total
+No. Observations:   2186      Method:               REML          
+No. Groups:         730       Scale:                177.4294      
+Min. group size:    1         Log-Likelihood:       -9566.1329    
+Max. group size:    11        Converged:            Yes           
+Mean group size:    3.0                                           
+------------------------------------------------------------------
+                  Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+------------------------------------------------------------------
+Intercept         434.256    1.254 346.331 0.000  431.798  436.714
+C(Sex)[T.Women]  -149.927    1.829 -81.955 0.000 -153.513 -146.342
+TravelDuration_c   -0.133    0.043  -3.061 0.002   -0.218   -0.048
+Group Var         541.353    2.972                                
+==================================================================

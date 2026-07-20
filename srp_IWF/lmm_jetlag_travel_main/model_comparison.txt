@@ -1,0 +1,21 @@
+==========================================================================================
+Mode: main  |  Formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + (1|Athlete_ID)
+==========================================================================================
+
+Random-effects variance (REML, full model):
+  sigma_u^2 = 541.3534   sigma_epsilon^2 = 177.4294   ICC = 0.7532
+
+LRT: TravelDuration_c as main effect (Full vs Sex-only)
+  LR=9.4142  df=1  p=2.1532e-03
+  LogLik (full)    = -9566.265999
+  LogLik (reduced) = -9570.973083
+  → TravelDuration has a significant main effect on Sinclair_Total.
+
+==========================================================================================
+Fixed-effect coefficients (REML):
+  sigma_u^2=541.3534  sigma_epsilon^2=177.4294  ICC=0.7532  AIC=19142.5  BIC=19171.0
+------------------------------------------------------------------------------------------
+  Intercept                                               coef=+434.2560  95%CI=[+431.798,+436.714]  p=0.0000 ***
+  C(Sex)[T.Women]                                         coef=-149.9272  95%CI=[-153.513,-146.342]  p=0.0000 ***
+  TravelDuration_c                                        coef=-0.1328  95%CI=[-0.218,-0.048]  p=0.0022 **
+

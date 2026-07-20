@@ -1,0 +1,64 @@
+================================================================================
+LMM_jetlag_travel  mode=main  - START
+Run time: 2026-07-20T15:47:21
+================================================================================
+Loaded: athlete_top13_travel.csv
+Rows: 2636, Columns: 25
+STEP 1 - Drop NA (core): 2636 → 2308
+STEP 2 - JetLag computed; drop NA: 2308 → 2308
+STEP 3 - Sinclair computed; drop NA: 2308 → 2308
+
+STEP 4 - TravelDuration missing before drop: 122 / 2308
+  After dropping missing TravelDuration: 2186 rows
+  Athletes: 730
+  TravelDuration  mean=15.67h  std=7.75h
+  TravelDuration_c = TravelDuration - 15.6674  (centered, unit=h)
+
+  JetLagGroup_dir counts (after TravelDuration drop):
+JetLagGroup_dir
+Minimal(0-1h)    443
+West_2-3h        308
+West_4-5h        257
+West_6-7h        212
+West_8-9h         68
+West_10-11h      160
+East_2-3h         97
+East_4-5h         36
+East_6-7h         50
+East_8-9h        289
+East_10-11h      266
+
+  Saved model input data: lmm_jetlag_travel_main\data_used_for_model.csv
+
+================================================================================
+STEP 5 - Model fitting
+================================================================================
+
+[Main effect mode]
+  Full    : Sinclair_Total ~ C(Sex) + TravelDuration_c
+  Reduced : Sinclair_Total ~ C(Sex)  (no TravelDuration)
+
+================================================================================
+STEP 6 - Likelihood Ratio Tests (asymptotic chi-square, ML fits)
+================================================================================
+
+LRT: TravelDuration_c overall effect (vs Sex-only model)
+  H0: TravelDuration_c coefficient = 0
+  LR=9.4142  df=1  p=2.1532e-03
+  → TravelDuration has a significant main effect on Sinclair_Total
+
+================================================================================
+STEP 7 - Fixed-effect coefficients (REML fit)
+================================================================================
+  sigma_u^2 = 541.3534   sigma_epsilon^2 = 177.4294   ICC = 0.7532
+  AIC = 19142.5  BIC = 19171.0
+  Intercept                                               coef=+434.2560  95%CI=[+431.798,+436.714]  p=0.0000 ***
+  C(Sex)[T.Women]                                         coef=-149.9272  95%CI=[-153.513,-146.342]  p=0.0000 ***
+  TravelDuration_c                                        coef=-0.1328  95%CI=[-0.218,-0.048]  p=0.0022 **
+
+Model comparison saved: lmm_jetlag_travel_main\model_comparison.txt
+Model summary saved: lmm_jetlag_travel_main\model_summary.txt
+
+================================================================================
+LMM_jetlag_travel  mode=main  - END
+================================================================================

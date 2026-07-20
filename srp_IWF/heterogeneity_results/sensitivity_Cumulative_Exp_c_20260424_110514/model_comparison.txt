@@ -1,0 +1,14 @@
+sensitivity_var=Cumulative_Exp_c
+primary_full=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Cumulative_Exp_c + Cumulative_Exp_c:JetLag_signed
+primary_reduced=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Cumulative_Exp_c
+primary_lr=0.936128
+primary_df=1
+primary_p=3.332755e-01
+primary_interaction_coef=0.025173
+primary_interaction_p=3.342344e-01
+
+secondary_full=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(JetLagGroup_dir) + Cumulative_Exp_c + Cumulative_Exp_c:C(JetLagGroup_dir)
+secondary_reduced=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(JetLagGroup_dir) + Cumulative_Exp_c
+secondary_lr=10.865943
+secondary_df=10
+secondary_p=3.680573e-01

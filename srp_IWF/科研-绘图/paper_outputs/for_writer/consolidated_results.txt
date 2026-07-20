@@ -1,0 +1,589 @@
+# Consolidated Statistical Results
+# Generated: 2026-07-20T16:38:02
+#
+# 本文件汇总了论文写作需要的全部“文字型”统计输出。
+# 章节顺序约定：
+#   1. 主分析 (Main analysis, LMM_jetlag_v2, 2186 obs / 730 athletes)
+#   2. 旅行时长稳健性 (control mode)
+#   3. 旅行时长主效应 (main mode, 仅作 Discussion 引用，不放主分析)
+#   4. 异质性分析 (subgroup-stratified + interaction LRT)
+#
+# 注意：
+#   - 主文样本统一为 2186 / 730。异质性分析因技术性去重略少 (2184)，正文不单列。
+#   - 表格 (CSV) 见 paper_outputs/tables/，图见 paper_outputs/figures/，
+#     此处不重复粘贴 CSV/图，避免冗余。
+
+
+################################################################################################
+# 1.1  Main analysis: pre-model data flow & sample composition
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_v2/analysis_log.txt
+################################################################################################
+
+================================================================================
+LMM JetLag V2 (Travel-available subset) - START
+Run time: 2026-07-20T15:46:42
+================================================================================
+Loaded: athlete_top13_travel.csv
+Rows: 2636, Columns: 25
+STEP 1 - Drop NA core fields: 2636 -> 2308
+STEP 2 - JetLag computed; drop NA: 2308 -> 2308
+STEP 3 - Sinclair_Total computed; drop NA: 2308 -> 2308
+STEP 4 - TravelDuration missing before subset: 122 / 2308
+STEP 4 - Restrict to travel-available subset: 2186 rows
+
+JetLagGroup_dir counts (travel-available subset):
+JetLagGroup_dir
+Minimal(0-1h)    443
+West_2-3h        308
+West_4-5h        257
+West_6-7h        212
+West_8-9h         68
+West_10-11h      160
+East_2-3h         97
+East_4-5h         36
+East_6-7h         50
+East_8-9h        289
+East_10-11h      266
+
+Data summary (post-clean):
+  Rows used (pre-model): 2186
+  Athletes (Athlete_ID): 730
+  Nations: 13
+  Mean JetLag_abs:    5.484 h
+  Mean JetLag_signed: 0.143 h
+  Max  JetLag_abs:    12.000 h
+Saved model input data: lmm_jetlag_v2\data_used_for_model.csv
+
+================================================================================
+STEP 5 - Fitting 3 models for comparison
+================================================================================
+Model comparison saved: lmm_jetlag_v2\model_comparison.txt
+Model summaries saved: lmm_jetlag_v2\model_summary.txt
+All output files saved to: D:\Code\Python\Creeper\srp_IWF\lmm_jetlag_v2
+================================================================================
+LMM JetLag V2 (Travel-available subset) - END
+================================================================================
+
+
+################################################################################################
+# 1.2  Main analysis: model comparison, LRT, post-hoc FDR, East vs West contrast
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_v2/model_comparison.txt
+################################################################################################
+
+==========================================================================================
+Likelihood Ratio Test — Model B: overall effect of C(JetLagGroup_dir)
+  H0: all JetLagGroup_dir coefficients (vs Minimal) are jointly zero.
+  Full:  Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1|Athlete_ID), ML
+  Reduced: Sinclair_Total ~ C(Sex) + (1|Athlete_ID), ML
+------------------------------------------------------------------------------------------
+  LogLik (full)    = -9545.063241
+  LogLik (reduced) = -9570.973083
+  LR (chi^2)       = 51.819683
+  df               = 10
+  p-value          = 1.232e-07
+
+==========================================================================================
+Model Comparison: Abs-only vs Directional vs Continuous
+==========================================================================================
+
+Model        Formula                                                             AIC        BIC      ICC
+----------------------------------------------------------------------------------------------------
+A (abs)      Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs)                    19120.2    19171.4   0.7536
+B (dir) *    Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir)                    19118.1    19197.8   0.7527
+C (cont)     Sinclair_Total ~ C(Sex) + JetLag_signed                         19140.6    19169.1   0.7541
+
+==========================================================================================
+Model B (Directional) - JetLagGroup coefficients
+  Reference group: Minimal(0-1h)
+  Positive coef = higher Sinclair than ref; Negative = lower
+------------------------------------------------------------------------------------------
+  C(JetLagGroup_dir)[T.West_2-3h]                         coef=-0.0617  p=0.9578 
+  C(JetLagGroup_dir)[T.West_4-5h]                         coef=-0.2692  p=0.8399 
+  C(JetLagGroup_dir)[T.West_6-7h]                         coef=-1.8311  p=0.2088 
+  C(JetLagGroup_dir)[T.West_8-9h]                         coef=-3.3245  p=0.1075 
+  C(JetLagGroup_dir)[T.West_10-11h]                       coef=+0.9988  p=0.4750 
+  C(JetLagGroup_dir)[T.East_2-3h]                         coef=-3.1228  p=0.0840 .
+  C(JetLagGroup_dir)[T.East_4-5h]                         coef=-1.2568  p=0.6492 
+  C(JetLagGroup_dir)[T.East_6-7h]                         coef=+0.3951  p=0.8633 
+  C(JetLagGroup_dir)[T.East_8-9h]                         coef=-7.7661  p=0.0000 ***
+  C(JetLagGroup_dir)[T.East_10-11h]                       coef=-1.6597  p=0.1794 
+==========================================================================================
+Likelihood Ratio Test — Model C: overall effect of JetLag_signed (continuous)
+  H0: coefficient of JetLag_signed = 0.
+  Full:    Sinclair_Total ~ C(Sex) + JetLag_signed + (1|Athlete_ID), ML
+  Reduced: Sinclair_Total ~ C(Sex) + (1|Athlete_ID), ML
+------------------------------------------------------------------------------------------
+  LogLik (full)    = -9565.303103
+  LogLik (reduced) = -9570.973083
+  LR (chi^2)       = 11.339958
+  df               = 1
+  p-value          = 7.586e-04
+
+==========================================================================================
+Post-hoc contrasts: each group vs Minimal(0-1h)  [FDR-BH corrected]
+  (No Sex × JetLagGroup_dir interaction → model coefficient = emmeans contrast)
+  Group                 Estimate      SE        95%CI             p_raw  sig      p_fdr sig_fdr
+  ----------------------------------------------------------------------------------------
+  West_2-3h              -0.0617  1.1670   [-2.349, +2.226]      0.9578          0.9578        
+  West_4-5h              -0.2692  1.3323   [-2.880, +2.342]      0.8399          0.9578        
+  West_6-7h              -1.8311  1.4567   [-4.686, +1.024]      0.2088          0.4175        
+  West_8-9h              -3.3245  2.0655   [-7.373, +0.724]      0.1075          0.3583        
+  West_10-11h            +0.9988  1.3980   [-1.741, +3.739]      0.4750          0.7916        
+  East_2-3h              -3.1228  1.8071   [-6.665, +0.419]      0.0840    .     0.3583        
+  East_4-5h              -1.2568  2.7632   [-6.673, +4.159]      0.6492          0.9275        
+  East_6-7h              +0.3951  2.2943   [-4.102, +4.892]      0.8633          0.9578        
+  East_8-9h              -7.7661  1.2752  [-10.265, -5.267]      0.0000  ***     0.0000     ***
+  East_10-11h            -1.6597  1.2361   [-4.082, +0.763]      0.1794          0.4175        
+  Reference: Minimal(0-1h)
+  Sig codes: *** p<.001  ** p<.01  * p<.05  . p<.1
+
+==========================================================================================
+Contrast Tests: East vs West at same magnitude
+  H0: coef(East_Xh) - coef(West_Xh) = 0
+  (both relative to Minimal(0-1h), so difference = East effect - West effect)
+------------------------------------------------------------------------------------------
+  2-3h: East-West     diff=-3.0610  se=1.8665  p=0.1010 
+  4-5h: East-West     diff=-0.9876  se=2.9271  p=0.7358 
+  6-7h: East-West     diff=+2.2262  se=2.5066  p=0.3745 
+  8-9h: East-West     diff=-4.4416  se=2.2445  p=0.0478 *
+  10-11h: East-West   diff=-2.6585  se=1.5698  p=0.0904 .
+==========================================================================================
+
+
+################################################################################################
+# 1.3  Main analysis: detailed REML model summaries (A / B / C)
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_v2/model_summary.txt
+################################################################################################
+
+================================================================================
+Model A: Abs-only JetLagGroup (travel-available subset)
+Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_abs) + (1|Athlete_ID)
+ICC: 0.7536
+
+                    Mixed Linear Model Regression Results
+==============================================================================
+Model:                  MixedLM       Dependent Variable:       Sinclair_Total
+No. Observations:       2186          Method:                   REML          
+No. Groups:             730           Scale:                    175.1768      
+Min. group size:        1             Log-Likelihood:           -9551.0803    
+Max. group size:        11            Converged:                Yes           
+Mean group size:        3.0                                                   
+------------------------------------------------------------------------------
+                              Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+------------------------------------------------------------------------------
+Intercept                     435.727    1.407 309.647 0.000  432.969  438.485
+C(Sex)[T.Women]              -149.953    1.821 -82.335 0.000 -153.523 -146.384
+C(JetLagGroup_abs)[T.2-4h]     -0.789    1.085  -0.728 0.467   -2.916    1.337
+C(JetLagGroup_abs)[T.4-6h]     -0.280    1.247  -0.224 0.823   -2.724    2.165
+C(JetLagGroup_abs)[T.6-8h]     -1.044    1.303  -0.802 0.423   -3.598    1.509
+C(JetLagGroup_abs)[T.8-10h]    -6.532    1.156  -5.650 0.000   -8.798   -4.266
+C(JetLagGroup_abs)[T.10-12h]   -0.540    1.046  -0.516 0.606   -2.591    1.511
+Group Var                     535.789    2.963                                
+==============================================================================
+
+
+================================================================================
+Model B: Directional JetLagGroup (travel-available subset)
+Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1|Athlete_ID)
+Ref group: Minimal(0-1h)
+ICC: 0.7527
+
+                       Mixed Linear Model Regression Results
+===================================================================================
+Model:                     MixedLM        Dependent Variable:        Sinclair_Total
+No. Observations:          2186           Method:                    REML          
+No. Groups:                730            Scale:                     174.8534      
+Min. group size:           1              Log-Likelihood:            -9545.0642    
+Max. group size:           11             Converged:                 Yes           
+Mean group size:           3.0                                                     
+-----------------------------------------------------------------------------------
+                                   Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+-----------------------------------------------------------------------------------
+Intercept                          435.787    1.405 310.266 0.000  433.034  438.540
+C(Sex)[T.Women]                   -149.768    1.818 -82.390 0.000 -153.331 -146.206
+C(JetLagGroup_dir)[T.West_2-3h]     -0.062    1.167  -0.053 0.958   -2.349    2.226
+C(JetLagGroup_dir)[T.West_4-5h]     -0.269    1.332  -0.202 0.840   -2.880    2.342
+C(JetLagGroup_dir)[T.West_6-7h]     -1.831    1.457  -1.257 0.209   -4.686    1.024
+C(JetLagGroup_dir)[T.West_8-9h]     -3.324    2.065  -1.610 0.108   -7.373    0.724
+C(JetLagGroup_dir)[T.West_10-11h]    0.999    1.398   0.714 0.475   -1.741    3.739
+C(JetLagGroup_dir)[T.East_2-3h]     -3.123    1.807  -1.728 0.084   -6.665    0.419
+C(JetLagGroup_dir)[T.East_4-5h]     -1.257    2.763  -0.455 0.649   -6.673    4.159
+C(JetLagGroup_dir)[T.East_6-7h]      0.395    2.294   0.172 0.863   -4.102    4.892
+C(JetLagGroup_dir)[T.East_8-9h]     -7.766    1.275  -6.090 0.000  -10.265   -5.267
+C(JetLagGroup_dir)[T.East_10-11h]   -1.660    1.236  -1.343 0.179   -4.082    0.763
+Group Var                          532.327    2.964                                
+===================================================================================
+
+
+================================================================================
+Model C: Continuous JetLag_signed (travel-available subset)
+Formula: Sinclair_Total ~ C(Sex) + JetLag_signed + (1|Athlete_ID)
+ICC: 0.7541
+
+              Mixed Linear Model Regression Results
+=================================================================
+Model:               MixedLM  Dependent Variable:  Sinclair_Total
+No. Observations:    2186     Method:              REML          
+No. Groups:          730      Scale:               177.0128      
+Min. group size:     1        Log-Likelihood:      -9565.3037    
+Max. group size:     11       Converged:           Yes           
+Mean group size:     3.0                                         
+-----------------------------------------------------------------
+                 Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+-----------------------------------------------------------------
+Intercept        434.242    1.255 345.960 0.000  431.781  436.702
+C(Sex)[T.Women] -149.919    1.831 -81.870 0.000 -153.508 -146.330
+JetLag_signed     -0.181    0.054  -3.364 0.001   -0.286   -0.076
+Group Var        542.796    2.977                                
+=================================================================
+
+
+################################################################################################
+# 2.1  Sensitivity (travel as covariate): data flow & coefficients
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_travel_control/analysis_log.txt
+################################################################################################
+
+================================================================================
+LMM_jetlag_travel  mode=control  - START
+Run time: 2026-07-20T15:47:06
+================================================================================
+Loaded: athlete_top13_travel.csv
+Rows: 2636, Columns: 25
+STEP 1 - Drop NA (core): 2636 → 2308
+STEP 2 - JetLag computed; drop NA: 2308 → 2308
+STEP 3 - Sinclair computed; drop NA: 2308 → 2308
+
+STEP 4 - TravelDuration missing before drop: 122 / 2308
+  After dropping missing TravelDuration: 2186 rows
+  Athletes: 730
+  TravelDuration  mean=15.67h  std=7.75h
+  TravelDuration_c = TravelDuration - 15.6674  (centered, unit=h)
+
+  JetLagGroup_dir counts (after TravelDuration drop):
+JetLagGroup_dir
+Minimal(0-1h)    443
+West_2-3h        308
+West_4-5h        257
+West_6-7h        212
+West_8-9h         68
+West_10-11h      160
+East_2-3h         97
+East_4-5h         36
+East_6-7h         50
+East_8-9h        289
+East_10-11h      266
+
+  Saved model input data: lmm_jetlag_travel_control\data_used_for_model.csv
+
+================================================================================
+STEP 5 - Model fitting
+================================================================================
+
+[Control mode]
+  Full    : Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c
+  Base B  : Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir)  (no TravelDuration)
+  No-JLag : Sinclair_Total ~ C(Sex) + TravelDuration_c  (no JetLagGroup_dir)
+
+================================================================================
+STEP 6 - Likelihood Ratio Tests (asymptotic chi-square, ML fits)
+================================================================================
+
+LRT-A: Full (JetLag + Travel) vs Base-B (JetLag only)
+  H0: TravelDuration_c coefficient = 0
+  LR=10.8644  df=1  p=9.8029e-04
+  → TravelDuration is a significant covariate (p < .05)
+
+LRT-B: Full (JetLag + Travel) vs No-JLag (Travel only)
+  H0: all JetLagGroup_dir coefficients = 0 (given TravelDuration in model)
+  LR=53.2699  df=10  p=6.6340e-08
+  → JetLagGroup_dir remains significant after controlling TravelDuration
+
+================================================================================
+STEP 7 - Fixed-effect coefficients (REML fit)
+================================================================================
+  sigma_u^2 = 527.0067   sigma_epsilon^2 = 174.4665   ICC = 0.7513
+  AIC = 19109.3  BIC = 19194.6
+  Intercept                                               coef=+433.8555  95%CI=[+430.882,+436.829]  p=0.0000 ***
+  C(Sex)[T.Women]                                         coef=-149.7545  95%CI=[-153.301,-146.208]  p=0.0000 ***
+  C(JetLagGroup_dir)[T.West_2-3h]                         coef=+1.3373  95%CI=[-1.094,+3.769]  p=0.2810 
+  C(JetLagGroup_dir)[T.West_4-5h]                         coef=+1.8436  95%CI=[-1.052,+4.739]  p=0.2120 
+  C(JetLagGroup_dir)[T.West_6-7h]                         coef=+0.8227  95%CI=[-2.437,+4.082]  p=0.6208 
+  C(JetLagGroup_dir)[T.West_8-9h]                         coef=-0.4397  95%CI=[-4.835,+3.955]  p=0.8445 
+  C(JetLagGroup_dir)[T.West_10-11h]                       coef=+5.1653  95%CI=[+1.471,+8.860]  p=0.0061 **
+  C(JetLagGroup_dir)[T.East_2-3h]                         coef=-1.7460  95%CI=[-5.378,+1.886]  p=0.3461 
+  C(JetLagGroup_dir)[T.East_4-5h]                         coef=-0.2520  95%CI=[-5.694,+5.190]  p=0.9277 
+  C(JetLagGroup_dir)[T.East_6-7h]                         coef=+1.6040  95%CI=[-2.944,+6.152]  p=0.4894 
+  C(JetLagGroup_dir)[T.East_8-9h]                         coef=-5.5841  95%CI=[-8.396,-2.773]  p=0.0001 ***
+  C(JetLagGroup_dir)[T.East_10-11h]                       coef=+1.9141  95%CI=[-1.307,+5.136]  p=0.2442 
+  TravelDuration_c                                        coef=-0.2182  95%CI=[-0.348,-0.088]  p=0.0010 **
+
+================================================================================
+STEP 8 - Post-hoc: each JetLagGroup vs Minimal  [FDR-BH]  (control mode)
+================================================================================
+  Note: model has no Sex×JetLag interaction → coef = emmeans trt.vs.ctrl contrast
+  Group                 Estimate      SE  Cohen_d        95%CI             p_raw  sig      p_fdr sig_fdr
+  ------------------------------------------------------------------------------------------------------
+  West_2-3h              +1.3373  1.2406   +0.101   [-1.094,+3.769]       0.2810          0.5621        
+  West_4-5h              +1.8436  1.4772   +0.140   [-1.052,+4.739]       0.2120          0.5621        
+  West_6-7h              +0.8227  1.6629   +0.062   [-2.437,+4.082]       0.6208          0.7760        
+  West_8-9h              -0.4397  2.2424   -0.033   [-4.835,+3.955]       0.8445          0.9277        
+  West_10-11h            +5.1653  1.8849   +0.391   [+1.471,+8.860]       0.0061   **     0.0307       *
+  East_2-3h              -1.7460  1.8530   -0.132   [-5.378,+1.886]       0.3461          0.5768        
+  East_4-5h              -0.2520  2.7766   -0.019   [-5.694,+5.190]       0.9277          0.9277        
+  East_6-7h              +1.6040  2.3206   +0.121   [-2.944,+6.152]       0.4894          0.6992        
+  East_8-9h              -5.5841  1.4345   -0.423   [-8.396,-2.773]       0.0001  ***     0.0010     ***
+  East_10-11h            +1.9141  1.6436   +0.145   [-1.307,+5.136]       0.2442          0.5621        
+
+  Saved: lmm_jetlag_travel_control\emmeans_FDR_travel_control.csv
+  Figure 1 (forest plot, from emmeans_FDR_travel_control.csv) saved: lmm_jetlag_travel_control\fig1_forest_main_effect.png
+
+Model comparison saved: lmm_jetlag_travel_control\model_comparison.txt
+Model summary saved: lmm_jetlag_travel_control\model_summary.txt
+
+================================================================================
+LMM_jetlag_travel  mode=control  - END
+================================================================================
+
+
+################################################################################################
+# 2.2  Sensitivity (travel as covariate): LRT-A / LRT-B & FDR post-hoc
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_travel_control/model_comparison.txt
+################################################################################################
+
+==========================================================================================
+Mode: control  |  Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + (1|Athlete_ID)
+==========================================================================================
+
+Random-effects variance (REML, full model):
+  sigma_u^2 = 527.0067   sigma_epsilon^2 = 174.4665   ICC = 0.7513
+
+LRT-A: Does TravelDuration significantly improve over base Model B (JetLag-only)?
+  Full vs Base-B  |  LR=10.8644  df=1  p=9.8029e-04
+  LogLik (full)    = -9539.631031
+  LogLik (base-B)  = -9545.063241
+  → TravelDuration is a significant covariate.
+
+LRT-B: Is JetLagGroup_dir still significant after controlling TravelDuration?
+  Full vs No-JLag  |  LR=53.2699  df=10  p=6.6340e-08
+  LogLik (full)    = -9539.631031
+  LogLik (no-JLag) = -9566.265999
+  → JetLagGroup_dir remains significant (robust to travel control).
+
+==========================================================================================
+Fixed-effect coefficients (REML):
+  sigma_u^2=527.0067  sigma_epsilon^2=174.4665  ICC=0.7513  AIC=19109.3  BIC=19194.6
+------------------------------------------------------------------------------------------
+  Intercept                                               coef=+433.8555  95%CI=[+430.882,+436.829]  p=0.0000 ***
+  C(Sex)[T.Women]                                         coef=-149.7545  95%CI=[-153.301,-146.208]  p=0.0000 ***
+  C(JetLagGroup_dir)[T.West_2-3h]                         coef=+1.3373  95%CI=[-1.094,+3.769]  p=0.2810 
+  C(JetLagGroup_dir)[T.West_4-5h]                         coef=+1.8436  95%CI=[-1.052,+4.739]  p=0.2120 
+  C(JetLagGroup_dir)[T.West_6-7h]                         coef=+0.8227  95%CI=[-2.437,+4.082]  p=0.6208 
+  C(JetLagGroup_dir)[T.West_8-9h]                         coef=-0.4397  95%CI=[-4.835,+3.955]  p=0.8445 
+  C(JetLagGroup_dir)[T.West_10-11h]                       coef=+5.1653  95%CI=[+1.471,+8.860]  p=0.0061 **
+  C(JetLagGroup_dir)[T.East_2-3h]                         coef=-1.7460  95%CI=[-5.378,+1.886]  p=0.3461 
+  C(JetLagGroup_dir)[T.East_4-5h]                         coef=-0.2520  95%CI=[-5.694,+5.190]  p=0.9277 
+  C(JetLagGroup_dir)[T.East_6-7h]                         coef=+1.6040  95%CI=[-2.944,+6.152]  p=0.4894 
+  C(JetLagGroup_dir)[T.East_8-9h]                         coef=-5.5841  95%CI=[-8.396,-2.773]  p=0.0001 ***
+  C(JetLagGroup_dir)[T.East_10-11h]                       coef=+1.9141  95%CI=[-1.307,+5.136]  p=0.2442 
+  TravelDuration_c                                        coef=-0.2182  95%CI=[-0.348,-0.088]  p=0.0010 **
+
+==========================================================================================
+Post-hoc: each JetLagGroup vs Minimal  [FDR-BH, control mode]
+  Group                 Estimate      SE  Cohen_d        95%CI             p_raw  sig      p_fdr sig_fdr
+  ------------------------------------------------------------------------------------------------------
+  West_2-3h              +1.3373  1.2406   +0.101   [-1.094,+3.769]       0.2810          0.5621        
+  West_4-5h              +1.8436  1.4772   +0.140   [-1.052,+4.739]       0.2120          0.5621        
+  West_6-7h              +0.8227  1.6629   +0.062   [-2.437,+4.082]       0.6208          0.7760        
+  West_8-9h              -0.4397  2.2424   -0.033   [-4.835,+3.955]       0.8445          0.9277        
+  West_10-11h            +5.1653  1.8849   +0.391   [+1.471,+8.860]       0.0061   **     0.0307       *
+  East_2-3h              -1.7460  1.8530   -0.132   [-5.378,+1.886]       0.3461          0.5768        
+  East_4-5h              -0.2520  2.7766   -0.019   [-5.694,+5.190]       0.9277          0.9277        
+  East_6-7h              +1.6040  2.3206   +0.121   [-2.944,+6.152]       0.4894          0.6992        
+  East_8-9h              -5.5841  1.4345   -0.423   [-8.396,-2.773]       0.0001  ***     0.0010     ***
+  East_10-11h            +1.9141  1.6436   +0.145   [-1.307,+5.136]       0.2442          0.5621        
+  Reference: Minimal(0-1h)  |  Cohen's d = beta / sigma_epsilon (13.2086)
+  Sig: *** <.001  ** <.01  * <.05  . <.1
+
+
+################################################################################################
+# 2.3  Sensitivity (travel as covariate): REML model summary
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_travel_control/model_summary.txt
+################################################################################################
+
+Mode: control
+Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + (1|Athlete_ID)
+sigma_u^2: 527.0067
+sigma_epsilon^2: 174.4665
+ICC: 0.7513
+
+                       Mixed Linear Model Regression Results
+===================================================================================
+Model:                     MixedLM        Dependent Variable:        Sinclair_Total
+No. Observations:          2186           Method:                    REML          
+No. Groups:                730            Scale:                     174.4665      
+Min. group size:           1              Log-Likelihood:            -9525.9632    
+Max. group size:           11             Converged:                 Yes           
+Mean group size:           3.0                                                     
+-----------------------------------------------------------------------------------
+                                   Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+-----------------------------------------------------------------------------------
+Intercept                          433.855    1.517 285.962 0.000  430.882  436.829
+C(Sex)[T.Women]                   -149.754    1.810 -82.753 0.000 -153.301 -146.208
+C(JetLagGroup_dir)[T.West_2-3h]      1.337    1.241   1.078 0.281   -1.094    3.769
+C(JetLagGroup_dir)[T.West_4-5h]      1.844    1.477   1.248 0.212   -1.052    4.739
+C(JetLagGroup_dir)[T.West_6-7h]      0.823    1.663   0.495 0.621   -2.437    4.082
+C(JetLagGroup_dir)[T.West_8-9h]     -0.440    2.242  -0.196 0.845   -4.835    3.955
+C(JetLagGroup_dir)[T.West_10-11h]    5.165    1.885   2.740 0.006    1.471    8.860
+C(JetLagGroup_dir)[T.East_2-3h]     -1.746    1.853  -0.942 0.346   -5.378    1.886
+C(JetLagGroup_dir)[T.East_4-5h]     -0.252    2.777  -0.091 0.928   -5.694    5.190
+C(JetLagGroup_dir)[T.East_6-7h]      1.604    2.321   0.691 0.489   -2.944    6.152
+C(JetLagGroup_dir)[T.East_8-9h]     -5.584    1.434  -3.893 0.000   -8.396   -2.773
+C(JetLagGroup_dir)[T.East_10-11h]    1.914    1.644   1.165 0.244   -1.307    5.136
+TravelDuration_c                    -0.218    0.066  -3.288 0.001   -0.348   -0.088
+Group Var                          527.007    2.945                                
+===================================================================================
+
+
+################################################################################################
+# 3.1  Travel duration as main effect: model comparison
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_travel_main/model_comparison.txt
+################################################################################################
+
+==========================================================================================
+Mode: main  |  Formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + (1|Athlete_ID)
+==========================================================================================
+
+Random-effects variance (REML, full model):
+  sigma_u^2 = 541.3534   sigma_epsilon^2 = 177.4294   ICC = 0.7532
+
+LRT: TravelDuration_c as main effect (Full vs Sex-only)
+  LR=9.4142  df=1  p=2.1532e-03
+  LogLik (full)    = -9566.265999
+  LogLik (reduced) = -9570.973083
+  → TravelDuration has a significant main effect on Sinclair_Total.
+
+==========================================================================================
+Fixed-effect coefficients (REML):
+  sigma_u^2=541.3534  sigma_epsilon^2=177.4294  ICC=0.7532  AIC=19142.5  BIC=19171.0
+------------------------------------------------------------------------------------------
+  Intercept                                               coef=+434.2560  95%CI=[+431.798,+436.714]  p=0.0000 ***
+  C(Sex)[T.Women]                                         coef=-149.9272  95%CI=[-153.513,-146.342]  p=0.0000 ***
+  TravelDuration_c                                        coef=-0.1328  95%CI=[-0.218,-0.048]  p=0.0022 **
+
+
+################################################################################################
+# 3.2  Travel duration as main effect: REML model summary
+# Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_travel_main/model_summary.txt
+################################################################################################
+
+Mode: main
+Formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + (1|Athlete_ID)
+sigma_u^2: 541.3534
+sigma_epsilon^2: 177.4294
+ICC: 0.7532
+
+              Mixed Linear Model Regression Results
+==================================================================
+Model:              MixedLM   Dependent Variable:   Sinclair_Total
+No. Observations:   2186      Method:               REML          
+No. Groups:         730       Scale:                177.4294      
+Min. group size:    1         Log-Likelihood:       -9566.1329    
+Max. group size:    11        Converged:            Yes           
+Mean group size:    3.0                                           
+------------------------------------------------------------------
+                  Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+------------------------------------------------------------------
+Intercept         434.256    1.254 346.331 0.000  431.798  436.714
+C(Sex)[T.Women]  -149.927    1.829 -81.955 0.000 -153.513 -146.342
+TravelDuration_c   -0.133    0.043  -3.061 0.002   -0.218   -0.048
+Group Var         541.353    2.972                                
+==================================================================
+
+
+################################################################################################
+# 4.1  Heterogeneity: overall LRT summary across moderators
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/heterogeneity_summary.md
+################################################################################################
+
+# Heterogeneity Summary
+
+Run time: 2026-07-20T16:36:28
+
+| Analysis | N | LR | df | p | Status |
+|---|---:|---:|---:|---:|---|
+| sex | 2184 | 3.662 | 10 | 9.613e-01 | ok |
+| age | 2184 | 12.639 | 10 | 2.445e-01 | ok |
+| experience | 2184 | 8.854 | 10 | 5.460e-01 | ok |
+| weight | 2184 | 18.752 | 30 | 9.450e-01 | ok |
+| age_adjusted | 2184 | 7.715 | 10 | 6.567e-01 | ok |
+| sensitivity_Age_c | 2184 | 0.119 | 1 | 7.305e-01 | ok |
+| sensitivity_BodyWeight_c | 2184 | 0.289 | 1 | 5.908e-01 | ok |
+| sensitivity_Cumulative_Exp_c | 2184 | 0.936 | 1 | 3.333e-01 | ok |
+
+
+################################################################################################
+# 4.2  Heterogeneity (sex): full model_comparison
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/sex_20260720_163301/model_comparison.txt
+################################################################################################
+
+analysis=sex
+full_formula=Sinclair_Total ~ TravelDuration_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+reduced_formula=Sinclair_Total ~ TravelDuration_c + C(Group) + C(JetLagGroup_dir)
+llf_full_ml=-9530.079721
+llf_reduced_ml=-9531.910735
+LR=3.662028
+df=10
+p=9.613084e-01
+aic_full=19110.159
+bic_full=19252.382
+
+
+################################################################################################
+# 4.2  Heterogeneity (age): full model_comparison
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/age_adjusted_20260720_163438/model_comparison.txt
+################################################################################################
+
+analysis=age_adjusted
+full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
+reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
+llf_full_ml=-9472.269576
+llf_reduced_ml=-9476.127064
+LR=7.714976
+df=10
+p=6.566550e-01
+aic_full=19020.539
+bic_full=19236.718
+
+
+################################################################################################
+# 4.2  Heterogeneity (experience): full model_comparison
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/experience_20260720_163342/model_comparison.txt
+################################################################################################
+
+analysis=experience
+full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir)
+llf_full_ml=-9475.826394
+llf_reduced_ml=-9480.253499
+LR=8.854210
+df=10
+p=5.459934e-01
+aic_full=19005.653
+bic_full=19159.253
+
+
+################################################################################################
+# 4.2  Heterogeneity (weight): full model_comparison
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/weight_20260720_163407/model_comparison.txt
+################################################################################################
+
+analysis=weight
+full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir)
+llf_full_ml=-9511.043778
+llf_reduced_ml=-9520.419835
+LR=18.752114
+df=30
+p=9.450464e-01
+aic_full=19118.088
+bic_full=19391.155

@@ -1,3 +1,5 @@
+# 读取两个excel， 计算每个国家在每个比赛中的数据量， 并计算总量前20和项目前10前20
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt

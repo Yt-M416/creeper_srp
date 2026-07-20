@@ -2,8 +2,8 @@
 LMM_jetlag.py（最终修正版）
 
 基于原版代码的最小改动，核心修正：
-  1. ★ 新增方向性分组 JetLagGroup_dir（7 档），保留原版 JetLagGroup_abs（4 档）做基线对比
-     - Minimal(0-3h) 合并不区分方向，作为参照组
+  1. ★ 新增方向性分组 JetLagGroup_dir（11 档），保留原版 JetLagGroup_abs 做基线对比
+     - Minimal(0-1h) 合并不区分方向（|signed|<2），作为参照组；标签按整数小时区间书写
      - East/West 各 3 档：3-6h, 6-9h, >=9h
   2. 拟合 3 个模型：A(abs-only) / B(directional) / C(continuous signed)
   3. 新增 Contrast Test：同量级下 East vs West 的系数差异检验
@@ -28,11 +28,13 @@ from typing import Optional, Tuple
 
 import numpy as np
 import pandas as pd
+from scipy.stats import chi2
 import matplotlib
 matplotlib.use("Agg")          # 服务器/无 GUI 环境兼容
 import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.formula.api as smf
+from statsmodels.stats.multitest import multipletests
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -45,18 +47,19 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 分组类别顺序（2h一档，与同学保持一致）
 ABS_GROUP_ORDER = ["0-2h", "2-4h", "4-6h", "6-8h", "8-10h", "10-12h"]
-# ★ Minimal(0-2h) 必须是第一个 category（statsmodels 参照组）
+# ★ Minimal(0-1h) 必须是第一个 category（statsmodels 参照组）
+# 标签含义：2h 宽 bins 用整数小时记为「下界-(上界-1)h」，如 [0,2)→0-1h，[2,4)→2-3h
 DIRECTIONAL_GROUP_ORDER = [
-    "Minimal(0-2h)",
-    "West_2-4h", "West_4-6h", "West_6-8h", "West_8-10h", "West_10-12h",
-    "East_2-4h", "East_4-6h", "East_6-8h", "East_8-10h", "East_10-12h",
+    "Minimal(0-1h)",
+    "West_2-3h", "West_4-5h", "West_6-7h", "West_8-9h", "West_10-11h",
+    "East_2-3h", "East_4-5h", "East_6-7h", "East_8-9h", "East_10-11h",
 ]
 
 # 图表横轴用这个顺序（从西到东，直观）
 DIRECTIONAL_PLOT_ORDER = [
-    "West_10-12h", "West_8-10h", "West_6-8h", "West_4-6h", "West_2-4h",
-    "Minimal(0-2h)",
-    "East_2-4h", "East_4-6h", "East_6-8h", "East_8-10h", "East_10-12h",
+    "West_10-11h", "West_8-9h", "West_6-7h", "West_4-5h", "West_2-3h",
+    "Minimal(0-1h)",
+    "East_2-3h", "East_4-5h", "East_6-7h", "East_8-9h", "East_10-11h",
 ]
 
 
@@ -138,38 +141,39 @@ def build_jetlag_group_abs(jetlag_abs: float) -> Optional[str]:
 
 def build_jetlag_group_directional(jetlag_signed: float) -> Optional[str]:
     """
-    ★ 方向性分组：11 档（2h一档）。用于 Model B。
+    ★ 方向性分组：11 档（2h 一档）。用于 Model B。
+    分组边界不变；字符串标签按整数小时区间书写（[a,b)→「a-(b-1)h」）。
 
-    |signed| < 2       → "Minimal(0-2h)"（参照组）
-    signed ∈ [+2, +4)  → "East_2-4h"
-    signed ∈ [+4, +6)  → "East_4-6h"
-    signed ∈ [+6, +8)  → "East_6-8h"
-    signed ∈ [+8, +10) → "East_8-10h"
-    signed ∈ [+10,+12] → "East_10-12h"
-    signed ∈ (-4, -2]  → "West_2-4h"
-    signed ∈ (-6, -4]  → "West_4-6h"
-    signed ∈ (-8, -6]  → "West_6-8h"
-    signed ∈ (-10,-8]  → "West_8-10h"
-    signed ∈ [-12,-10] → "West_10-12h"
+    |signed| < 2       → "Minimal(0-1h)"（参照组，对应 [0,2) 的整数 0,1）
+    signed ∈ [+2, +4)  → "East_2-3h"
+    signed ∈ [+4, +6)  → "East_4-5h"
+    signed ∈ [+6, +8)  → "East_6-7h"
+    signed ∈ [+8, +10) → "East_8-9h"
+    signed ∈ [+10,+12] → "East_10-11h"
+    signed ∈ (-4, -2]  → "West_2-3h"
+    signed ∈ (-6, -4]  → "West_4-5h"
+    signed ∈ (-8, -6]  → "West_6-7h"
+    signed ∈ (-10,-8]  → "West_8-9h"
+    signed ∈ [-12,-10] → "West_10-11h"
     """
     if pd.isna(jetlag_signed):
         return None
     x = float(jetlag_signed)
     absx = abs(x)
     if absx < 2:
-        return "Minimal(0-2h)"
+        return "Minimal(0-1h)"
     if x > 0:  # 向东
-        if absx < 4:   return "East_2-4h"
-        if absx < 6:   return "East_4-6h"
-        if absx < 8:   return "East_6-8h"
-        if absx < 10:  return "East_8-10h"
-        return "East_10-12h"
+        if absx < 4:   return "East_2-3h"
+        if absx < 6:   return "East_4-5h"
+        if absx < 8:   return "East_6-7h"
+        if absx < 10:  return "East_8-9h"
+        return "East_10-11h"
     else:       # 向西
-        if absx < 4:   return "West_2-4h"
-        if absx < 6:   return "West_4-6h"
-        if absx < 8:   return "West_6-8h"
-        if absx < 10:  return "West_8-10h"
-        return "West_10-12h"
+        if absx < 4:   return "West_2-3h"
+        if absx < 6:   return "West_4-5h"
+        if absx < 8:   return "West_6-7h"
+        if absx < 10:  return "West_8-9h"
+        return "West_10-11h"
 
 
 def log_write(fp, msg: str) -> None:
@@ -333,12 +337,210 @@ def main() -> None:
         res_c_ml   = model_c.fit(method="lbfgs", reml=False)
         icc_c = compute_icc(res_c_reml)
 
+        # -------- STEP 7.0: Likelihood Ratio Test — Model B 整体效应（JetLagGroup_dir）--------
+        # 与 Full 相比，Reduced 仅去掉 C(JetLagGroup_dir)；随机效应与数据行一致；须用 ML（reml=False）比较固定效应。
+        log_write(lf, "\n" + "=" * 80)
+        log_write(lf, "STEP 7.0 - Likelihood Ratio Test (Model B: JetLagGroup_dir overall effect)")
+        log_write(lf, "=" * 80)
+
+        formula_b_reduced = "Sinclair_Total ~ C(Sex)"
+        log_write(lf, f"Full model (ML):    {formula_b} + (1|Athlete_ID)")
+        log_write(lf, f"Reduced model (ML): {formula_b_reduced} + (1|Athlete_ID)")
+
+        model_b_reduced = smf.mixedlm(formula_b_reduced, data=df, groups=df["Athlete_ID"])
+        res_b_reduced_ml = model_b_reduced.fit(method="lbfgs", reml=False)
+
+        llf_full = float(res_b_ml.llf)
+        llf_reduced = float(res_b_reduced_ml.llf)
+        lr_stat = 2.0 * (llf_full - llf_reduced)
+        # 嵌套模型下固定效应参数个数之差 = 被检验因子非参照水平数（此处为 11-1=10）
+        df_lrt = int(res_b_ml.k_fe - res_b_reduced_ml.k_fe)
+        if lr_stat < 0:
+            log_write(
+                lf,
+                f"[WARN] LR statistic is negative ({lr_stat:.6f}); "
+                "check convergence / optimization; p-value not interpretable.",
+            )
+            p_lrt = np.nan
+        else:
+            p_lrt = float(chi2.sf(lr_stat, df_lrt))
+
+        log_write(lf, "\nLikelihood Ratio Test (asymptotic chi-square):")
+        log_write(lf, f"  LogLik (full)         = {llf_full:.6f}")
+        log_write(lf, f"  LogLik (reduced)      = {llf_reduced:.6f}")
+        log_write(lf, f"  LR statistic (chi^2)  = {lr_stat:.6f}")
+        log_write(lf, f"  df                    = {df_lrt}  (difference in k_fe)")
+        log_write(lf, f"  p-value               = {p_lrt:.3e}" if not pd.isna(p_lrt) else "  p-value               = NA")
+        if not pd.isna(p_lrt):
+            if p_lrt < 0.05:
+                log_write(lf, "  → Result: C(JetLagGroup_dir) has a significant overall effect (p < .05).")
+            else:
+                log_write(lf, "  → Result: C(JetLagGroup_dir) is not significant overall (p >= .05).")
+        log_write(
+            lf,
+            "  Note: asymptotic LRT; for small samples consider sensitivity checks (e.g. parametric bootstrap).",
+        )
+
+        lrt_comp_lines = [
+            "=" * 90,
+            "Likelihood Ratio Test — Model B: overall effect of C(JetLagGroup_dir)",
+            "  H0: all JetLagGroup_dir coefficients (vs Minimal) are jointly zero.",
+            "  Full:  " + formula_b + " + (1|Athlete_ID), ML",
+            "  Reduced: " + formula_b_reduced + " + (1|Athlete_ID), ML",
+            "-" * 90,
+            f"  LogLik (full)    = {llf_full:.6f}",
+            f"  LogLik (reduced) = {llf_reduced:.6f}",
+            f"  LR (chi^2)       = {lr_stat:.6f}",
+            f"  df               = {df_lrt}",
+            f"  p-value          = {p_lrt:.3e}" if not pd.isna(p_lrt) else "  p-value          = NA",
+            "",
+        ]
+
+        # -------- STEP 7.1: Likelihood Ratio Test — Model C 整体效应（JetLag_signed 连续变量）--------
+        # 复用 STEP 6 已拟合的 res_c_ml 与 STEP 7.0 已拟合的 res_b_reduced_ml，避免重复拟合。
+        # df = k_fe(full) - k_fe(reduced) = 1（仅多一个连续参数 JetLag_signed）。
+        log_write(lf, "\n" + "=" * 80)
+        log_write(lf, "STEP 7.1 - Likelihood Ratio Test (Model C: JetLag_signed continuous effect)")
+        log_write(lf, "=" * 80)
+        log_write(lf, f"Full model (ML):    {formula_c} + (1|Athlete_ID)  [reused from STEP 6]")
+        log_write(lf, f"Reduced model (ML): {formula_b_reduced} + (1|Athlete_ID)  [reused from STEP 7.0]")
+
+        llf_c_full    = float(res_c_ml.llf)
+        llf_c_reduced = float(res_b_reduced_ml.llf)
+        lr_stat_c     = 2.0 * (llf_c_full - llf_c_reduced)
+        df_lrt_c      = int(res_c_ml.k_fe - res_b_reduced_ml.k_fe)   # 应为 1
+
+        if lr_stat_c < 0:
+            log_write(
+                lf,
+                f"[WARN] LR statistic is negative ({lr_stat_c:.6f}); "
+                "check convergence / optimization; p-value not interpretable.",
+            )
+            p_lrt_c = np.nan
+        else:
+            p_lrt_c = float(chi2.sf(lr_stat_c, df_lrt_c))
+
+        log_write(lf, "\nLikelihood Ratio Test (asymptotic chi-square):")
+        log_write(lf, f"  LogLik (full)         = {llf_c_full:.6f}")
+        log_write(lf, f"  LogLik (reduced)      = {llf_c_reduced:.6f}")
+        log_write(lf, f"  LR statistic (chi^2)  = {lr_stat_c:.6f}")
+        log_write(lf, f"  df                    = {df_lrt_c}  (1 continuous predictor)")
+        log_write(lf, f"  p-value               = {p_lrt_c:.3e}" if not pd.isna(p_lrt_c) else "  p-value               = NA")
+        if not pd.isna(p_lrt_c):
+            if p_lrt_c < 0.05:
+                log_write(lf, "  → Result: JetLag_signed has a significant overall effect (p < .05).")
+            else:
+                log_write(lf, "  → Result: JetLag_signed is not significant overall (p >= .05).")
+        log_write(
+            lf,
+            "  Note: asymptotic LRT; for small samples consider sensitivity checks (e.g. parametric bootstrap).",
+        )
+
+        lrt_c_comp_lines = [
+            "=" * 90,
+            "Likelihood Ratio Test — Model C: overall effect of JetLag_signed (continuous)",
+            "  H0: coefficient of JetLag_signed = 0.",
+            "  Full:    " + formula_c + " + (1|Athlete_ID), ML",
+            "  Reduced: " + formula_b_reduced + " + (1|Athlete_ID), ML",
+            "-" * 90,
+            f"  LogLik (full)    = {llf_c_full:.6f}",
+            f"  LogLik (reduced) = {llf_c_reduced:.6f}",
+            f"  LR (chi^2)       = {lr_stat_c:.6f}",
+            f"  df               = {df_lrt_c}",
+            f"  p-value          = {p_lrt_c:.3e}" if not pd.isna(p_lrt_c) else "  p-value          = NA",
+            "",
+        ]
+
+        # -------- STEP 7.2: Post-hoc 对比（各组 vs Minimal）+ FDR 校正 --------
+        # 数学等价性说明：
+        #   模型无 Sex×JetLagGroup_dir 交互项，Sex 的贡献在"g vs Minimal"对比中完全消掉，
+        #   因此 C(JetLagGroup_dir)[T.xxx] 系数本身就等于 emmeans 的 trt.vs.ctrl contrast。
+        #   只需对已有 10 个 p 值做 BH-FDR 多重校正即可，无需重新估计。
+        log_write(lf, "\n" + "=" * 80)
+        log_write(lf, "STEP 7.2 - Post-hoc contrasts: each group vs Minimal(0-1h)  [FDR-BH corrected]")
+        log_write(lf, "=" * 80)
+        log_write(lf, "  Method: model coefficients = trt.vs.ctrl contrasts (no Sex×Group interaction)")
+        log_write(lf, "  Multiple comparison correction: FDR (Benjamini-Hochberg)")
+        log_write(lf, "  95% CI from REML fit profile (Wald approximation)\n")
+
+        jetlag_terms = [n for n in res_b_reml.fe_params.index if "JetLagGroup_dir" in n]
+        ci_df = res_b_reml.conf_int()
+
+        emm_rows = []
+        for term in jetlag_terms:
+            m = re.search(r"\[T\.(.+?)\]", term)
+            group = m.group(1) if m else term
+            coef  = float(res_b_reml.fe_params[term])
+            se    = float(res_b_reml.bse[term])
+            p_raw = float(res_b_reml.pvalues[term])
+            ci_lo = float(ci_df.loc[term, 0])
+            ci_hi = float(ci_df.loc[term, 1])
+            emm_rows.append({"Group": group, "Estimate": coef, "SE": se,
+                             "CI_lo": ci_lo, "CI_hi": ci_hi, "p_raw": p_raw})
+
+        emm_df = pd.DataFrame(emm_rows)
+
+        # BH-FDR 校正
+        _, p_fdr_arr, _, _ = multipletests(emm_df["p_raw"].values, method="fdr_bh")
+        emm_df["p_fdr"] = p_fdr_arr
+
+        def sig_stars(p: float) -> str:
+            if pd.isna(p):  return ""
+            if p < 0.001:   return "***"
+            if p < 0.01:    return "**"
+            if p < 0.05:    return "*"
+            if p < 0.1:     return "."
+            return ""
+
+        emm_df["sig_raw"] = emm_df["p_raw"].apply(sig_stars)
+        emm_df["sig_fdr"] = emm_df["p_fdr"].apply(sig_stars)
+
+        # 写入 analysis_log
+        hdr = f"  {'Group':<20} {'Estimate':>9} {'SE':>7} {'95%CI':^20} {'p_raw':>9} {'sig':>4}  {'p_fdr':>9} {'sig_fdr':>7}"
+        log_write(lf, hdr)
+        log_write(lf, "  " + "-" * (len(hdr) - 2))
+        for _, row in emm_df.iterrows():
+            ci_str = f"[{row['CI_lo']:+.3f}, {row['CI_hi']:+.3f}]"
+            log_write(
+                lf,
+                f"  {row['Group']:<20} {row['Estimate']:>+9.4f} {row['SE']:>7.4f} "
+                f"{ci_str:^20} {row['p_raw']:>9.4f} {row['sig_raw']:>4}  "
+                f"{row['p_fdr']:>9.4f} {row['sig_fdr']:>7}",
+            )
+        log_write(lf, "  (Reference: Minimal(0-1h), Estimate = contrast vs Minimal)")
+
+        # 保存到 CSV
+        emm_csv_path = os.path.join(OUTPUT_DIR, "emmeans_FDR.csv")
+        emm_df.to_csv(emm_csv_path, index=False, encoding="utf-8-sig", float_format="%.6f")
+        log_write(lf, f"\n  Saved: {emm_csv_path}")
+
+        # 构造写入 model_comparison.txt 的段落
+        emm_comp_lines = [
+            "",
+            "=" * 90,
+            "Post-hoc contrasts: each group vs Minimal(0-1h)  [FDR-BH corrected]",
+            "  (No Sex × JetLagGroup_dir interaction → model coefficient = emmeans contrast)",
+            f"  {'Group':<20} {'Estimate':>9} {'SE':>7} {'95%CI':^20} {'p_raw':>9} {'sig':>4}  {'p_fdr':>9} {'sig_fdr':>7}",
+            "  " + "-" * 88,
+        ]
+        for _, row in emm_df.iterrows():
+            ci_str = f"[{row['CI_lo']:+.3f}, {row['CI_hi']:+.3f}]"
+            emm_comp_lines.append(
+                f"  {row['Group']:<20} {row['Estimate']:>+9.4f} {row['SE']:>7.4f} "
+                f"{ci_str:^20} {row['p_raw']:>9.4f} {row['sig_raw']:>4}  "
+                f"{row['p_fdr']:>9.4f} {row['sig_fdr']:>7}"
+            )
+        emm_comp_lines.append("  Reference: Minimal(0-1h)")
+        emm_comp_lines.append("  Sig codes: *** p<.001  ** p<.01  * p<.05  . p<.1")
+        emm_comp_lines.append("")
+
         # -------- STEP 7: 模型对比 + Contrast Test --------
         aic_a, bic_a = res_a_ml.aic, res_a_ml.bic
         aic_b, bic_b = res_b_ml.aic, res_b_ml.bic
         aic_c, bic_c = res_c_ml.aic, res_c_ml.bic
 
         comp_lines = []
+        comp_lines.extend(lrt_comp_lines)
         comp_lines.append("=" * 90)
         comp_lines.append("Model Comparison: Abs-only vs Directional vs Continuous")
         comp_lines.append("=" * 90)
@@ -363,7 +565,7 @@ def main() -> None:
         comp_lines.append("")
         comp_lines.append("=" * 90)
         comp_lines.append("Model B (Directional) - JetLagGroup coefficients")
-        comp_lines.append("  Reference group: Minimal(0-3h)")
+        comp_lines.append("  Reference group: Minimal(0-1h)")
         comp_lines.append("  Positive coef = higher Sinclair than ref; Negative = lower")
         comp_lines.append("-" * 90)
         for name, val in res_b_reml.params.items():
@@ -377,12 +579,18 @@ def main() -> None:
                     elif pval < 0.1:   sig = "."
                 comp_lines.append(f"  {name:<55} coef={val:+.4f}  p={pval:.4f} {sig}")
 
+        # LRT Model C（连续变量，紧跟 Model B 系数之后）
+        comp_lines.extend(lrt_c_comp_lines)
+
+        # Post-hoc FDR 表（紧跟 LRT C 之后）
+        comp_lines.extend(emm_comp_lines)
+
         # ★ Contrast Tests: 同量级 East vs West
         comp_lines.append("")
         comp_lines.append("=" * 90)
         comp_lines.append("Contrast Tests: East vs West at same magnitude")
         comp_lines.append("  H0: coef(East_Xh) - coef(West_Xh) = 0")
-        comp_lines.append("  (both relative to Minimal(0-3h), so difference = East effect - West effect)")
+        comp_lines.append("  (both relative to Minimal(0-1h), so difference = East effect - West effect)")
         comp_lines.append("-" * 90)
 
         # ★ 用固定效应参数（fe_params）构造 contrast 向量
@@ -417,29 +625,29 @@ def main() -> None:
                 comp_lines.append(f"  {label:<18}  [FAILED] {e}")
 
         contrast_east_vs_west(
-            "2-4h: East-West",
-            "C(JetLagGroup_dir)[T.East_2-4h]",
-            "C(JetLagGroup_dir)[T.West_2-4h]",
+            "2-3h: East-West",
+            "C(JetLagGroup_dir)[T.East_2-3h]",
+            "C(JetLagGroup_dir)[T.West_2-3h]",
         )
         contrast_east_vs_west(
-            "4-6h: East-West",
-            "C(JetLagGroup_dir)[T.East_4-6h]",
-            "C(JetLagGroup_dir)[T.West_4-6h]",
+            "4-5h: East-West",
+            "C(JetLagGroup_dir)[T.East_4-5h]",
+            "C(JetLagGroup_dir)[T.West_4-5h]",
         )
         contrast_east_vs_west(
-            "6-8h: East-West",
-            "C(JetLagGroup_dir)[T.East_6-8h]",
-            "C(JetLagGroup_dir)[T.West_6-8h]",
+            "6-7h: East-West",
+            "C(JetLagGroup_dir)[T.East_6-7h]",
+            "C(JetLagGroup_dir)[T.West_6-7h]",
         )
         contrast_east_vs_west(
-            "8-10h: East-West",
-            "C(JetLagGroup_dir)[T.East_8-10h]",
-            "C(JetLagGroup_dir)[T.West_8-10h]",
+            "8-9h: East-West",
+            "C(JetLagGroup_dir)[T.East_8-9h]",
+            "C(JetLagGroup_dir)[T.West_8-9h]",
         )
         contrast_east_vs_west(
-            "10-12h: East-West",
-            "C(JetLagGroup_dir)[T.East_10-12h]",
-            "C(JetLagGroup_dir)[T.West_10-12h]",
+            "10-11h: East-West",
+            "C(JetLagGroup_dir)[T.East_10-11h]",
+            "C(JetLagGroup_dir)[T.West_10-11h]",
         )
 
         comp_lines.append("")
@@ -465,7 +673,7 @@ def main() -> None:
             sf.write("=" * 80 + "\n")
             sf.write("* Model B: Directional JetLagGroup (FIXED version)\n")
             sf.write(f"Formula: {formula_b} + (1|Athlete_ID)\n")
-            sf.write(f"Ref group: Minimal(0-3h)\n")
+            sf.write(f"Ref group: Minimal(0-1h)\n")
             sf.write(f"ICC: {icc_b:.4f}\n\n")
             sf.write(res_b_reml.summary().as_text())
             sf.write("\n\n")

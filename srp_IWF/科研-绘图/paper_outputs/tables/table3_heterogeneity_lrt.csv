@@ -1,0 +1,5 @@
+﻿Moderator,Definition,LR,df,p
+Sex,Men vs. Women,3.662,10,0.9613
+Age,<25 vs. ≥25 yr,12.639,10,0.2445
+Experience,≤2 vs. ≥3 starts,8.854,10,0.546
+Weight class,4 categories,18.752,30,0.945

@@ -28,7 +28,7 @@ Group Var                     530.330    2.872
 ================================================================================
 * Model B: Directional JetLagGroup (FIXED version)
 Formula: Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1|Athlete_ID)
-Ref group: Minimal(0-3h)
+Ref group: Minimal(0-1h)
 ICC: 0.7513
 
                        Mixed Linear Model Regression Results
@@ -44,16 +44,16 @@ Mean group size:           3.1
 -----------------------------------------------------------------------------------
 Intercept                          435.676    1.353 321.944 0.000  433.023  438.328
 C(Sex)[T.Women]                   -149.775    1.773 -84.498 0.000 -153.249 -146.301
-C(JetLagGroup_dir)[T.West_2-4h]     -0.177    1.138  -0.156 0.876   -2.408    2.053
-C(JetLagGroup_dir)[T.West_4-6h]     -0.644    1.297  -0.497 0.619   -3.186    1.898
-C(JetLagGroup_dir)[T.West_6-8h]     -1.941    1.427  -1.360 0.174   -4.737    0.855
-C(JetLagGroup_dir)[T.West_8-10h]    -2.086    1.884  -1.107 0.268   -5.779    1.608
-C(JetLagGroup_dir)[T.West_10-12h]    0.789    1.377   0.573 0.567   -1.910    3.488
-C(JetLagGroup_dir)[T.East_2-4h]     -3.584    1.653  -2.169 0.030   -6.824   -0.345
-C(JetLagGroup_dir)[T.East_4-6h]     -2.221    2.510  -0.885 0.376   -7.140    2.698
-C(JetLagGroup_dir)[T.East_6-8h]     -0.132    2.233  -0.059 0.953   -4.508    4.245
-C(JetLagGroup_dir)[T.East_8-10h]    -7.470    1.222  -6.111 0.000   -9.867   -5.074
-C(JetLagGroup_dir)[T.East_10-12h]   -1.825    1.199  -1.521 0.128   -4.175    0.526
+C(JetLagGroup_dir)[T.West_2-3h]     -0.177    1.138  -0.156 0.876   -2.408    2.053
+C(JetLagGroup_dir)[T.West_4-5h]     -0.644    1.297  -0.497 0.619   -3.186    1.898
+C(JetLagGroup_dir)[T.West_6-7h]     -1.941    1.427  -1.360 0.174   -4.737    0.855
+C(JetLagGroup_dir)[T.West_8-9h]     -2.086    1.884  -1.107 0.268   -5.779    1.608
+C(JetLagGroup_dir)[T.West_10-11h]    0.789    1.377   0.573 0.567   -1.910    3.488
+C(JetLagGroup_dir)[T.East_2-3h]     -3.584    1.653  -2.169 0.030   -6.824   -0.345
+C(JetLagGroup_dir)[T.East_4-5h]     -2.221    2.510  -0.885 0.376   -7.140    2.698
+C(JetLagGroup_dir)[T.East_6-7h]     -0.132    2.233  -0.059 0.953   -4.508    4.245
+C(JetLagGroup_dir)[T.East_8-9h]     -7.470    1.222  -6.111 0.000   -9.867   -5.074
+C(JetLagGroup_dir)[T.East_10-11h]   -1.825    1.199  -1.521 0.128   -4.175    0.526
 Group Var                          526.154    2.868                                
 ===================================================================================
 
