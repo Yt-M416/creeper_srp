@@ -36,14 +36,17 @@ def write_for_writer(fw: Path) -> None:
 在项目根目录 `srp_IWF/` 下依次运行：
 
 ```text
-python LMM_jetlag_v2.py
+python preprocess2-athlete.py
+python merge_travel.py
+python LMM_jetlag_travel_v2.py --mode control    # ★ 主分析（控制旅行时长），正文 headline 结果
+python LMM_jetlag_travel_v2.py --mode main       # 旅行时长主效应（Discussion 引用）
+python LMM_jetlag_v2.py                          # 补充分析（不控制旅行时长，仅作对照）
 python heterogeneity_analysis.py --run-sensitivity
-python LMM_jetlag_travel.py --mode control
-python LMM_jetlag_travel.py --mode main
 python 科研-绘图/make_paper_figures.py
 ```
 
-中间结果仍写入 `lmm_jetlag/`、`heterogeneity_results/`、`lmm_jetlag_travel_*`；论文用图表写入 `科研-绘图/paper_outputs/`。
+中间结果写入 `lmm_jetlag_travel_control/`（主分析）、`lmm_jetlag_travel_main/`、`lmm_jetlag_v2/`（补充分析）、
+`heterogeneity_results/`；论文用图表写入 `科研-绘图/paper_outputs/`。
 """,
         encoding="utf-8",
     )
@@ -62,7 +65,8 @@ python 科研-绘图/make_paper_figures.py
 | `JetLag_signed` | 圆形 24h 最短时差，东向为正 (h) |
 | `JetLagGroup_dir` | 方向性 11 档分组；参照组 `Minimal(0-1h)` |
 | `Sinclair_Total` | IWF Sinclair 标准化总分（跨级别可比） |
-| `TravelDuration` | 估计旅行时长 (h) |
+| `TravelDuration` | 估计旅行时长 (h)（起点为各国训练基地城市，非首都） |
+| `TravelDuration_c` | TravelDuration 中心化，**主模型协变量** |
 | `Reference_Date` | 比赛参考日期 |
 | `Born` | 出生日期（原始字符串，解析用于年龄） |
 
@@ -71,9 +75,9 @@ python 科研-绘图/make_paper_figures.py
         encoding="utf-8",
     )
 
-    # key numbers from files
+    # key numbers from files（主分析=控制旅行时长，headline 在前；补充分析置后）
     lines_kn = ["# 关键数字（自动摘录）\n"]
-    dused = PROJECT_ROOT / "lmm_jetlag_v2" / "data_used_for_model.csv"
+    dused = PROJECT_ROOT / "lmm_jetlag_travel_control" / "data_used_for_model.csv"
     if dused.is_file():
         du = pd.read_csv(dused, encoding="utf-8-sig")
         lines_kn.append(f"- 模型用观测数 (rows): **{len(du)}**")
@@ -81,28 +85,33 @@ python 科研-绘图/make_paper_figures.py
         if "Nation" in du.columns:
             lines_kn.append(f"- 国家/地区数 (unique Nation): **{du['Nation'].nunique()}**")
 
+    tc = PROJECT_ROOT / "lmm_jetlag_travel_control" / "model_comparison.txt"
+    if tc.is_file():
+        t_tc = tc.read_text(encoding="utf-8")
+        lr = parse_travel_control_lrts(t_tc)
+        if lr.get("lrt_b_p") is not None:
+            lines_kn.append(
+                f"- ★ 主分析整体 LRT-B（控制旅行时长后 JetLag 联合检验）: "
+                f"LR={lr.get('lrt_b_lr'):.3f}, df={lr.get('lrt_b_df')}, p={lr.get('lrt_b_p'):.3e}"
+            )
+        if lr.get("lrt_a_p") is not None:
+            lines_kn.append(
+                f"- 主分析 LRT-A（TravelDuration 本身是否显著协变量）: "
+                f"LR={lr.get('lrt_a_lr'):.3f}, df={lr.get('lrt_a_df')}, p={lr.get('lrt_a_p'):.3e}"
+            )
+        for line in t_tc.splitlines():
+            if "ICC" in line and "sigma_u" in line:
+                lines_kn.append(f"- 主分析 ICC（REML 方差分量行）: `{line.strip()}`")
+                break
+
     mc = PROJECT_ROOT / "lmm_jetlag_v2" / "model_comparison.txt"
     if mc.is_file():
         t = mc.read_text(encoding="utf-8")
         lrt = parse_lrt_block_model_b_jetlag(t)
         if lrt:
             lines_kn.append(
-                f"- Model B 方向性时差整体 LRT: LR={lrt['lr']:.3f}, df={lrt['df']}, p={lrt['p']:.3e}"
-            )
-        for line in t.splitlines():
-            if "B (dir)" in line and "Sinclair_Total" in line:
-                toks = line.split()
-                if toks:
-                    lines_kn.append(f"- Model B ICC（model_comparison 表末列）: **{toks[-1]}**")
-                break
-
-    tc = PROJECT_ROOT / "lmm_jetlag_travel_control" / "model_comparison.txt"
-    if tc.is_file():
-        lr = parse_travel_control_lrts(tc.read_text(encoding="utf-8"))
-        if lr.get("lrt_b_p") is not None:
-            lines_kn.append(
-                f"- 控制旅行时长后 JetLag 联合 LRT-B: LR={lr.get('lrt_b_lr'):.3f}, "
-                f"df={lr.get('lrt_b_df')}, p={lr.get('lrt_b_p'):.3e}"
+                f"- 补充分析（不控制旅行时长）整体 LRT，供一致性对照: "
+                f"LR={lrt['lr']:.3f}, df={lrt['df']}, p={lrt['p']:.3e}"
             )
 
     (fw / "key_numbers.md").write_text("\n".join(lines_kn) + "\n", encoding="utf-8")
@@ -111,31 +120,45 @@ python 科研-绘图/make_paper_figures.py
     an.write_text(
         """# Methods 写作要点（笔记）
 
-## 线性混合模型 (LMM)
+## 线性混合模型 (LMM) —— 主模型（论文正文 headline 结果）
 
 - 结局：`Sinclair_Total`
-- 固定效应：`C(Sex) + C(JetLagGroup_dir)`（主分析 Model B，当前以 `LMM_jetlag_v2.py` 的 2186 子样本为主文口径）；随机截距：`(1 | Athlete_ID)`
+- 固定效应：`C(Sex) + C(JetLagGroup_dir) + TravelDuration_c`（主分析，控制旅行时长，
+  以 `LMM_jetlag_travel_v2.py --mode control` 的 2186 样本为正文口径）；随机截距：`(1 | Athlete_ID)`
 - 参照组：`Minimal(0-1h)`（|signed jet lag| < 2 h）
+- TravelDuration_c：旅行时长中心化协变量（TravelDuration − 样本均值）
 - 软件：`statsmodels` `MixedLM`，优化 `L-BFGS`
+
+## 整体检验
+
+- **LRT-B（headline，正文引用）**：控制 TravelDuration_c 后，比较含/不含 JetLagGroup_dir 的模型，
+  回答"时差分组作为整体是否对成绩有影响，且不能被旅行疲劳解释"。
+- LRT-A：TravelDuration_c 本身是否显著改善拟合（旅行时长的独立贡献）。
+
+## 补充分析（不控制旅行时长，一致性对照，不进正文表格）
+
+- 固定效应：`C(Sex) + C(JetLagGroup_dir)`（`LMM_jetlag_v2.py`，同一份2186样本，去掉 TravelDuration_c）
+- 用途：证明控制旅行时长前后，效应方向与显著性模式一致（仅量级从 β≈−7.77 减弱为 β≈−5.58），
+  说明时差效应不完全等同于旅行疲劳。
 
 ## 多重比较
 
 - 各时差组 vs Minimal 的事后对比：模型系数即对比（无 Sex×时差 交互）
 - **FDR**：Benjamini–Hochberg，对 10 个非参照组 `p_raw` 校正得 `p_fdr`
+- Table 2 / Fig 1 的数据来源均为主模型（`lmm_jetlag_travel_control`）。
 
 ## 异质性
 
 - 分层模型（Design A）：在亚组内分别拟合同结构 LMM
 - 全局交互：完整模型含 `C(Group):C(JetLagGroup_dir)` 与去交互的嵌套模型，**ML** 拟合下似然比检验
 
-## 旅行时长稳健性
-
-- 协变量：`TravelDuration_c`（中心化）
-- `LMM_jetlag_travel.py --mode control` 报告 LRT-A（是否需旅行）与 LRT-B（控制旅行后时差是否仍联合显著）
-
 ## Sinclair
 
-- IWF 2021–2024 周期 Sinclair 系数（男/女不同 A、b 参数），见 `LMM_jetlag.py` 内 `calculate_sinclair`。
+- IWF 2021–2024 周期 Sinclair 系数（男/女不同 A、b 参数），见 `LMM_jetlag_travel_v2.py` 内 `calculate_sinclair`。
+
+## Cohen's d
+
+- d = β / σ_ε（σ_ε 为 REML 残差标准差 = sqrt(scale)，**不是**残差方差）。
 """,
         encoding="utf-8",
     )

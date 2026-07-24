@@ -37,7 +37,7 @@ def write_usage_manifest(fw_dir: Path, consolidated_path: Path) -> None:
 | 文件 | 用途 |
 |---|---|
 | `for_writer/WRITER_PROMPT.md` | **给写作者/AI 的写作提示**：包含研究背景、样本、主要结论、逐段提示与风格要求。按它的框架写即可。 |
-| `{rel_cons}` | **合并后的文字型统计结果**：主分析 LRT / 事后比较 / 旅行稳健性 / 异质性 LRT 全部在同一文件中，分节明确。**引用统计量时查这里。** |
+| `{rel_cons}` | **合并后的文字型统计结果**：主分析（控制旅行时长，2.x节）为正文headline，补充分析（不控制旅行时长，1.x节）为对照；事后比较 / 异质性 LRT 均在同一文件中，分节明确。**引用统计量时查这里。** |
 
 ---
 
@@ -93,9 +93,9 @@ def write_usage_manifest(fw_dir: Path, consolidated_path: Path) -> None:
 | 论文段落 | 去哪找 |
 |---|---|
 | Abstract / Results 第一段（样本）| `for_writer/key_numbers.md` 首两条（2186 obs / 730 athletes）+ Table 1 |
-| Results § Overall jet lag effect（整体 LRT）| `{rel_cons}` 第 `1.2` 节 "Likelihood Ratio Test — Model B" |
-| Results § Overall jet lag effect（事后比较具体数字）| `tables/table2_posthoc_fdr.csv` + Fig 1 |
-| Results § Travel fatigue robustness | `{rel_cons}` 第 `2.2` 节 LRT-A / LRT-B |
+| Results § Overall jet lag effect（整体 LRT，headline）| `{rel_cons}` 第 `2.2` 节 LRT-B（主分析，控制旅行时长） |
+| Results § Overall jet lag effect（事后比较具体数字）| `tables/table2_posthoc_fdr.csv` + Fig 1（均来自主分析 `lmm_jetlag_travel_control`） |
+| Results § Consistency without travel adjustment（一致性对照）| `{rel_cons}` 第 `1.2` 节（补充分析，不控制旅行时长，仅作对照，不放正文表格） |
 | Results § Homogeneity across subgroups | `tables/table3_heterogeneity_lrt.csv` + Fig 2；细节在 `{rel_cons}` 第 4 节 |
 | Methods § Statistical analysis | `for_writer/analysis_notes.md` |
 | Methods § Variables | `for_writer/data_dictionary.md` |
@@ -104,7 +104,8 @@ def write_usage_manifest(fw_dir: Path, consolidated_path: Path) -> None:
 
 ## 6. 不要做的事
 
-- 不要引用 `lmm_jetlag/` 目录（旧的 2308 样本版本）。主分析口径为 `lmm_jetlag_v2/`（2186 样本），已整合到本资料包。
+- 不要引用 `lmm_jetlag/` 目录（旧的 2308 样本版本）。**主分析口径为 `lmm_jetlag_travel_control/`（2186 样本，控制旅行时长）**；
+  `lmm_jetlag_v2/`（同样 2186 样本，不控制旅行时长）仅作一致性对照，**不进正文 Table/Fig**，只在 Results 里补一句"结果方向和显著性一致"。
 - 不要在正文里单独列 "异质性分析样本 = 2184" —— 与主样本 2186 相差 2 条（技术性去重），可统一口径报告为 **"2186 obs / 730 athletes"**。
 - Table 3 故意不含 N 列，保持与正文 2186 的一致性。
 - `heterogeneity_results/` 下 `*_20260416_*` 等旧时间戳目录是历史版本，**只看最新时间戳**；合并 txt 与表格已自动选最新。
@@ -138,19 +139,23 @@ def write_writer_prompt(fw_dir: Path, consolidated_path: Path) -> None:
 
 ## 3. 统计模型 (Methods 段抄 `for_writer/analysis_notes.md`)
 
-主模型 (Model B)：
+★ 主模型（正文 headline，控制旅行时长）：
+
+    Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + (1 | Athlete_ID)   # REML
+
+补充对照模型（同一 2186 样本，不含 TravelDuration_c，仅用于一致性检验，不进正文表格）：
 
     Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + (1 | Athlete_ID)   # REML
 
-- 10 个非参照组 × vs Minimal 的对比 p 值用 **Benjamini–Hochberg FDR** 校正；
-- 稳健性：加 `TravelDuration_c` 为协变量后重复 JetLag 联合 LRT（LRT-B）；
+- 10 个非参照组 × vs Minimal 的对比 p 值用 **Benjamini–Hochberg FDR** 校正（主模型系数，Table 2）；
+- 整体检验：控制旅行时长后 JetLag 联合 LRT-B（headline）；
 - 异质性：分层模型 (Design A) + 交互项 LRT (Design B, ML 拟合)；
 - ICC 报告自 REML 方差分量。
 
 ## 4. 主要结论 (摘要 3–4 句 + Results 首段)
 
-1. 整体方向性时差对 Sinclair 有显著影响 —— LRT (Model B) 见 `{rel_cons}` § 1.2；具体大小见 Fig 1 / Table 2。
-2. 控制旅行时长 (`TravelDuration_c`) 后该效应仍联合显著 —— LRT-B 见 `{rel_cons}` § 2.2。
+1. 控制旅行时长后，方向性时差对 Sinclair 仍有显著整体影响 —— 主模型 LRT-B 见 `{rel_cons}` § 2.2；具体大小见 Fig 1 / Table 2。
+2. 不控制旅行时长时效应方向与显著性模式一致（仅量级更大）—— 补充对照见 `{rel_cons}` § 1.2，用于说明效应不能被旅行疲劳完全解释。
 3. 效应在性别 / 年龄 / 经验 / 体重级别亚组间**高度同质** (全部 LRT p > 0.2) —— Table 3 + Fig 2。
 4. 连续调节敏感性分析同样未发现显著交互 —— Supp Table S1 + Fig 3。
 
@@ -163,7 +168,7 @@ def write_writer_prompt(fw_dir: Path, consolidated_path: Path) -> None:
 
 - Purpose：评估方向性时差对 Sinclair 总分的影响及稳健性 / 同质性；
 - Methods：引用 Sample + 模型 + FDR + 稳健 + 异质设计；
-- Results：填入 `key_numbers.md` 中 **Model B LRT** 与 **ICC**；引用 Fig 1 显著组数量、方向；
+- Results：填入 `key_numbers.md` 中 **主模型 LRT-B**（headline）与 **ICC**；引用 Fig 1 显著组数量、方向；
 - Conclusion：效应可观察但有限，且跨亚组一致 → 对实战 periodization 的含义。
 
 ### 1. Introduction (≤600 字)
@@ -182,8 +187,9 @@ def write_writer_prompt(fw_dir: Path, consolidated_path: Path) -> None:
 
 ### 3. Results
 - 3.1 Sample — 引用 Table 1；自然语言一句话覆盖 2186 / 730 / 13 国。
-- 3.2 Overall jet lag effect — 报告 Model B LRT；解读 Fig 1；在文中列出显著组 β(95%CI, p_fdr) 的 1–3 条典型值（从 Table 2 挑）。
-- 3.3 Travel fatigue robustness — 一句话 + 括号 LRT-A / LRT-B。
+- 3.2 Overall jet lag effect (travel-controlled, primary) — 报告主模型 LRT-B（括号带 LRT-A）；解读 Fig 1；
+  在文中列出显著组 β(95%CI, p_fdr) 的 1–3 条典型值（从 Table 2 挑，均来自主模型）。
+- 3.3 Consistency without travel adjustment — 一句话引用补充对照（`{rel_cons}` § 1.2）方向/显著性一致，量级更大。
 - 3.4 Homogeneity across subgroups — 引用 Table 3；四句话，每亚组一句；强调"四条线重叠" (Fig 2)。
 - 3.5 Sensitivity of continuous moderators — 引用 Supp Table S1 + Fig 3。
 
@@ -202,11 +208,11 @@ def write_writer_prompt(fw_dir: Path, consolidated_path: Path) -> None:
 
 ## 6. 数字查询速查
 
-**样本 / ICC / Model B LRT** → `for_writer/key_numbers.md`（已自动抽取）。
-**具体某组 β / CI / p_fdr** → `tables/table2_posthoc_fdr.csv`。
+**样本 / ICC / 主模型 LRT-B（headline）** → `for_writer/key_numbers.md`（已自动抽取）。
+**具体某组 β / CI / p_fdr（主模型）** → `tables/table2_posthoc_fdr.csv`。
 **异质性每行 LR / df / p** → `tables/table3_heterogeneity_lrt.csv`。
-**稳健性 LRT-A / LRT-B** → `{rel_cons}` § 2.2。
-**任何其它细节** → 检索 `{rel_cons}`；它按 1.x / 2.x / 3.x / 4.x 顺序组织，节标题明确。
+**主模型 LRT-A / LRT-B** → `{rel_cons}` § 2.2；**补充对照（不控制旅行时长）** → `{rel_cons}` § 1.2。
+**任何其它细节** → 检索 `{rel_cons}`；它按 1.x（补充）/ 2.x（主分析）/ 3.x / 4.x 顺序组织，节标题明确。
 
 ---
 

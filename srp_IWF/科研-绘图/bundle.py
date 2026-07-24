@@ -49,9 +49,11 @@ def build_consolidated_results(out_path: Path) -> None:
 # Generated: {datetime.now().isoformat(timespec='seconds')}
 #
 # 本文件汇总了论文写作需要的全部“文字型”统计输出。
-# 章节顺序约定：
-#   1. 主分析 (Main analysis, LMM_jetlag_v2, 2186 obs / 730 athletes)
-#   2. 旅行时长稳健性 (control mode)
+# 章节顺序约定（章节编号保持不变，但角色已按最新口径更新）：
+#   1. 补充分析 (Supplementary, 不控制旅行时长, LMM_jetlag_v2, 2186 obs / 730 athletes)
+#      —— 仅作一致性对照，NOT 正文主结果
+#   2. 主分析 (Main analysis, 控制旅行时长 TravelDuration_c, control mode)
+#      —— ★ 正文 headline 结果，整体检验见 2.2 节 LRT-B
 #   3. 旅行时长主效应 (main mode, 仅作 Discussion 引用，不放主分析)
 #   4. 异质性分析 (subgroup-stratified + interaction LRT)
 #
@@ -59,41 +61,42 @@ def build_consolidated_results(out_path: Path) -> None:
 #   - 主文样本统一为 2186 / 730。异质性分析因技术性去重略少 (2184)，正文不单列。
 #   - 表格 (CSV) 见 paper_outputs/tables/，图见 paper_outputs/figures/，
 #     此处不重复粘贴 CSV/图，避免冗余。
+#   - Table 1 / Table 2 / Fig 1 的数据来源均为 2.x 节（lmm_jetlag_travel_control）。
 """
     )
 
-    # 1) 主分析
+    # 1) 补充分析（不控制旅行时长，仅作对照）
     main_dir = PROJECT_ROOT / "lmm_jetlag_v2"
     parts.append(_section(
-        "1.1  Main analysis: pre-model data flow & sample composition",
+        "1.1  Supplementary (no travel control): pre-model data flow & sample composition",
         main_dir / "analysis_log.txt",
         _safe_read(main_dir / "analysis_log.txt"),
     ))
     parts.append(_section(
-        "1.2  Main analysis: model comparison, LRT, post-hoc FDR, East vs West contrast",
+        "1.2  Supplementary (no travel control): model comparison, LRT, post-hoc FDR, East vs West contrast",
         main_dir / "model_comparison.txt",
         _safe_read(main_dir / "model_comparison.txt"),
     ))
     parts.append(_section(
-        "1.3  Main analysis: detailed REML model summaries (A / B / C)",
+        "1.3  Supplementary (no travel control): detailed REML model summaries (A / B / C)",
         main_dir / "model_summary.txt",
         _safe_read(main_dir / "model_summary.txt"),
     ))
 
-    # 2) 旅行控制
+    # 2) 主分析（控制旅行时长，正文 headline 结果）
     tc_dir = PROJECT_ROOT / "lmm_jetlag_travel_control"
     parts.append(_section(
-        "2.1  Sensitivity (travel as covariate): data flow & coefficients",
+        "2.1  Main analysis (travel-controlled): data flow & coefficients",
         tc_dir / "analysis_log.txt",
         _safe_read(tc_dir / "analysis_log.txt"),
     ))
     parts.append(_section(
-        "2.2  Sensitivity (travel as covariate): LRT-A / LRT-B & FDR post-hoc",
+        "2.2  Main analysis (travel-controlled): LRT-A / LRT-B  ★ overall test (headline) & FDR post-hoc",
         tc_dir / "model_comparison.txt",
         _safe_read(tc_dir / "model_comparison.txt"),
     ))
     parts.append(_section(
-        "2.3  Sensitivity (travel as covariate): REML model summary",
+        "2.3  Main analysis (travel-controlled): REML model summary",
         tc_dir / "model_summary.txt",
         _safe_read(tc_dir / "model_summary.txt"),
     ))

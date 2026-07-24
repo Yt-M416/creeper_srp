@@ -16,7 +16,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 ROOT = Path(__file__).resolve().parent
 STAMP = datetime.now().strftime("%Y%m%d")
 OUT_DIR = ROOT / f"交付材料_{STAMP}"
-TABLES_DIR = OUT_DIR / "03_统计结果" / "论文表格"
+TABLES_DIR = OUT_DIR / "03_统计结果" / "05_论文表格"
 FIG_DIR = OUT_DIR / "04_图表"
 DOCX_PATH = OUT_DIR / "论文结果汇总.docx"
 
@@ -71,18 +71,22 @@ def main() -> None:
     add_table(doc, header, rows)
     doc.add_paragraph(
         "最终建模样本：N = 2186 条观测，730 名运动员，13 个国家/地区（Top13）。"
-        "该样本口径为主模型（无旅行时长）与稳健性模型（含旅行时长协变量）共用。"
+        "该样本口径为主模型（控制旅行时长）与补充分析（不控制旅行时长）共用。"
     )
 
     # ---------------- 2. 主模型 ----------------
-    heading(doc, "2. 主模型：方向性时差整体效应")
+    heading(doc, "2. 主模型：控制旅行时长后的方向性时差整体效应")
     doc.add_paragraph(
-        "模型：Sinclair_Total ~ Sex + JetLagGroup_dir + (1|Athlete_ID)，REML 估计；"
-        "参照组 Minimal(0-1h)（|有向时差| < 2h）。"
+        "模型：Sinclair_Total ~ Sex + JetLagGroup_dir + TravelDuration_c + (1|Athlete_ID)，REML 估计；"
+        "参照组 Minimal(0-1h)（|有向时差| < 2h）；TravelDuration_c 为中心化旅行时长协变量。"
     )
     doc.add_paragraph(
-        "整体似然比检验（LRT，ML 拟合，比较含/不含 JetLagGroup_dir 的模型）："
-        "LR = 51.82, df = 10, p = 1.23×10⁻⁷ —— 方向性时差对 Sinclair 总分有显著整体效应。"
+        "LRT-A（旅行时长本身是否显著协变量）：加入 TravelDuration_c 后模型拟合显著改善"
+        "（LR=10.86, df=1, p=9.8×10⁻⁴），旅行时长每增加1小时，Sinclair 总分下降约0.22分（β=−0.22）。"
+    )
+    doc.add_paragraph(
+        "LRT-B（整体检验，正文headline结果）：控制 TravelDuration_c 后，JetLagGroup_dir 仍高度联合显著"
+        "（LR=53.27, df=10, p=6.6×10⁻⁸）—— 方向性时差对 Sinclair 总分有显著整体效应，且该效应不能被旅行疲劳解释。"
     )
     doc.add_paragraph("模型拟合质量：ICC ≈ 0.75，约75%的成绩变异来自运动员个体差异，支持以 Athlete_ID 作随机截距。")
 
@@ -90,29 +94,32 @@ def main() -> None:
     header, rows = read_csv(TABLES_DIR / "table2_posthoc_fdr.csv")
     add_table(doc, header, rows)
     doc.add_paragraph(
-        "结果：经 FDR 校正后唯一显著的组为 East 8–9h（β = −7.77, 95% CI [−10.27, −5.27], p_FDR < .001）；"
-        "其余9个组无论东西方向、经 FDR 校正后均不显著；West 10–11h 的正系数（+5.17）校正前接近显著但校正后不再保留。"
+        "结果：经 FDR 校正后唯一显著的组为 East 8–9h（β = −5.58, 95% CI [−8.40, −2.77], "
+        "d = −0.42, p_FDR < .001）；其余9个组无论东西方向、经 FDR 校正后均不显著；"
+        "West 10–11h 的正系数（+5.17）FDR 校正后仍显著（p_FDR = .031）。"
     )
     fig1 = FIG_DIR / "fig1_forest_main_effect.png"
     if fig1.exists():
         doc.add_picture(str(fig1), width=Cm(15))
-        cap = doc.add_paragraph("图1. 11档方向性时差组的边际效应森林图（vs Minimal，BH-FDR 显著标记）")
+        cap = doc.add_paragraph("图1. 11档方向性时差组的边际效应森林图（控制旅行时长；vs Minimal，BH-FDR 显著标记）")
         cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
         cap.runs[0].italic = True
 
-    # ---------------- 3. 稳健性 ----------------
-    heading(doc, "3. 旅行疲劳稳健性检验")
+    # ---------------- 3. 补充分析 ----------------
+    heading(doc, "3. 补充分析：不控制旅行时长时的结果（一致性对照）")
+    doc.add_paragraph(
+        "模型：Sinclair_Total ~ Sex + JetLagGroup_dir + (1|Athlete_ID)（同一份 N=2186 样本，不含 TravelDuration_c）。"
+        "该结果不进入正文 Table/Fig，仅用于说明控制旅行时长前后效应方向、显著性模式一致。"
+    )
+    doc.add_paragraph(
+        "整体 LRT：LR=51.82, df=10, p=1.23×10⁻⁷；East 8–9h：β=−7.77, 95%CI[−10.27,−5.27], d=−0.59。"
+    )
+    doc.add_paragraph(
+        "对比：控制旅行时长后 East 8–9h 效应从 β=−7.77 减弱到 β=−5.58（约缩小28%），"
+        "但仍高度显著 —— 说明方向性时差效应部分独立于旅行疲劳，不能被旅行时长完全解释。"
+    )
     header, rows = read_csv(TABLES_DIR / "supp_table1_sensitivity.csv")
-    add_table(doc, header, rows, title="LRT-A / LRT-B 及连续调节变量敏感性 LRT")
-    doc.add_paragraph(
-        "LRT-A：加入 TravelDuration_c 后模型拟合显著改善（LR=10.86, df=1, p=9.8×10⁻⁴），"
-        "旅行时长每增加1小时，Sinclair 总分下降约0.22分（β=−0.22）。"
-    )
-    doc.add_paragraph(
-        "LRT-B：控制 TravelDuration_c 后，JetLagGroup_dir 仍高度联合显著（LR=53.27, df=10, p=6.6×10⁻⁸），"
-        "East 8–9h 系数略缩小为 β=−5.58（95% CI [−8.40, −2.77]），"
-        "说明方向性时差效应不能被旅行疲劳解释。"
-    )
+    add_table(doc, header, rows, title="附表：LRT-A / LRT-B 及连续调节变量敏感性 LRT")
 
     # ---------------- 4. 异质性 ----------------
     heading(doc, "4. 异质性分析 (Table 3)")
@@ -141,8 +148,10 @@ def main() -> None:
     items = [
         "Cohen's d 计算已修正：由 β/σ²_ε（残差方差，错误）改为 β/σ_ε（残差标准差，正确）。"
         "East 8–9h 的 d 由错误的 −0.032 修正为 −0.42。β、SE、p、FDR 结果不受影响。",
-        "论文正文主模型 = LMM_jetlag_v2.py（不含 TravelDuration），"
-        "稳健性检验 = LMM_jetlag_travel_v2.py --mode control（含 TravelDuration_c），二者均为正确、互补的分析，非互斥或替代关系。",
+        "论文正文主模型已确认为 LMM_jetlag_travel_v2.py --mode control（含 TravelDuration_c，"
+        "对应 β=−5.58, d=−0.42, LRT-B）；LMM_jetlag_v2.py（不含 TravelDuration，β=−7.77, d=−0.59）"
+        "降级为补充分析，仅用于一致性对照，不再作为正文 headline 结果。Table 1/2、Fig 1 已相应改为以"
+        "control 模型为数据来源。",
         "JetLagGroup 分组：Minimal 组操作定义为 |有向时差| < 2h（标签书写为 0-1h，为2h宽档的整数标签惯例）；"
         "东、西向各按2h一档分5档；圆周时差范围为[-12,12]，所有有效值均可分组，无因超出分组范围被删除的样本；"
         "仅因时区信息缺失（JetLag_signed 为 NA）而删除的记录。",

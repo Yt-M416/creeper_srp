@@ -10,7 +10,8 @@
 | `JetLag_signed` | 圆形 24h 最短时差，东向为正 (h) |
 | `JetLagGroup_dir` | 方向性 11 档分组；参照组 `Minimal(0-1h)` |
 | `Sinclair_Total` | IWF Sinclair 标准化总分（跨级别可比） |
-| `TravelDuration` | 估计旅行时长 (h) |
+| `TravelDuration` | 估计旅行时长 (h)（起点为各国训练基地城市，非首都） |
+| `TravelDuration_c` | TravelDuration 中心化，**主模型协变量** |
 | `Reference_Date` | 比赛参考日期 |
 | `Born` | 出生日期（原始字符串，解析用于年龄） |
 

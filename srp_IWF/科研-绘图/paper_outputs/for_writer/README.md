@@ -16,11 +16,14 @@
 在项目根目录 `srp_IWF/` 下依次运行：
 
 ```text
-python LMM_jetlag_v2.py
+python preprocess2-athlete.py
+python merge_travel.py
+python LMM_jetlag_travel_v2.py --mode control    # ★ 主分析（控制旅行时长），正文 headline 结果
+python LMM_jetlag_travel_v2.py --mode main       # 旅行时长主效应（Discussion 引用）
+python LMM_jetlag_v2.py                          # 补充分析（不控制旅行时长，仅作对照）
 python heterogeneity_analysis.py --run-sensitivity
-python LMM_jetlag_travel.py --mode control
-python LMM_jetlag_travel.py --mode main
 python 科研-绘图/make_paper_figures.py
 ```
 
-中间结果仍写入 `lmm_jetlag/`、`heterogeneity_results/`、`lmm_jetlag_travel_*`；论文用图表写入 `科研-绘图/paper_outputs/`。
+中间结果写入 `lmm_jetlag_travel_control/`（主分析）、`lmm_jetlag_travel_main/`、`lmm_jetlag_v2/`（补充分析）、
+`heterogeneity_results/`；论文用图表写入 `科研-绘图/paper_outputs/`。

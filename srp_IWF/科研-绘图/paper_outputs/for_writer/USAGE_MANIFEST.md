@@ -1,6 +1,6 @@
 # 论文写作资料包 —— 使用清单 (USAGE MANIFEST)
 
-> 自动生成于 2026-07-20 16:38。本文件告诉你：**每个文件是什么、论文哪一部分会用到、怎么填数字**。
+> 自动生成于 2026-07-21 09:44。本文件告诉你：**每个文件是什么、论文哪一部分会用到、怎么填数字**。
 > 所有路径均相对于 `科研-绘图/paper_outputs/`。
 
 ---
@@ -10,7 +10,7 @@
 | 文件 | 用途 |
 |---|---|
 | `for_writer/WRITER_PROMPT.md` | **给写作者/AI 的写作提示**：包含研究背景、样本、主要结论、逐段提示与风格要求。按它的框架写即可。 |
-| `for_writer/consolidated_results.txt` | **合并后的文字型统计结果**：主分析 LRT / 事后比较 / 旅行稳健性 / 异质性 LRT 全部在同一文件中，分节明确。**引用统计量时查这里。** |
+| `for_writer/consolidated_results.txt` | **合并后的文字型统计结果**：主分析（控制旅行时长，2.x节）为正文headline，补充分析（不控制旅行时长，1.x节）为对照；事后比较 / 异质性 LRT 均在同一文件中，分节明确。**引用统计量时查这里。** |
 
 ---
 
@@ -66,9 +66,9 @@
 | 论文段落 | 去哪找 |
 |---|---|
 | Abstract / Results 第一段（样本）| `for_writer/key_numbers.md` 首两条（2186 obs / 730 athletes）+ Table 1 |
-| Results § Overall jet lag effect（整体 LRT）| `for_writer/consolidated_results.txt` 第 `1.2` 节 "Likelihood Ratio Test — Model B" |
-| Results § Overall jet lag effect（事后比较具体数字）| `tables/table2_posthoc_fdr.csv` + Fig 1 |
-| Results § Travel fatigue robustness | `for_writer/consolidated_results.txt` 第 `2.2` 节 LRT-A / LRT-B |
+| Results § Overall jet lag effect（整体 LRT，headline）| `for_writer/consolidated_results.txt` 第 `2.2` 节 LRT-B（主分析，控制旅行时长） |
+| Results § Overall jet lag effect（事后比较具体数字）| `tables/table2_posthoc_fdr.csv` + Fig 1（均来自主分析 `lmm_jetlag_travel_control`） |
+| Results § Consistency without travel adjustment（一致性对照）| `for_writer/consolidated_results.txt` 第 `1.2` 节（补充分析，不控制旅行时长，仅作对照，不放正文表格） |
 | Results § Homogeneity across subgroups | `tables/table3_heterogeneity_lrt.csv` + Fig 2；细节在 `for_writer/consolidated_results.txt` 第 4 节 |
 | Methods § Statistical analysis | `for_writer/analysis_notes.md` |
 | Methods § Variables | `for_writer/data_dictionary.md` |
@@ -77,7 +77,8 @@
 
 ## 6. 不要做的事
 
-- 不要引用 `lmm_jetlag/` 目录（旧的 2308 样本版本）。主分析口径为 `lmm_jetlag_v2/`（2186 样本），已整合到本资料包。
+- 不要引用 `lmm_jetlag/` 目录（旧的 2308 样本版本）。**主分析口径为 `lmm_jetlag_travel_control/`（2186 样本，控制旅行时长）**；
+  `lmm_jetlag_v2/`（同样 2186 样本，不控制旅行时长）仅作一致性对照，**不进正文 Table/Fig**，只在 Results 里补一句"结果方向和显著性一致"。
 - 不要在正文里单独列 "异质性分析样本 = 2184" —— 与主样本 2186 相差 2 条（技术性去重），可统一口径报告为 **"2186 obs / 730 athletes"**。
 - Table 3 故意不含 N 列，保持与正文 2186 的一致性。
 - `heterogeneity_results/` 下 `*_20260416_*` 等旧时间戳目录是历史版本，**只看最新时间戳**；合并 txt 与表格已自动选最新。
