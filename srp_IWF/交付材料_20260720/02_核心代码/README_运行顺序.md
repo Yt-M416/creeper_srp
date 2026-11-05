@@ -36,3 +36,16 @@
 
 依赖库：pandas, numpy, scipy, statsmodels, matplotlib, seaborn。
 Cohen's d 计算公式：d = β / σ_ε （σ_ε 为 REML 残差标准差，即 sqrt(scale)，非残差方差）。
+## 仅重新生成合并后的正文 Figure 1
+
+如果模型结果文件已经存在，不需要重新拟合模型。运行：
+
+`python LMM_jetlag_travel_v2.py --figures-only`
+
+脚本读取 `03_统计结果` 中锁定的控制/未控制旅行时长系数，以及
+`01_最终数据/final_model_data_N2186.csv` 中的各时差组样本量，并在
+`04_图表` 输出：
+
+- `fig1_signed_axis_main_effect.png/.pdf`：以0为中心、向西为负且向东为正的单面板效应图；灰色空心点表示未控制旅行时长的模型，红/蓝实心点表示控制旅行时长的主模型，细灰线连接同一时差组的两套估计。
+
+原版纵向森林图、双分面效应图和原 Figure 2 配对系数图函数仍保留在脚本中，便于历史复现；旧 Figure 2 不再由 `--figures-only` 生成，也不再进入正文，其既有 PNG/PDF 已移至 `04_图表/历史版本_不进入正文/`。

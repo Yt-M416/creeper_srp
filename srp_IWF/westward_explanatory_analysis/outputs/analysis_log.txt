@@ -1,0 +1,47 @@
+[2026-10-31T00:34:31] 读取正式数据：D:\Code\Python\Creeper\srp_IWF\交付材料_20260720\01_最终数据\final_model_data_N2186.csv；N=2186
+[2026-10-31T00:34:31] 阶段0/1：复现主模型并执行±12 h边界核验
+[2026-10-31T00:34:33] ±12 h排除后，West 10–11 h系数方向和BH-FDR结论均未改变；按预设规则，边界记录不改变统计结论，后续解释不再展开该问题。
+[2026-10-31T00:34:33] 阶段2：国家与赛事届次构成和集中度
+[2026-10-31T00:34:34] 阶段3：逐赛事、逐国家删除影响诊断
+[2026-10-31T00:34:35] 影响诊断 Nation 1/13：删除 ARM（n=120）
+[2026-10-31T00:34:35] 影响诊断 Nation 2/13：删除 CHN（n=212）
+[2026-10-31T00:34:36] 影响诊断 Nation 3/13：删除 COL（n=222）
+[2026-10-31T00:34:37] 影响诊断 Nation 4/13：删除 IRI（n=115）
+[2026-10-31T00:34:38] 影响诊断 Nation 5/13：删除 JPN（n=212）
+[2026-10-31T00:34:38] 影响诊断 Nation 6/13：删除 KAZ（n=146）
+[2026-10-31T00:34:39] 影响诊断 Nation 7/13：删除 KOR（n=185）
+[2026-10-31T00:34:40] 影响诊断 Nation 8/13：删除 MEX（n=158）
+[2026-10-31T00:34:40] 影响诊断 Nation 9/13：删除 RUS（n=172）
+[2026-10-31T00:34:41] 影响诊断 Nation 10/13：删除 THA（n=150）
+[2026-10-31T00:34:42] 影响诊断 Nation 11/13：删除 TPE（n=186）
+[2026-10-31T00:34:43] 影响诊断 Nation 12/13：删除 UKR（n=84）
+[2026-10-31T00:34:44] 影响诊断 Nation 13/13：删除 USA（n=224）
+[2026-10-31T00:34:44] 影响诊断 EventEdition 1/22：删除 1998 | 69th MEN's and 12th WOMEN's WOR | Lathi,FIN（n=47）
+[2026-10-31T00:34:45] 影响诊断 EventEdition 2/22：删除 1999 | 70th MEN's and 13th WOMEN's WOR | Athens,GRE（n=87）
+[2026-10-31T00:34:46] 影响诊断 EventEdition 3/22：删除 2001 | 71st MEN's and 14th WOMEN's WOR | Antalya,TUR（n=47）
+[2026-10-31T00:34:47] 影响诊断 EventEdition 4/22：删除 2002 | 72nd MEN's and 15th WOMEN's WOR | Warsaw,POL（n=68）
+[2026-10-31T00:34:48] 影响诊断 EventEdition 5/22：删除 2003 | 73rd MEN's and 16th WOMEN's WOR | Vancouver,CAN（n=105）
+[2026-10-31T00:34:48] 影响诊断 EventEdition 6/22：删除 2005 | 74th MEN's and 17th WOMEN's CEN | Doha,QAT（n=91）
+[2026-10-31T00:34:49] 影响诊断 EventEdition 7/22：删除 2006 | 75th MEN's and 18th WOMEN's WOR | Santo Domingo, DOM（n=129）
+[2026-10-31T00:34:50] 影响诊断 EventEdition 8/22：删除 2007 | 76th MEN's and 19th WOMEN's WOR | Chiang Mai, THA（n=136）
+[2026-10-31T00:34:51] 影响诊断 EventEdition 9/22：删除 2009 | 77th MEN's and 20th WOMEN's WOR | Goyang, KOR（n=105）
+[2026-10-31T00:34:52] 影响诊断 EventEdition 10/22：删除 2010 | 78th MEN's and 21st WOMEN's WOR | Antalya, TUR（n=117）
+[2026-10-31T00:34:53] 影响诊断 EventEdition 11/22：删除 2011 | 2011 IWF WORLD CHAMPIONSHIPS | Paris, FRA（n=123）
+[2026-10-31T00:34:53] 影响诊断 EventEdition 12/22：删除 2013 | 2013 IWF WORLD CHAMPIONSHIPS | Wroclaw, POL（n=78）
+[2026-10-31T00:34:54] 影响诊断 EventEdition 13/22：删除 2014 | 2014 IWF WORLD CHAMPIONSHIPS | Almaty, KAZ（n=111）
+[2026-10-31T00:34:55] 影响诊断 EventEdition 14/22：删除 2015 | 2015 IWF WORLD CHAMPIONSHIPS | Houston, USA（n=127）
+[2026-10-31T00:34:56] 影响诊断 EventEdition 15/22：删除 2017 | 2017 IWF WORLD CHAMPIONSHIPS | Anaheim, USA（n=80）
+[2026-10-31T00:34:57] 影响诊断 EventEdition 16/22：删除 2018 | 2018 IWF World Championships | Ashgabat, TKM（n=143）
+[2026-10-31T00:34:57] 影响诊断 EventEdition 17/22：删除 2019 | 2019 IWF World Championships | PATTAYA, THA（n=129）
+[2026-10-31T00:34:58] 影响诊断 EventEdition 18/22：删除 2021 | 2021 IWF World Championships | Tashkent, UZB（n=73）
+[2026-10-31T00:34:59] 影响诊断 EventEdition 19/22：删除 2022 | 2022 IWF World Championships | Bogota, COL（n=113）
+[2026-10-31T00:35:00] 影响诊断 EventEdition 20/22：删除 2023 | 2023 IWF World Championships | Riyadh, KSA（n=132）
+[2026-10-31T00:35:01] 影响诊断 EventEdition 21/22：删除 2024 | 2024 IWF World Championships | Manama, BRN（n=92）
+[2026-10-31T00:35:01] 影响诊断 EventEdition 22/22：删除 2025 | 2025 IWF World Championships | Forde, NOR（n=53）
+[2026-10-31T00:35:03] 阶段4：国家、赛事届次固定效应调整模型
+[2026-10-31T00:35:03] 固定效应模型：base
+[2026-10-31T00:35:05] 固定效应模型：plus_nation
+[2026-10-31T00:35:06] 固定效应模型：plus_event_edition
+[2026-10-31T00:35:08] 固定效应模型：plus_nation_event
+[2026-10-31T00:35:11] 综合分类：赛事与国家共同影响。国家和赛事删除分析均识别出满足预设标准的影响来源。
+[2026-10-31T00:35:11] 阶段all完成

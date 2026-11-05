@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-10-31T00:35:03",
+  "stage": "adjustment",
+  "input_path": "D:\\Code\\Python\\Creeper\\srp_IWF\\交付材料_20260720\\01_最终数据\\final_model_data_N2186.csv",
+  "input_rows": 2186,
+  "formula": "Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + (1|Athlete_ID)",
+  "filters": "完整样本；依次加入Nation和EventEdition固定效应",
+  "random_seed": 20261031
+}

@@ -1,0 +1,5 @@
+﻿model,formula,n,athletes,success,converged_reml,design_rank,design_columns,error,warnings_reml,converged_ml,loglik_ml,aic_ml,bic_ml,k_fe_ml,lr_vs_base,lr_df_vs_base,lr_p_vs_base
+base,Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c,2186,730,True,True,13,13,,,True,-9539.631030755318,19109.262061510635,19194.609491541683,13,0.0,0,
+plus_nation,Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + C(Nation),2186,730,True,True,25,25,,,True,-9319.760378669765,18693.52075733953,18847.146131395417,25,439.7413041711043,12,1.422288560016921e-86
+plus_event_edition,Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + C(EventEdition),2186,730,True,True,34,34,,,True,-9487.235992843187,19046.471985686374,19251.305817760887,34,104.7900758242613,21,4.062626832678912e-13
+plus_nation_event,Sinclair_Total ~ C(Sex) + C(JetLagGroup_dir) + TravelDuration_c + C(Nation) + C(EventEdition),2186,730,True,True,46,46,,,True,-9258.398460290748,18612.796920581495,18885.908696680846,46,562.46514092914,33,1.3555720299588957e-97

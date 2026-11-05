@@ -183,7 +183,8 @@ def _sig_fdr_stars(p: float) -> str:
 
 def plot_fig1_forest(emmeans_csv: str, out_png: str) -> None:
     """
-    Figure 1：读取事后比较 CSV（Table 4 同源），按 BH-FDR p < .05 高亮显著组。
+    旧版 Figure 1（保留以复现原始纵向森林图）：
+    读取事后比较 CSV（Table 4 同源），按 BH-FDR p < .05 高亮显著组。
     纵轴：West 大时差在上 → Minimal → East 大时差在下（与 table2_posthoc 一致）。
     """
     emm = pd.read_csv(emmeans_csv, encoding="utf-8-sig").set_index("Group")
@@ -247,6 +248,477 @@ def plot_fig1_forest(emmeans_csv: str, out_png: str) -> None:
     plt.close(fig)
 
 
+def _save_paper_figure(fig, out_png: str) -> None:
+    """同时输出高分辨率 PNG 和可编辑的矢量 PDF。"""
+    os.makedirs(os.path.dirname(out_png), exist_ok=True)
+    fig.savefig(out_png, dpi=600, bbox_inches="tight", facecolor="white")
+    fig.savefig(os.path.splitext(out_png)[0] + ".pdf", bbox_inches="tight", facecolor="white")
+
+
+def _read_effect_table(csv_path: str) -> pd.DataFrame:
+    df = pd.read_csv(csv_path, encoding="utf-8-sig")
+    required = {"Group", "Estimate", "CI_lo", "CI_hi"}
+    missing = required.difference(df.columns)
+    if missing:
+        raise ValueError(f"{csv_path} 缺少绘图所需列：{sorted(missing)}")
+    return df.set_index("Group")
+
+
+def plot_fig1_faceted_main_effect(
+    emmeans_csv: str,
+    data_used_csv: str,
+    out_png: str,
+) -> None:
+    """
+    新版正文 Figure 1：按旅行方向分面的调整后效应图。
+
+    两个面板共享纵轴；点为相对于 Minimal 组的 beta，误差线为普通 95% CI；
+    显著性符号根据 BH-FDR 校正后的 p 值；横轴标签同时报告各组记录数。
+    """
+    emm = _read_effect_table(emmeans_csv)
+    data = pd.read_csv(data_used_csv, encoding="utf-8-sig")
+    counts = data["JetLagGroup_dir"].value_counts()
+    magnitudes = ["2-3h", "4-5h", "6-7h", "8-9h", "10-11h"]
+    x = np.arange(len(magnitudes))
+    panel_specs = [
+        ("West", "A  Westward travel", "#35608D"),
+        ("East", "B  Eastward travel", "#B85C38"),
+    ]
+
+    fig, axes = plt.subplots(
+        1, 2, figsize=(8.0, 4.25), sharey=True,
+        gridspec_kw={"wspace": 0.10},
+    )
+    all_lows, all_highs = [], []
+    for ax, (direction, panel_title, color) in zip(axes, panel_specs):
+        groups = [f"{direction}_{m}" for m in magnitudes]
+        rows = emm.loc[groups]
+        beta = rows["Estimate"].astype(float).to_numpy()
+        lo = rows["CI_lo"].astype(float).to_numpy()
+        hi = rows["CI_hi"].astype(float).to_numpy()
+        p_fdr = rows["p_fdr"].astype(float).to_numpy()
+        all_lows.extend(lo)
+        all_highs.extend(hi)
+
+        for idx in range(len(groups)):
+            significant = p_fdr[idx] < 0.05
+            ax.errorbar(
+                x[idx], beta[idx],
+                yerr=[[beta[idx] - lo[idx]], [hi[idx] - beta[idx]]],
+                fmt="none", ecolor=color, elinewidth=1.25,
+                capsize=3.2, capthick=1.0, zorder=2,
+            )
+            ax.plot(
+                x[idx], beta[idx], marker="o", markersize=6.5,
+                markerfacecolor=color if significant else "white",
+                markeredgecolor=color, markeredgewidth=1.35,
+                linestyle="none", zorder=3,
+            )
+            stars = _sig_fdr_stars(p_fdr[idx])
+            if stars:
+                ax.annotate(
+                    stars, (x[idx], hi[idx]), xytext=(0, 5),
+                    textcoords="offset points", ha="center", va="bottom",
+                    fontsize=9, color=color, fontweight="bold",
+                )
+
+        labels = [
+            f"{m.replace('-', '–').replace('h', ' h')}\n"
+            f"n={int(counts.get(g, 0))}"
+            for m, g in zip(magnitudes, groups)
+        ]
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, fontsize=8)
+        ax.axhline(0.0, color="0.35", linestyle="--", linewidth=0.9, zorder=1)
+        ax.set_title(panel_title, fontsize=10.5, fontweight="semibold", loc="left")
+        ax.tick_params(axis="y", labelsize=8.5)
+        ax.grid(False)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_color("0.55")
+        ax.spines["bottom"].set_color("0.55")
+
+    y_span = max(all_highs) - min(all_lows)
+    y_pad = max(0.8, y_span * 0.08)
+    axes[0].set_ylim(min(all_lows) - y_pad, max(all_highs) + y_pad)
+    axes[0].set_ylabel("Adjusted difference in Sinclair Total\n(vs Minimal)", fontsize=9.5)
+    fig.supxlabel("Time-zone difference (h)", fontsize=9.5, y=0.02)
+    minimal_n = int(counts.get("Minimal(0-1h)", 0))
+    fig.suptitle(
+        "Adjusted directional jet-lag effects",
+        fontsize=11.5, y=0.99,
+    )
+    fig.text(
+        0.5, 0.925,
+        f"Reference: Minimal (0–1 h), n={minimal_n}; error bars are ordinary 95% CIs",
+        ha="center", va="top", fontsize=8.3, color="0.30",
+    )
+    fig.subplots_adjust(left=0.11, right=0.985, bottom=0.20, top=0.84)
+    _save_paper_figure(fig, out_png)
+    plt.close(fig)
+
+
+def plot_fig1_signed_axis_main_effect(
+    emmeans_csv: str,
+    data_used_csv: str,
+    out_png: str,
+    unadjusted_csv: Optional[str] = None,
+) -> None:
+    """
+    正文 Figure 1：合并旅行时长调整前后结果的有向时差效应图。
+
+    横轴按实际旅行方向编码：向西为负、向东为正，0 为 Minimal 参考组；
+    纵轴为相对于 Minimal 组的 beta，误差线为普通 95% CI；灰色空心点
+    表示未控制旅行时长的模型，红/蓝实心点表示控制旅行时长的主模型，
+    星号依据主模型 BH-FDR 校正后的 p 值，横轴同时报告各组记录数。
+
+    unadjusted_csv 留为可选参数，便于既有模型流程继续复现仅含主模型的图；
+    交付材料的 --figures-only 流程会传入该文件并生成合并后的正式 Figure 1。
+    """
+    adjusted = _read_effect_table(emmeans_csv)
+    unadjusted = (
+        _read_effect_table(unadjusted_csv)
+        if unadjusted_csv is not None else None
+    )
+    data = pd.read_csv(data_used_csv, encoding="utf-8-sig")
+    counts = data["JetLagGroup_dir"].value_counts()
+
+    west_groups = [
+        "West_10-11h", "West_8-9h", "West_6-7h", "West_4-5h", "West_2-3h"
+    ]
+    east_groups = [
+        "East_2-3h", "East_4-5h", "East_6-7h", "East_8-9h", "East_10-11h"
+    ]
+    west_x = np.array([-10.5, -8.5, -6.5, -4.5, -2.5])
+    east_x = np.array([2.5, 4.5, 6.5, 8.5, 10.5])
+    colors = {"West": "#35608D", "East": "#B85C38"}
+
+    fig, ax = plt.subplots(figsize=(9.4, 5.0))
+    all_lows, all_highs = [], []
+    pair_offset = 0.16 if unadjusted is not None else 0.0
+
+    for direction, groups, positions in [
+        ("West", west_groups, west_x),
+        ("East", east_groups, east_x),
+    ]:
+        adj = adjusted.loc[groups]
+        adj_beta = adj["Estimate"].astype(float).to_numpy()
+        adj_lo = adj["CI_lo"].astype(float).to_numpy()
+        adj_hi = adj["CI_hi"].astype(float).to_numpy()
+        p_fdr = adj["p_fdr"].astype(float).to_numpy()
+        all_lows.extend(adj_lo)
+        all_highs.extend(adj_hi)
+        color = colors[direction]
+
+        for idx, group in enumerate(groups):
+            adjusted_x = positions[idx] + pair_offset
+
+            if unadjusted is not None:
+                unadj_beta = float(unadjusted.loc[group, "Estimate"])
+                unadj_lo = float(unadjusted.loc[group, "CI_lo"])
+                unadj_hi = float(unadjusted.loc[group, "CI_hi"])
+                unadjusted_x = positions[idx] - pair_offset
+                all_lows.append(unadj_lo)
+                all_highs.append(unadj_hi)
+
+                ax.plot(
+                    [unadjusted_x, adjusted_x], [unadj_beta, adj_beta[idx]],
+                    color="0.72", linewidth=0.9, zorder=1,
+                )
+                ax.errorbar(
+                    unadjusted_x, unadj_beta,
+                    yerr=[[unadj_beta - unadj_lo], [unadj_hi - unadj_beta]],
+                    fmt="none", ecolor="0.48", elinewidth=1.05,
+                    capsize=3.0, capthick=0.9, zorder=2,
+                )
+                ax.plot(
+                    unadjusted_x, unadj_beta, marker="o", markersize=6.0,
+                    markerfacecolor="white", markeredgecolor="0.48",
+                    markeredgewidth=1.2, linestyle="none", zorder=3,
+                )
+
+            ax.errorbar(
+                adjusted_x, adj_beta[idx],
+                yerr=[[adj_beta[idx] - adj_lo[idx]], [adj_hi[idx] - adj_beta[idx]]],
+                fmt="none", ecolor=color, elinewidth=1.25,
+                capsize=3.2, capthick=1.0, zorder=2,
+            )
+            ax.plot(
+                adjusted_x, adj_beta[idx], marker="o", markersize=6.8,
+                markerfacecolor=color,
+                markeredgecolor=color, markeredgewidth=1.4,
+                linestyle="none", zorder=3,
+            )
+            stars = _sig_fdr_stars(p_fdr[idx])
+            if stars:
+                ax.annotate(
+                    stars, (adjusted_x, adj_hi[idx]), xytext=(0, 5),
+                    textcoords="offset points", ha="center", va="bottom",
+                    fontsize=9.5, color=color, fontweight="bold",
+                )
+
+    minimal_n = int(counts.get("Minimal(0-1h)", 0))
+    ax.plot(
+        0.0, 0.0, marker="D", markersize=6.5,
+        markerfacecolor="0.45", markeredgecolor="0.45", zorder=3,
+    )
+    ax.annotate(
+        "Ref", (0.0, 0.0), xytext=(0, 8), textcoords="offset points",
+        ha="center", va="bottom", fontsize=8.3, color="0.35",
+    )
+
+    positions = np.concatenate([west_x, [0.0], east_x])
+    groups = west_groups + ["Minimal(0-1h)"] + east_groups
+    interval_labels = [
+        "−11 to −10", "−9 to −8", "−7 to −6", "−5 to −4", "−3 to −2",
+        "Minimal\n(0–1 h)",
+        "+2 to +3", "+4 to +5", "+6 to +7", "+8 to +9", "+10 to +11",
+    ]
+    labels = [
+        f"{label}\nn={int(counts.get(group, 0))}"
+        for label, group in zip(interval_labels, groups)
+    ]
+    ax.set_xticks(positions)
+    ax.set_xticklabels(labels, fontsize=7.8)
+
+    y_span = max(all_highs) - min(all_lows)
+    y_pad = max(0.9, y_span * 0.10)
+    ax.set_ylim(min(all_lows) - y_pad, max(all_highs) + y_pad)
+    ax.set_xlim(-12.0, 12.0)
+    ax.axhline(0.0, color="0.35", linestyle="--", linewidth=0.9, zorder=1)
+    ax.axvline(0.0, color="0.72", linestyle="-", linewidth=0.8, zorder=1)
+    ax.axvspan(-12.0, 0.0, color=colors["West"], alpha=0.035, zorder=0)
+    ax.axvspan(0.0, 12.0, color=colors["East"], alpha=0.035, zorder=0)
+    ax.text(
+        0.02, 0.96, "WESTWARD", transform=ax.transAxes,
+        ha="left", va="top", fontsize=8.2, color=colors["West"],
+        fontweight="semibold",
+    )
+    ax.text(
+        0.98, 0.96, "EASTWARD", transform=ax.transAxes,
+        ha="right", va="top", fontsize=8.2, color=colors["East"],
+        fontweight="semibold",
+    )
+    ax.set_ylabel("Difference in Sinclair Total\n(vs Minimal)", fontsize=9.5)
+    ax.set_xlabel(
+        "Signed time-zone difference (h; westward < 0, eastward > 0)",
+        fontsize=9.5,
+    )
+    ax.set_title(
+        "Directional jet-lag effects before and after travel-duration adjustment",
+        fontsize=11.5, pad=31,
+    )
+    ax.text(
+        0.5, 1.035,
+        "Points are model coefficients; error bars are ordinary 95% CIs; "
+        "asterisks indicate BH-FDR-adjusted p<0.05 in the primary model",
+        transform=ax.transAxes, ha="center", va="bottom", fontsize=8.2, color="0.30",
+    )
+
+    if unadjusted is not None:
+        from matplotlib.lines import Line2D
+        from matplotlib.legend_handler import HandlerTuple
+        legend_handles = [
+            Line2D(
+                [0], [0], marker="o", linestyle="none", markersize=6.2,
+                markerfacecolor="white", markeredgecolor="0.48",
+            ),
+            (
+                Line2D(
+                    [0], [0], marker="o", linestyle="none", markersize=6.2,
+                    markerfacecolor=colors["West"], markeredgecolor=colors["West"],
+                ),
+                Line2D(
+                    [0], [0], marker="o", linestyle="none", markersize=6.2,
+                    markerfacecolor=colors["East"], markeredgecolor=colors["East"],
+                ),
+            ),
+        ]
+        ax.legend(
+            handles=legend_handles,
+            labels=[
+                "Without travel-duration adjustment",
+                "Adjusted for travel duration",
+            ],
+            handler_map={tuple: HandlerTuple(ndivide=None)}, loc="upper center",
+            bbox_to_anchor=(0.5, 1.155), frameon=False, ncol=2,
+            fontsize=8.2, handletextpad=0.5, columnspacing=1.4,
+        )
+    ax.grid(False)
+    ax.tick_params(axis="y", labelsize=8.5)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("0.55")
+    ax.spines["bottom"].set_color("0.55")
+    fig.subplots_adjust(left=0.105, right=0.985, bottom=0.22, top=0.76)
+    _save_paper_figure(fig, out_png)
+    plt.close(fig)
+
+
+def plot_fig2_travel_adjustment_comparison(
+    adjusted_csv: str,
+    unadjusted_csv: str,
+    out_png: str,
+) -> None:
+    """
+    旧版 Figure 2（保留以复现此前旅行时长调整前后的配对系数图）。
+
+    灰色空心点为未控制旅行时长模型，彩色实心点为控制旅行时长主模型；
+    两个点以细线连接，两套估计均显示普通 95% CI。
+    """
+    adjusted = _read_effect_table(adjusted_csv)
+    unadjusted = _read_effect_table(unadjusted_csv)
+    magnitudes = ["2-3h", "4-5h", "6-7h", "8-9h", "10-11h"]
+    panel_specs = [
+        ("West", "A  Westward travel"),
+        ("East", "B  Eastward travel"),
+    ]
+    adjusted_color = "#35608D"
+
+    all_bounds = pd.concat(
+        [
+            adjusted[["CI_lo", "CI_hi"]],
+            unadjusted[["CI_lo", "CI_hi"]],
+        ],
+        axis=0,
+    ).astype(float)
+    x_pad = max(0.8, (all_bounds["CI_hi"].max() - all_bounds["CI_lo"].min()) * 0.06)
+    x_limits = (
+        float(all_bounds["CI_lo"].min() - x_pad),
+        float(all_bounds["CI_hi"].max() + x_pad),
+    )
+
+    fig, axes = plt.subplots(
+        1, 2, figsize=(8.0, 4.35), sharex=True, sharey=True,
+        gridspec_kw={"wspace": 0.10},
+    )
+    y = np.arange(len(magnitudes))
+    offset = 0.10
+    for ax, (direction, panel_title) in zip(axes, panel_specs):
+        groups = [f"{direction}_{m}" for m in magnitudes]
+        adj = adjusted.loc[groups]
+        unadj = unadjusted.loc[groups]
+
+        for idx, group in enumerate(groups):
+            adj_beta = float(adj.loc[group, "Estimate"])
+            unadj_beta = float(unadj.loc[group, "Estimate"])
+            ax.plot(
+                [unadj_beta, adj_beta],
+                [y[idx] - offset, y[idx] + offset],
+                color="0.72", linewidth=1.0, zorder=1,
+            )
+
+            for beta, lo, hi, ypos, point_color, face_color in [
+                (
+                    unadj_beta,
+                    float(unadj.loc[group, "CI_lo"]),
+                    float(unadj.loc[group, "CI_hi"]),
+                    y[idx] - offset,
+                    "0.48",
+                    "white",
+                ),
+                (
+                    adj_beta,
+                    float(adj.loc[group, "CI_lo"]),
+                    float(adj.loc[group, "CI_hi"]),
+                    y[idx] + offset,
+                    adjusted_color,
+                    adjusted_color,
+                ),
+            ]:
+                ax.errorbar(
+                    beta, ypos,
+                    xerr=[[beta - lo], [hi - beta]],
+                    fmt="none", ecolor=point_color, elinewidth=1.1,
+                    capsize=2.8, capthick=0.9, zorder=2,
+                )
+                ax.plot(
+                    beta, ypos, marker="o", markersize=5.8,
+                    markerfacecolor=face_color, markeredgecolor=point_color,
+                    markeredgewidth=1.2, linestyle="none", zorder=3,
+                )
+
+        ax.axvline(0.0, color="0.35", linestyle="--", linewidth=0.9, zorder=0)
+        ax.set_title(panel_title, fontsize=10.5, fontweight="semibold", loc="left")
+        ax.set_xlim(*x_limits)
+        ax.set_yticks(y)
+        ax.set_yticklabels(
+            [m.replace("-", "–").replace("h", " h") for m in magnitudes],
+            fontsize=8.5,
+        )
+        ax.grid(False)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_color("0.55")
+        ax.spines["bottom"].set_color("0.55")
+        ax.tick_params(axis="x", labelsize=8.5)
+
+    axes[0].invert_yaxis()
+
+    from matplotlib.lines import Line2D
+    legend_handles = [
+        Line2D(
+            [0], [0], marker="o", linestyle="none", markersize=6,
+            markerfacecolor="white", markeredgecolor="0.48",
+            label="Without travel-duration adjustment",
+        ),
+        Line2D(
+            [0], [0], marker="o", linestyle="none", markersize=6,
+            markerfacecolor="#35608D", markeredgecolor="#35608D",
+            label="Adjusted for travel duration",
+        ),
+    ]
+    fig.legend(
+        handles=legend_handles, loc="upper center", bbox_to_anchor=(0.5, 0.91),
+        frameon=False, ncol=2, fontsize=8.3, handletextpad=0.5,
+        columnspacing=1.4,
+    )
+    fig.supxlabel(r"$\beta$ (Sinclair points vs Minimal)", fontsize=9.5, y=0.025)
+    fig.suptitle(
+        "Effect estimates before and after travel-duration adjustment",
+        fontsize=11.5, y=0.99,
+    )
+    fig.text(
+        0.5, 0.855,
+        "Points are model coefficients; error bars are ordinary 95% CIs",
+        ha="center", va="top", fontsize=8.3, color="0.30",
+    )
+    fig.subplots_adjust(left=0.10, right=0.985, bottom=0.15, top=0.78)
+    _save_paper_figure(fig, out_png)
+    plt.close(fig)
+
+
+def generate_delivery_main_figures() -> str:
+    """用交付材料内已锁定的 CSV 重新生成合并后的正文 Figure 1。"""
+    code_dir = os.path.dirname(os.path.abspath(__file__))
+    delivery_root = os.path.dirname(code_dir)
+    adjusted_dir = os.path.join(
+        delivery_root, "03_统计结果", "01_主模型_控制旅行时长_travel_control"
+    )
+    unadjusted_dir = os.path.join(
+        delivery_root, "03_统计结果", "02_补充_不控制旅行时长_lmm_jetlag_v2"
+    )
+    data_csv = os.path.join(
+        delivery_root, "01_最终数据", "final_model_data_N2186.csv"
+    )
+    figure_dir = os.path.join(delivery_root, "04_图表")
+    fig1_path = os.path.join(figure_dir, "fig1_signed_axis_main_effect.png")
+
+    # 旧版双分面主效应图调用保留，便于复现此前 Figure 1：
+    # plot_fig1_faceted_main_effect(
+    #     os.path.join(adjusted_dir, "emmeans_FDR_travel_control.csv"),
+    #     data_csv,
+    #     os.path.join(figure_dir, "fig1_faceted_main_effect.png"),
+    # )
+    plot_fig1_signed_axis_main_effect(
+        os.path.join(adjusted_dir, "emmeans_FDR_travel_control.csv"),
+        data_csv,
+        fig1_path,
+        unadjusted_csv=os.path.join(unadjusted_dir, "emmeans_FDR.csv"),
+    )
+    return fig1_path
+
+
 # ======================== 主流程 ========================
 
 def main() -> None:
@@ -256,7 +728,17 @@ def main() -> None:
         choices=["control", "main"],
         help="control: travel as covariate; main: travel as main effect",
     )
+    parser.add_argument(
+        "--figures-only", action="store_true",
+        help="不重跑模型，直接用交付材料中的锁定结果生成合并后的正文 Figure 1",
+    )
     args = parser.parse_args()
+
+    if args.figures_only:
+        setup_plot_style()
+        fig1_path = generate_delivery_main_figures()
+        print(f"Saved: {fig1_path}")
+        return
 
     OUTPUT_DIR = f"lmm_jetlag_travel_{args.mode}"
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -527,9 +1009,17 @@ def main() -> None:
             emm_df.to_csv(emm_csv, index=False, encoding="utf-8-sig", float_format="%.6f")
             log_write(lf, f"\n  Saved: {emm_csv}")
 
-            fig1_path = os.path.join(OUTPUT_DIR, "fig1_forest_main_effect.png")
-            plot_fig1_forest(emm_csv, fig1_path)
-            log_write(lf, f"  Figure 1 (forest plot, from {os.path.basename(emm_csv)}) saved: {fig1_path}")
+            # 旧版纵向森林图调用保留，便于复现此前 Figure 1：
+            # legacy_fig1_path = os.path.join(OUTPUT_DIR, "fig1_forest_main_effect.png")
+            # plot_fig1_forest(emm_csv, legacy_fig1_path)
+
+            # 旧版双分面主效应图调用保留，便于复现此前 Figure 1：
+            # faceted_fig1_path = os.path.join(OUTPUT_DIR, "fig1_faceted_main_effect.png")
+            # plot_fig1_faceted_main_effect(emm_csv, data_used_path, faceted_fig1_path)
+
+            fig1_path = os.path.join(OUTPUT_DIR, "fig1_signed_axis_main_effect.png")
+            plot_fig1_signed_axis_main_effect(emm_csv, data_used_path, fig1_path)
+            log_write(lf, f"  Figure 1 (signed-axis effect plot, from {os.path.basename(emm_csv)}) saved: {fig1_path}")
 
             comp_lines += [
                 "=" * 90,

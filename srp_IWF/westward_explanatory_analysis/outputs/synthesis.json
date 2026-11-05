@@ -1,0 +1,79 @@
+{
+  "classification": "赛事与国家共同影响",
+  "rationale": "国家和赛事删除分析均识别出满足预设标准的影响来源。",
+  "history_search_triggered": true,
+  "candidate_nations": [
+    "CHN",
+    "IRI",
+    "KAZ",
+    "MEX",
+    "RUS",
+    "THA"
+  ],
+  "candidate_events": [
+    "1999 | 70th MEN's and 13th WOMEN's WOR | Athens,GRE",
+    "2002 | 72nd MEN's and 15th WOMEN's WOR | Warsaw,POL",
+    "2003 | 73rd MEN's and 16th WOMEN's WOR | Vancouver,CAN",
+    "2006 | 75th MEN's and 18th WOMEN's WOR | Santo Domingo, DOM",
+    "2007 | 76th MEN's and 19th WOMEN's WOR | Chiang Mai, THA",
+    "2009 | 77th MEN's and 20th WOMEN's WOR | Goyang, KOR",
+    "2014 | 2014 IWF WORLD CHAMPIONSHIPS | Almaty, KAZ",
+    "2015 | 2015 IWF WORLD CHAMPIONSHIPS | Houston, USA",
+    "2017 | 2017 IWF WORLD CHAMPIONSHIPS | Anaheim, USA",
+    "2018 | 2018 IWF World Championships | Ashgabat, TKM",
+    "2019 | 2019 IWF World Championships | PATTAYA, THA",
+    "2021 | 2021 IWF World Championships | Tashkent, UZB"
+  ],
+  "boundary": {
+    "boundary_material": false,
+    "same_direction": true,
+    "same_fdr_status": true,
+    "full_west_beta": 5.165259453512082,
+    "no12_west_beta": 5.593441780349688,
+    "full_west_fdr": 0.03069163335765161,
+    "no12_west_fdr": 0.038625480088975934
+  },
+  "composition": {
+    "west_nation_top1": "THA",
+    "west_nation_top1_share": 0.2125,
+    "west_event_top1": "2006 | 75th MEN's and 18th WOMEN's WOR | Santo Domingo, DOM",
+    "west_event_top1_share": 0.25625
+  },
+  "adjustment": {
+    "failed_models": [],
+    "west_models": [
+      {
+        "model": "base",
+        "estimate": 5.165259453512082,
+        "ci_low": 1.4708737104979206,
+        "ci_high": 8.859645196526243,
+        "p_fdr": 0.03069163335765161,
+        "relative_change": 0.0
+      },
+      {
+        "model": "plus_nation",
+        "estimate": 4.2551111862049,
+        "ci_low": 0.5943380419058255,
+        "ci_high": 7.9158843305039746,
+        "p_fdr": 0.11358216350750891,
+        "relative_change": -0.1762057212224515
+      },
+      {
+        "model": "plus_event_edition",
+        "estimate": 4.737623157643781,
+        "ci_low": 0.36155949101198104,
+        "ci_high": 9.11368682427558,
+        "p_fdr": 0.16923056068872766,
+        "relative_change": -0.08279086456683851
+      },
+      {
+        "model": "plus_nation_event",
+        "estimate": 2.1989738743812053,
+        "ci_low": -2.150575020084257,
+        "ci_high": 6.548522768846667,
+        "p_fdr": 0.5362349492994467,
+        "relative_change": -0.5742762015786006
+      }
+    ]
+  }
+}
