@@ -1,0 +1,10 @@
+analysis=weight
+full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir)
+llf_full_ml=-9518.736258
+llf_reduced_ml=-9528.112004
+LR=18.751491
+df=30
+p=9.450587e-01
+aic_full=19133.473
+bic_full=19406.584

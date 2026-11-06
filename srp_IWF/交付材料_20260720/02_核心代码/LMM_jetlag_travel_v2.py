@@ -417,6 +417,7 @@ def plot_fig1_signed_axis_main_effect(
                 unadj_beta = float(unadjusted.loc[group, "Estimate"])
                 unadj_lo = float(unadjusted.loc[group, "CI_lo"])
                 unadj_hi = float(unadjusted.loc[group, "CI_hi"])
+                unadj_p_fdr = float(unadjusted.loc[group, "p_fdr"])
                 unadjusted_x = positions[idx] - pair_offset
                 all_lows.append(unadj_lo)
                 all_highs.append(unadj_hi)
@@ -436,6 +437,13 @@ def plot_fig1_signed_axis_main_effect(
                     markerfacecolor="white", markeredgecolor="0.48",
                     markeredgewidth=1.2, linestyle="none", zorder=3,
                 )
+                unadjusted_stars = _sig_fdr_stars(unadj_p_fdr)
+                if unadjusted_stars:
+                    ax.annotate(
+                        unadjusted_stars, (unadjusted_x, unadj_hi), xytext=(0, 5),
+                        textcoords="offset points", ha="center", va="bottom",
+                        fontsize=9.5, color="0.42", fontweight="bold",
+                    )
 
             ax.errorbar(
                 adjusted_x, adj_beta[idx],
@@ -511,7 +519,7 @@ def plot_fig1_signed_axis_main_effect(
     ax.text(
         0.5, 1.035,
         "Points are model coefficients; error bars are ordinary 95% CIs; "
-        "asterisks indicate BH-FDR-adjusted p<0.05 in the primary model",
+        "asterisks match each model's point colour and indicate BH-FDR-adjusted p<0.05",
         transform=ax.transAxes, ha="center", va="bottom", fontsize=8.2, color="0.30",
     )
 

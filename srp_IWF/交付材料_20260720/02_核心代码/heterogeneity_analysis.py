@@ -240,9 +240,9 @@ def prepare_base_dataframe(input_csv: str, logger: AnalysisLogger) -> pd.DataFra
     logger.section("阶段1：数据预处理")
     logger.kv("原始行数", len(df))
 
-    before_dup = len(df)
-    df = df.drop_duplicates().copy()
-    logger.kv("去重后行数", f"{len(df)} (移除 {before_dup - len(df)})")
+    # 与正式主模型保持完全相同的分析样本。最终交付数据含2,186条建模记录，
+    # 异质性分析不再自行drop_duplicates，以免与主模型产生N=2,184的口径差异。
+    logger.kv("样本处理", f"保留全部 {len(df)} 条输入记录（不额外去重）")
 
     numeric_cols = ["Total", "Body_Weight", "Athlete_UTC_offset", "Venue_UTC_offset", "TravelDuration"]
     for col in numeric_cols:

@@ -50,35 +50,35 @@ def build_consolidated_results(out_path: Path) -> None:
 #
 # 本文件汇总了论文写作需要的全部“文字型”统计输出。
 # 章节顺序约定（章节编号保持不变，但角色已按最新口径更新）：
-#   1. 补充分析 (Supplementary, 不控制旅行时长, LMM_jetlag_v2, 2186 obs / 730 athletes)
-#      —— 仅作一致性对照，NOT 正文主结果
+#   1. 图形对照数据 (不控制旅行时长, LMM_jetlag_v2, 2186 obs / 730 athletes)
+#      —— 仅供 Figure 1 灰色节点使用，不作为独立正文模型报告
 #   2. 主分析 (Main analysis, 控制旅行时长 TravelDuration_c, control mode)
 #      —— ★ 正文 headline 结果，整体检验见 2.2 节 LRT-B
 #   3. 旅行时长主效应 (main mode, 仅作 Discussion 引用，不放主分析)
 #   4. 异质性分析 (subgroup-stratified + interaction LRT)
 #
 # 注意：
-#   - 主文样本统一为 2186 / 730。异质性分析因技术性去重略少 (2184)，正文不单列。
+#   - 主模型和异质性分析统一使用 2186 条记录 / 730 名运动员。
 #   - 表格 (CSV) 见 paper_outputs/tables/，图见 paper_outputs/figures/，
 #     此处不重复粘贴 CSV/图，避免冗余。
 #   - Table 1 / Table 2 / Fig 1 的数据来源均为 2.x 节（lmm_jetlag_travel_control）。
 """
     )
 
-    # 1) 补充分析（不控制旅行时长，仅作对照）
+    # 1) 不控制旅行时长的图形对照数据（仅供Figure 1灰色节点复现）
     main_dir = PROJECT_ROOT / "lmm_jetlag_v2"
     parts.append(_section(
-        "1.1  Supplementary (no travel control): pre-model data flow & sample composition",
+        "1.1  Figure-only comparison (no travel control): data flow & sample composition",
         main_dir / "analysis_log.txt",
         _safe_read(main_dir / "analysis_log.txt"),
     ))
     parts.append(_section(
-        "1.2  Supplementary (no travel control): model comparison, LRT, post-hoc FDR, East vs West contrast",
+        "1.2  Figure-only comparison (no travel control): coefficients and post-hoc FDR",
         main_dir / "model_comparison.txt",
         _safe_read(main_dir / "model_comparison.txt"),
     ))
     parts.append(_section(
-        "1.3  Supplementary (no travel control): detailed REML model summaries (A / B / C)",
+        "1.3  Figure-only comparison (no travel control): detailed REML summaries",
         main_dir / "model_summary.txt",
         _safe_read(main_dir / "model_summary.txt"),
     ))

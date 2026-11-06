@@ -106,7 +106,7 @@ def write_usage_manifest(fw_dir: Path, consolidated_path: Path) -> None:
 
 - 不要引用 `lmm_jetlag/` 目录（旧的 2308 样本版本）。**主分析口径为 `lmm_jetlag_travel_control/`（2186 样本，控制旅行时长）**；
   `lmm_jetlag_v2/`（同样 2186 样本，不控制旅行时长）仅作一致性对照，**不进正文 Table/Fig**，只在 Results 里补一句"结果方向和显著性一致"。
-- 不要在正文里单独列 "异质性分析样本 = 2184" —— 与主样本 2186 相差 2 条（技术性去重），可统一口径报告为 **"2186 obs / 730 athletes"**。
+- 主模型与异质性分析现已统一使用 **2186 obs / 730 athletes**；不得再引用旧版N=2184输出。
 - Table 3 故意不含 N 列，保持与正文 2186 的一致性。
 - `heterogeneity_results/` 下 `*_20260416_*` 等旧时间戳目录是历史版本，**只看最新时间戳**；合并 txt 与表格已自动选最新。
 """

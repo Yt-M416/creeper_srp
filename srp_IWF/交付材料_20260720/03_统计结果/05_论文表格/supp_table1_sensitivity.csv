@@ -1,6 +1,6 @@
 ﻿Test,LR,df,p
 LRT-A: Travel adds vs jetlag-only,10.8644,1,0.00098029
 LRT-B: JetLag joint vs travel-only (control travel),53.2699,10,6.634e-08
-Sensitivity: Age × JetLag_signed (primary LRT),0.118688,1,0.7304623
-Sensitivity: Body weight × JetLag_signed (primary LRT),0.289168,1,0.5907544
-Sensitivity: Cumulative exp × JetLag_signed (primary LRT),0.936128,1,0.3332755
+Sensitivity: Age × JetLag_signed (primary LRT),0.117095,1,0.732207
+Sensitivity: Body weight × JetLag_signed (primary LRT),0.288847,1,0.5909604
+Sensitivity: Cumulative exp × JetLag_signed (primary LRT),1.097558,1,0.2948026

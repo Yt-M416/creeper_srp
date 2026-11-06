@@ -1,0 +1,10 @@
+analysis=age_adjusted
+full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
+reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
+llf_full_ml=-9475.679569
+llf_reduced_ml=-9479.317420
+LR=7.275702
+df=10
+p=6.991858e-01
+aic_full=19027.359
+bic_full=19243.573

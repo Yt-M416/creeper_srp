@@ -1,0 +1,23 @@
+
+========================================================================================
+敏感性分析开始：体重(连续中心化)
+========================================================================================
+样本量: 2186
+连续变量: BodyWeight_c
+
+========================================================================================
+主敏感性（连续×连续）
+========================================================================================
+Full formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + JetLag_signed + BodyWeight_c + BodyWeight_c:JetLag_signed
+Reduced formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + JetLag_signed + BodyWeight_c
+主交互项: BodyWeight_c:JetLag_signed
+coef: -0.001141
+p: 5.919144e-01
+LRT(LR,df,p): 0.288847, 1, 5.909604e-01
+
+========================================================================================
+次级敏感性（连续×分类）
+========================================================================================
+Full formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + C(JetLagGroup_dir) + BodyWeight_c + BodyWeight_c:C(JetLagGroup_dir)
+Reduced formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + C(JetLagGroup_dir) + BodyWeight_c
+LRT(LR,df,p): 9.133424, 10, 5.194898e-01

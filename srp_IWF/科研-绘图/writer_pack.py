@@ -40,7 +40,7 @@ python preprocess2-athlete.py
 python merge_travel.py
 python LMM_jetlag_travel_v2.py --mode control    # ★ 主分析（控制旅行时长），正文 headline 结果
 python LMM_jetlag_travel_v2.py --mode main       # 旅行时长主效应（Discussion 引用）
-python LMM_jetlag_v2.py                          # 补充分析（不控制旅行时长，仅作对照）
+python LMM_jetlag_v2.py                          # Figure 1灰色节点复现（不作为独立正文模型）
 python heterogeneity_analysis.py --run-sensitivity
 python 科研-绘图/make_paper_figures.py
 ```
@@ -135,11 +135,11 @@ python 科研-绘图/make_paper_figures.py
   回答"时差分组作为整体是否对成绩有影响，且不能被旅行疲劳解释"。
 - LRT-A：TravelDuration_c 本身是否显著改善拟合（旅行时长的独立贡献）。
 
-## 补充分析（不控制旅行时长，一致性对照，不进正文表格）
+## Figure 1对照估计（不控制旅行时长，不作独立模型报告）
 
 - 固定效应：`C(Sex) + C(JetLagGroup_dir)`（`LMM_jetlag_v2.py`，同一份2186样本，去掉 TravelDuration_c）
-- 用途：证明控制旅行时长前后，效应方向与显著性模式一致（仅量级从 β≈−7.77 减弱为 β≈−5.58），
-  说明时差效应不完全等同于旅行疲劳。
+- 用途：仅生成Figure 1中的灰色对照节点及其BH-FDR显著性标记，直观展示加入旅行时长后估计值的变化；
+  正文核心结论、正式表格与模型检验均以控制旅行时长的主模型为准。
 
 ## 多重比较
 

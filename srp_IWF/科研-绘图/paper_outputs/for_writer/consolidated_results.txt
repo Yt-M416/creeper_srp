@@ -1,24 +1,24 @@
 # Consolidated Statistical Results
-# Generated: 2026-07-21T09:44:13
+# Generated: 2026-11-05T16:19:51
 #
 # 本文件汇总了论文写作需要的全部“文字型”统计输出。
 # 章节顺序约定（章节编号保持不变，但角色已按最新口径更新）：
-#   1. 补充分析 (Supplementary, 不控制旅行时长, LMM_jetlag_v2, 2186 obs / 730 athletes)
-#      —— 仅作一致性对照，NOT 正文主结果
+#   1. 图形对照数据 (不控制旅行时长, LMM_jetlag_v2, 2186 obs / 730 athletes)
+#      —— 仅供 Figure 1 灰色节点使用，不作为独立正文模型报告
 #   2. 主分析 (Main analysis, 控制旅行时长 TravelDuration_c, control mode)
 #      —— ★ 正文 headline 结果，整体检验见 2.2 节 LRT-B
 #   3. 旅行时长主效应 (main mode, 仅作 Discussion 引用，不放主分析)
 #   4. 异质性分析 (subgroup-stratified + interaction LRT)
 #
 # 注意：
-#   - 主文样本统一为 2186 / 730。异质性分析因技术性去重略少 (2184)，正文不单列。
+#   - 主模型和异质性分析统一使用 2186 条记录 / 730 名运动员。
 #   - 表格 (CSV) 见 paper_outputs/tables/，图见 paper_outputs/figures/，
 #     此处不重复粘贴 CSV/图，避免冗余。
 #   - Table 1 / Table 2 / Fig 1 的数据来源均为 2.x 节（lmm_jetlag_travel_control）。
 
 
 ################################################################################################
-# 1.1  Supplementary (no travel control): pre-model data flow & sample composition
+# 1.1  Figure-only comparison (no travel control): data flow & sample composition
 # Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_v2/analysis_log.txt
 ################################################################################################
 
@@ -69,7 +69,7 @@ LMM JetLag V2 (Travel-available subset) - END
 
 
 ################################################################################################
-# 1.2  Supplementary (no travel control): model comparison, LRT, post-hoc FDR, East vs West contrast
+# 1.2  Figure-only comparison (no travel control): coefficients and post-hoc FDR
 # Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_v2/model_comparison.txt
 ################################################################################################
 
@@ -154,7 +154,7 @@ Contrast Tests: East vs West at same magnitude
 
 
 ################################################################################################
-# 1.3  Supplementary (no travel control): detailed REML model summaries (A / B / C)
+# 1.3  Figure-only comparison (no travel control): detailed REML summaries
 # Source: D:/Code/Python/Creeper/srp_IWF/lmm_jetlag_v2/model_summary.txt
 ################################################################################################
 
@@ -510,83 +510,83 @@ Group Var         541.353    2.972
 
 # Heterogeneity Summary
 
-Run time: 2026-07-20T16:36:28
+Run time: 2026-11-05T16:14:09
 
 | Analysis | N | LR | df | p | Status |
 |---|---:|---:|---:|---:|---|
-| sex | 2184 | 3.662 | 10 | 9.613e-01 | ok |
-| age | 2184 | 12.639 | 10 | 2.445e-01 | ok |
-| experience | 2184 | 8.854 | 10 | 5.460e-01 | ok |
-| weight | 2184 | 18.752 | 30 | 9.450e-01 | ok |
-| age_adjusted | 2184 | 7.715 | 10 | 6.567e-01 | ok |
-| sensitivity_Age_c | 2184 | 0.119 | 1 | 7.305e-01 | ok |
-| sensitivity_BodyWeight_c | 2184 | 0.289 | 1 | 5.908e-01 | ok |
-| sensitivity_Cumulative_Exp_c | 2184 | 0.936 | 1 | 3.333e-01 | ok |
+| sex | 2186 | 3.676 | 10 | 9.608e-01 | ok |
+| age | 2186 | 12.651 | 10 | 2.439e-01 | ok |
+| experience | 2186 | 7.877 | 10 | 6.409e-01 | ok |
+| weight | 2186 | 18.751 | 30 | 9.451e-01 | ok |
+| age_adjusted | 2186 | 7.276 | 10 | 6.992e-01 | ok |
+| sensitivity_Age_c | 2186 | 0.117 | 1 | 7.322e-01 | ok |
+| sensitivity_BodyWeight_c | 2186 | 0.289 | 1 | 5.910e-01 | ok |
+| sensitivity_Cumulative_Exp_c | 2186 | 1.098 | 1 | 2.948e-01 | ok |
 
 
 ################################################################################################
 # 4.2  Heterogeneity (sex): full model_comparison
-# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/sex_20260720_163301/model_comparison.txt
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/sex_20261105_161302/model_comparison.txt
 ################################################################################################
 
 analysis=sex
 full_formula=Sinclair_Total ~ TravelDuration_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
 reduced_formula=Sinclair_Total ~ TravelDuration_c + C(Group) + C(JetLagGroup_dir)
-llf_full_ml=-9530.079721
-llf_reduced_ml=-9531.910735
-LR=3.662028
+llf_full_ml=-9537.792986
+llf_reduced_ml=-9539.631031
+LR=3.676089
 df=10
-p=9.613084e-01
-aic_full=19110.159
-bic_full=19252.382
+p=9.607785e-01
+aic_full=19125.586
+bic_full=19267.832
 
 
 ################################################################################################
 # 4.2  Heterogeneity (age): full model_comparison
-# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/age_adjusted_20260720_163438/model_comparison.txt
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/age_adjusted_20261105_161322/model_comparison.txt
 ################################################################################################
 
 analysis=age_adjusted
 full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
 reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + Cumulative_Exp_c + C(Group) + C(JetLagGroup_dir) + Cumulative_Exp_c:C(JetLagGroup_dir)
-llf_full_ml=-9472.269576
-llf_reduced_ml=-9476.127064
-LR=7.714976
+llf_full_ml=-9475.679569
+llf_reduced_ml=-9479.317420
+LR=7.275702
 df=10
-p=6.566550e-01
-aic_full=19020.539
-bic_full=19236.718
+p=6.991858e-01
+aic_full=19027.359
+bic_full=19243.573
 
 
 ################################################################################################
 # 4.2  Heterogeneity (experience): full model_comparison
-# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/experience_20260720_163342/model_comparison.txt
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/experience_20261105_161311/model_comparison.txt
 ################################################################################################
 
 analysis=experience
 full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
 reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir)
-llf_full_ml=-9475.826394
-llf_reduced_ml=-9480.253499
-LR=8.854210
+llf_full_ml=-9490.706506
+llf_reduced_ml=-9494.644917
+LR=7.876822
 df=10
-p=5.459934e-01
-aic_full=19005.653
-bic_full=19159.253
+p=6.408674e-01
+aic_full=19035.413
+bic_full=19189.038
 
 
 ################################################################################################
 # 4.2  Heterogeneity (weight): full model_comparison
-# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/weight_20260720_163407/model_comparison.txt
+# Source: D:/Code/Python/Creeper/srp_IWF/heterogeneity_results/weight_20261105_161316/model_comparison.txt
 ################################################################################################
 
 analysis=weight
 full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
 reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + C(Group) + C(JetLagGroup_dir)
-llf_full_ml=-9511.043778
-llf_reduced_ml=-9520.419835
-LR=18.752114
+llf_full_ml=-9518.736258
+llf_reduced_ml=-9528.112004
+LR=18.751491
 df=30
-p=9.450464e-01
-aic_full=19118.088
-bic_full=19391.155
+p=9.450587e-01
+aic_full=19133.473
+bic_full=19406.584

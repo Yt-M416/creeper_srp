@@ -1,0 +1,10 @@
+analysis=experience
+full_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir) + C(Group):C(JetLagGroup_dir)
+reduced_formula=Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(Group) + C(JetLagGroup_dir)
+llf_full_ml=-9490.706506
+llf_reduced_ml=-9494.644917
+LR=7.876822
+df=10
+p=6.408674e-01
+aic_full=19035.413
+bic_full=19189.038

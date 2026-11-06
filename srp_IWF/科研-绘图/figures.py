@@ -273,12 +273,6 @@ def plot_fig3_sensitivity(out_dir: Path) -> None:
     joint: list[tuple[str, float]] = []
     inter: list[tuple[str, float]] = []
 
-    mc_main = PROJECT_ROOT / "lmm_jetlag_v2" / "model_comparison.txt"
-    if mc_main.is_file():
-        d = parse_lrt_block_model_b_jetlag(mc_main.read_text(encoding="utf-8"))
-        if d.get("p") is not None and not (isinstance(d["p"], float) and math.isnan(float(d["p"]))):
-            joint.append(("C(JetLag) joint LRT (main model)", float(d["p"])))
-
     tc = PROJECT_ROOT / "lmm_jetlag_travel_control" / "model_comparison.txt"
     if tc.is_file():
         lr = parse_travel_control_lrts(tc.read_text(encoding="utf-8"))
@@ -286,7 +280,7 @@ def plot_fig3_sensitivity(out_dir: Path) -> None:
         if pb is not None:
             joint.append(
                 (
-                    "C(JetLag) joint LRT | + TravelDuration (LRT-B)",
+                    "C(JetLag) joint LRT | adjusted for travel duration",
                     float(pb),
                 )
             )

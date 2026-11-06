@@ -1,0 +1,59 @@
+                                  Mixed Linear Model Regression Results
+==========================================================================================================
+Model:                            MixedLM                Dependent Variable:                Sinclair_Total
+No. Observations:                 2186                   Method:                            REML          
+No. Groups:                       730                    Scale:                             175.8623      
+Min. group size:                  1                      Log-Likelihood:                    -9430.2036    
+Max. group size:                  11                     Converged:                         Yes           
+Mean group size:                  3.0                                                                     
+----------------------------------------------------------------------------------------------------------
+                                                          Coef.   Std.Err.    z    P>|z|  [0.025   0.975] 
+----------------------------------------------------------------------------------------------------------
+Intercept                                                 430.842    2.209 195.058 0.000  426.513  435.171
+C(Sex)[T.Women]                                          -149.364    1.844 -80.995 0.000 -152.979 -145.750
+C(Group)[T.Middle]                                          5.771    2.283   2.528 0.011    1.297   10.245
+C(Group)[T.Heavy]                                           3.074    2.834   1.084 0.278   -2.481    8.628
+C(Group)[T.SuperHeavy]                                     -1.683    3.313  -0.508 0.611   -8.176    4.810
+C(JetLagGroup_dir)[T.West_2-3h]                             0.463    2.275   0.203 0.839   -3.996    4.922
+C(JetLagGroup_dir)[T.West_4-5h]                             3.415    2.250   1.517 0.129   -0.996    7.825
+C(JetLagGroup_dir)[T.West_6-7h]                             0.076    2.620   0.029 0.977   -5.060    5.212
+C(JetLagGroup_dir)[T.West_8-9h]                             0.598    5.859   0.102 0.919  -10.885   12.081
+C(JetLagGroup_dir)[T.West_10-11h]                           6.134    2.851   2.151 0.031    0.545   11.722
+C(JetLagGroup_dir)[T.East_2-3h]                            -0.668    4.297  -0.155 0.877   -9.090    7.755
+C(JetLagGroup_dir)[T.East_4-5h]                             3.732    8.240   0.453 0.651  -12.419   19.883
+C(JetLagGroup_dir)[T.East_6-7h]                             1.995    3.907   0.511 0.610   -5.663    9.652
+C(JetLagGroup_dir)[T.East_8-9h]                            -5.431    2.335  -2.326 0.020  -10.007   -0.855
+C(JetLagGroup_dir)[T.East_10-11h]                           2.492    2.322   1.073 0.283   -2.059    7.043
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.West_2-3h]          0.529    2.898   0.183 0.855   -5.150    6.208
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.West_2-3h]           2.219    3.509   0.633 0.527   -4.658    9.097
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.West_2-3h]      2.701    3.984   0.678 0.498   -5.107   10.509
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.West_4-5h]         -2.930    3.058  -0.958 0.338   -8.924    3.063
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.West_4-5h]           1.993    4.308   0.463 0.644   -6.450   10.437
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.West_4-5h]     -4.912    4.816  -1.020 0.308  -14.350    4.527
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.West_6-7h]          1.496    3.439   0.435 0.664   -5.244    8.235
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.West_6-7h]           2.738    4.477   0.612 0.541   -6.036   11.512
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.West_6-7h]      0.838    4.433   0.189 0.850   -7.850    9.526
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.West_8-9h]          0.060    6.509   0.009 0.993  -12.696   12.817
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.West_8-9h]           1.052    7.072   0.149 0.882  -12.808   14.912
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.West_8-9h]     -6.801    7.738  -0.879 0.379  -21.967    8.365
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.West_10-11h]       -0.736    3.433  -0.214 0.830   -7.465    5.992
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.West_10-11h]        -0.387    4.343  -0.089 0.929   -8.899    8.125
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.West_10-11h]   -0.700    4.481  -0.156 0.876   -9.482    8.082
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.East_2-3h]         -2.915    5.031  -0.579 0.562  -12.776    6.946
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.East_2-3h]           1.252    5.920   0.211 0.833  -10.352   12.856
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.East_2-3h]      0.580    6.696   0.087 0.931  -12.544   13.704
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.East_4-5h]          0.836    9.185   0.091 0.927  -17.166   18.838
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.East_4-5h]          -8.615   10.107  -0.852 0.394  -28.424   11.194
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.East_4-5h]    -14.522   10.471  -1.387 0.165  -35.045    6.000
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.East_6-7h]          1.276    5.085   0.251 0.802   -8.691   11.244
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.East_6-7h]          -3.030   11.147  -0.272 0.786  -24.878   18.819
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.East_6-7h]     -8.090    7.691  -1.052 0.293  -23.164    6.984
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.East_8-9h]          1.653    2.978   0.555 0.579   -4.183    7.489
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.East_8-9h]          -1.798    3.947  -0.456 0.649   -9.533    5.937
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.East_8-9h]     -4.526    4.466  -1.014 0.311  -13.279    4.226
+C(Group)[T.Middle]:C(JetLagGroup_dir)[T.East_10-11h]        0.042    2.857   0.015 0.988   -5.558    5.641
+C(Group)[T.Heavy]:C(JetLagGroup_dir)[T.East_10-11h]        -1.302    4.054  -0.321 0.748   -9.247    6.643
+C(Group)[T.SuperHeavy]:C(JetLagGroup_dir)[T.East_10-11h]   -0.104    4.200  -0.025 0.980   -8.335    8.127
+TravelDuration_c                                           -0.248    0.067  -3.678 0.000   -0.380   -0.116
+Group Var                                                 510.297    2.898                                
+==========================================================================================================

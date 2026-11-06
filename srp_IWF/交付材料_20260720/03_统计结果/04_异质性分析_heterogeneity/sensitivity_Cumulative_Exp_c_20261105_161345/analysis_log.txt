@@ -1,0 +1,23 @@
+
+========================================================================================
+敏感性分析开始：经验(连续中心化)
+========================================================================================
+样本量: 2186
+连续变量: Cumulative_Exp_c
+
+========================================================================================
+主敏感性（连续×连续）
+========================================================================================
+Full formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Cumulative_Exp_c + Cumulative_Exp_c:JetLag_signed
+Reduced formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + JetLag_signed + Cumulative_Exp_c
+主交互项: Cumulative_Exp_c:JetLag_signed
+coef: 0.028899
+p: 2.957171e-01
+LRT(LR,df,p): 1.097558, 1, 2.948026e-01
+
+========================================================================================
+次级敏感性（连续×分类）
+========================================================================================
+Full formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(JetLagGroup_dir) + Cumulative_Exp_c + Cumulative_Exp_c:C(JetLagGroup_dir)
+Reduced formula: Sinclair_Total ~ C(Sex) + TravelDuration_c + BodyWeight_c + C(JetLagGroup_dir) + Cumulative_Exp_c
+LRT(LR,df,p): 8.906086, 10, 5.410390e-01

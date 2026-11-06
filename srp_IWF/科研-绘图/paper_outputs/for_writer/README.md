@@ -20,7 +20,7 @@ python preprocess2-athlete.py
 python merge_travel.py
 python LMM_jetlag_travel_v2.py --mode control    # ★ 主分析（控制旅行时长），正文 headline 结果
 python LMM_jetlag_travel_v2.py --mode main       # 旅行时长主效应（Discussion 引用）
-python LMM_jetlag_v2.py                          # 补充分析（不控制旅行时长，仅作对照）
+python LMM_jetlag_v2.py                          # Figure 1灰色节点复现（不作为独立正文模型）
 python heterogeneity_analysis.py --run-sensitivity
 python 科研-绘图/make_paper_figures.py
 ```

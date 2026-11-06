@@ -17,13 +17,14 @@
    LRT-A/LRT-B、Table1/2/Fig1 数据来源）
    同一脚本 `--mode main` 可单独检验旅行时长主效应（不含JetLagGroup），输出 lmm_jetlag_travel_main/。
 
-4. `LMM_jetlag_v2.py`   补充分析（不控制旅行时长，用于对比/一致性检验，非正文主结果）
+4. `LMM_jetlag_v2.py`   Figure 1对照估计（不控制旅行时长，非独立正文模型）
    Sinclair_Total ~ Sex + JetLagGroup_dir + (1|Athlete_ID)
-   同一份 N=2186 样本，仅用于说明"控制旅行时长前后效应方向、显著性模式一致"。
+   同一份 N=2186 样本，仅用于生成Figure 1灰色节点及对应BH-FDR星号。
    输出目录：lmm_jetlag_v2/
 
-5. `heterogeneity_analysis.py [--run-sensitivity]`
-   四个调节变量（性别/年龄/经验/体重）分层 + 交互项LRT；--run-sensitivity 额外做连续变量敏感性分析。
+5. `heterogeneity_analysis.py --input ../01_最终数据/final_model_data_N2186.csv --run-sensitivity`
+   在完整N=2186样本中逐个检验四个调节变量（性别/年龄/经验/体重）的交互项LRT；
+   `--run-sensitivity`额外逐个检验连续变量交互。脚本不再自行去重。
    输出目录：heterogeneity_results/
 
 ## 角色说明（论文正文用哪个数字）
@@ -32,7 +33,7 @@
 |---|---|---|
 | 整体 LRT | LRT-B: LR=53.27, df=10, p=6.6e-08 | LR=51.82, df=10, p=1.23e-07 |
 | East 8-9h | β=-5.58, 95%CI[-8.40,-2.77], d=-0.42 | β=-7.77, 95%CI[-10.27,-5.27], d=-0.59 |
-| Table 1 / Table 2 / Fig 1 | ✅ 数据来源 | 仅供文中提及对比，不进正式表格 |
+| Table 1 / Table 2 / Fig 1 | ✅ 正文主结果与彩色节点数据来源 | 仅供Fig 1灰色节点，不作独立正文模型或正式表格 |
 
 依赖库：pandas, numpy, scipy, statsmodels, matplotlib, seaborn。
 Cohen's d 计算公式：d = β / σ_ε （σ_ε 为 REML 残差标准差，即 sqrt(scale)，非残差方差）。
